@@ -75,3 +75,24 @@
 - The u_turn word contains | but the path has no cusp, because its first piece has
   zero length. The cusp count follows the pieces, not the word.
 - 110 tests pass. Wrote docs/notes/rs_export_math_reference.md.
+- Added cusp-aware tracking (Task 11). segments.py splits a path at its cusps into
+  single-gear segments that share the cusp sample. cusp_runner.py tracks one segment
+  at a time: it lets the steering settle at a standstill, drives the segment, brakes to
+  a stop at the cusp, and starts the next segment in the other gear.
+- Reverse driving, per controller: Pure Pursuit needs no change (its forward formula is
+  the reverse formula when the goal point is chosen in travel order). Stanley's forward
+  law diverges in reverse (positive feedback on the heading), so it has a reverse branch
+  that references the rear axle. The existing LQR and MPC use the dynamic model, which
+  divides by speed (minimum 2 m/s), so they cannot be used at cusp speeds. I had said
+  they would need only small changes; that was wrong. Wrote kinematic LQR and MPC in
+  distance driven instead.
+- All four controllers finish all nine Reeds-Shepp paths. On parallel_park and side_slot
+  the kinematic LQR and MPC reach 1.0 to 1.1 m of cross-track error, which is the
+  steering rate limit meeting an instant curvature step: 0.2 m at 0.5 m/s and 0.056 m
+  with a 5 rad/s actuator. Feedforward made it worse at the rate limit; not
+  investigated. Stanley is the weakest on forward arcs; not diagnosed.
+- One run per controller and path, starting on the path, no noise: exploratory, not the
+  benchmark. A progress message of mine said every cusp stop was within 0.55 m; the real
+  worst case is 1.1 m (parallel_park and side_slot, LQR and MPC).
+- 136 tests pass. Wrote docs/notes/cusp_tracking_math_reference.md. Results table:
+  data/results/cusp_tracking.csv.

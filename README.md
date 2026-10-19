@@ -42,3 +42,24 @@ Limits:
 - Cell size, corner radius and car parameters are placeholders. Notes: `docs/notes/planner_export_math_reference.md` and `docs/notes/rs_export_math_reference.md`.
 
 Reproduce: `python scripts/export_thesis_paths.py` (needs the thesis repo at `~/projects/hybrid-a-star-rrtstar-path-planning`), `python scripts/export_rs_paths.py` (needs MultiPlan at `~/projects/multiplan`), then `python scripts/plot_thesis_paths.py` and `python scripts/plot_rs_paths.py`.
+
+## Tracking paths with cusps
+
+Paths that reverse have cusps, where the car must stop and change gear. `segments.py` splits a path at its cusps, and `cusp_runner.py` tracks each single-gear segment with its own controller: settle the steering at a standstill, drive, brake to a stop at the cusp, repeat in the other gear. Pure Pursuit works unchanged in reverse, Stanley needs a reverse branch (its forward law diverges), and the LQR and MPC are rewritten on the kinematic model per metre driven, because the dynamic-model versions divide by speed.
+
+Maximum cross-track error in metres on the four Reeds-Shepp paths with reverse driving (1.5 m/s, one run each, start on the path, no noise):
+
+| path | Pure Pursuit | Stanley | Kinematic LQR | Kinematic MPC |
+| --- | --- | --- | --- | --- |
+| three_point | 0.135 | 0.669 | 0.024 | 0.025 |
+| parallel_park | 0.319 | 0.991 | 1.007 | 1.007 |
+| side_slot | 0.320 | 0.495 | 1.102 | 1.103 |
+| reverse_in | 0.201 | 0.208 | 0.189 | 0.193 |
+
+All 36 runs (four controllers, nine paths) finish and stop at every cusp. The 1 m errors of LQR and MPC on `parallel_park` and `side_slot` come from the path: it flips the steering curvature instantly, and the 0.8 rad/s steering limit cannot follow at 1.5 m/s (0.2 m at 0.5 m/s, 0.056 m with a 5 rad/s actuator).
+
+![Executed paths with cusp stops](docs/figures/cusp_tracking.png)
+
+Limits: exploratory (one run per pair, no noise, the controllers' model is the simulated model); the Reeds-Shepp paths are not steering-rate feasible at 1.5 m/s; Stanley's weak forward-arc result is not diagnosed; the stop overshoots about 0.07 m; car and path parameters are placeholders. Notes: `docs/notes/cusp_tracking_math_reference.md`. Results: `data/results/cusp_tracking.csv`.
+
+Reproduce: `python scripts/track_cusp_paths.py` (uses the exported paths in `data/paths`).
