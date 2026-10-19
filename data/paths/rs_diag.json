@@ -1,0 +1,42 @@
+{
+  "cusp_s_m": [],
+  "ds_m": 0.1,
+  "end_heading_error_rad": 4.440892098500626e-16,
+  "end_position_error_m": 5.0242958677880805e-15,
+  "goal": [
+    25,
+    -15,
+    -100
+  ],
+  "length_m": 31.118813191078118,
+  "max_curvature": 0.2,
+  "multiplan_commit": "8be3e44",
+  "multiplan_end_gap_m": 3.623118015607496e-05,
+  "multiplan_length_m": 31.118813191078118,
+  "multiplan_modified": false,
+  "n_cusps": 0,
+  "n_segments": 3,
+  "name": "diag",
+  "python": "3.14.4",
+  "radius_m": 5.0,
+  "segments": [
+    [
+      "R",
+      0.8235595912534184
+    ],
+    [
+      "S",
+      4.129367535822428
+    ],
+    [
+      "R",
+      1.2708355111397767
+    ]
+  ],
+  "start": [
+    0,
+    0,
+    20
+  ],
+  "word": "R+S+R+"
+}

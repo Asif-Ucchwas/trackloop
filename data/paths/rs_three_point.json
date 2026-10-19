@@ -1,0 +1,45 @@
+{
+  "cusp_s_m": [
+    9.044652649487857,
+    11.299786708469169
+  ],
+  "ds_m": 0.1,
+  "end_heading_error_rad": 4.440892098500626e-16,
+  "end_position_error_m": 9.930136612989092e-16,
+  "goal": [
+    2,
+    6,
+    180
+  ],
+  "length_m": 15.707963267948964,
+  "max_curvature": 0.2,
+  "multiplan_commit": "8be3e44",
+  "multiplan_end_gap_m": 2.6636917936380248e-05,
+  "multiplan_length_m": 15.707963267948964,
+  "multiplan_modified": false,
+  "n_cusps": 2,
+  "n_segments": 3,
+  "name": "three_point",
+  "python": "3.14.4",
+  "radius_m": 5.0,
+  "segments": [
+    [
+      "L",
+      1.8089305298975713
+    ],
+    [
+      "R",
+      -0.45102681179626236
+    ],
+    [
+      "L",
+      0.881635311895959
+    ]
+  ],
+  "start": [
+    0,
+    0,
+    0
+  ],
+  "word": "L+R-L+"
+}

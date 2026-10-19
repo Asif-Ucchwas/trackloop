@@ -1,0 +1,49 @@
+{
+  "cusp_s_m": [
+    1.3826872156553527,
+    11.02559193147345
+  ],
+  "ds_m": 0.1,
+  "end_heading_error_rad": 0.0,
+  "end_position_error_m": 2.8435583831733384e-15,
+  "goal": [
+    6,
+    4,
+    90
+  ],
+  "length_m": 12.408279147128802,
+  "max_curvature": 0.2,
+  "multiplan_commit": "8be3e44",
+  "multiplan_end_gap_m": 3.0011980265650053e-05,
+  "multiplan_length_m": 12.408279147128802,
+  "multiplan_modified": false,
+  "n_cusps": 2,
+  "n_segments": 4,
+  "name": "side_slot",
+  "python": "3.14.4",
+  "radius_m": 5.0,
+  "segments": [
+    [
+      "L",
+      -0.27653744313107054
+    ],
+    [
+      "R",
+      0.9642904715818097
+    ],
+    [
+      "L",
+      0.9642904715818097
+    ],
+    [
+      "R",
+      -0.27653744313107054
+    ]
+  ],
+  "start": [
+    0,
+    0,
+    90
+  ],
+  "word": "C|CuCu|C#2(tf)"
+}

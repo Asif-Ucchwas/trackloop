@@ -48,3 +48,30 @@
 - 5 m offset with the real rate limit: LQR overshoots 1.75 m and settles in 8.15 s,
   MPC does not overshoot and settles in 3.65 s. 89 tests pass.
 - Wrote docs/notes/mpc_math_reference.md.
+- Exported thesis planner paths into the common path format (Task 9). planner_export.py
+  rounds each corner with a circular arc and samples every 0.1 m, so heading and
+  curvature are exact for lines and arcs.
+- The thesis Hybrid planner returns a plain list of (x, y) grid cells with no heading
+  or curvature, and it draws from Python's global random generator: an unseeded run
+  differs every time. Each export seeds it and saves the seed, the thesis commit and
+  the Python version.
+- Chose 3 m per cell (paths of 195 to 208 m) and a 6 m corner radius.
+- 10 paths (two planners, five maps): the thesis waypoints never touch an obstacle but
+  9 of 10 rounded paths clip one at 0.5 m sampling (corner cut 0.21 to 1.13 m). Map 3
+  needs curvature 0.294 and 0.279 against the car's limit of 0.253.
+- The export table came out identical on Python 3.13 and 3.14.4. 99 tests pass.
+- Wrote docs/notes/planner_export_math_reference.md.
+- Generated Reeds-Shepp reference paths from MultiPlan in the common path format
+  (Task 10). rs_export.py turns MultiPlan's segment list into samples every 0.1 m
+  with exact formulas for lines and arcs, a direction flag for reverse gear, and one
+  sample exactly on each cusp.
+- Convention: heading is the body heading, curvature is the steering curvature
+  (positive for left, the same sign in both gears), so the heading changes at
+  curvature times direction per metre.
+- 9 paths at a 5 m radius from hand-chosen poses; 4 have cusps (7 in all). Each
+  converted path ends on the requested goal pose to within 1e-14 m and 1e-15 rad and
+  has MultiPlan's length. MultiPlan's own sampler ends up to 4.4e-5 m from my end
+  point; I did not test which side of that gap is its step size.
+- The u_turn word contains | but the path has no cusp, because its first piece has
+  zero length. The cusp count follows the pieces, not the word.
+- 110 tests pass. Wrote docs/notes/rs_export_math_reference.md.

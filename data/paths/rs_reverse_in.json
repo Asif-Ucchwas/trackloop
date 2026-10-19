@@ -1,0 +1,48 @@
+{
+  "cusp_s_m": [
+    15.887842767412772
+  ],
+  "ds_m": 0.1,
+  "end_heading_error_rad": 4.440892098500626e-16,
+  "end_position_error_m": 2.5121479338940403e-15,
+  "goal": [
+    -12,
+    8,
+    90
+  ],
+  "length_m": 19.850456621380772,
+  "max_curvature": 0.2,
+  "multiplan_commit": "8be3e44",
+  "multiplan_end_gap_m": 4.3759006416556894e-05,
+  "multiplan_length_m": 19.85045662138077,
+  "multiplan_modified": false,
+  "n_cusps": 1,
+  "n_segments": 4,
+  "name": "reverse_in",
+  "python": "3.14.4",
+  "radius_m": 5.0,
+  "segments": [
+    [
+      "L",
+      -0.7925227707935999
+    ],
+    [
+      "S",
+      -0.8142494558940578
+    ],
+    [
+      "R",
+      -1.5707963267948966
+    ],
+    [
+      "L",
+      0.7925227707935996
+    ]
+  ],
+  "start": [
+    0,
+    0,
+    0
+  ],
+  "word": "CSC90|C#2(tf)"
+}

@@ -1,0 +1,68 @@
+{
+  "cell_m": 3.0,
+  "collision_rule": "exact, margin 0.05 cell",
+  "density": 0.2,
+  "ds_m": 0.1,
+  "goal_cell": [
+    47,
+    47
+  ],
+  "grid_size": 50,
+  "length_m": 203.98658047674724,
+  "map_seed": 2,
+  "max_curvature": 0.16786098495408808,
+  "max_cut_m": 0.687842298297803,
+  "min_radius_m": 5.957310451106381,
+  "n_corners": 7,
+  "n_tight": 1,
+  "n_vertices": 9,
+  "planner": "theta_star_tight",
+  "planner_seed": 2,
+  "python": "3.14.4",
+  "radius_m": 6.0,
+  "rounded_hits": 1,
+  "start_cell": [
+    2,
+    2
+  ],
+  "thesis_commit": "9a51fac30e7e94979e88e57b3029eed54c9dca08",
+  "waypoint_hits": 0,
+  "waypoints_cells": [
+    [
+      2.0,
+      2.0
+    ],
+    [
+      7.0,
+      13.0
+    ],
+    [
+      13.673708005821515,
+      15.459048437278213
+    ],
+    [
+      24.63965269179034,
+      26.19229628515812
+    ],
+    [
+      29.0,
+      36.0
+    ],
+    [
+      40.0,
+      41.0
+    ],
+    [
+      44.875,
+      41.375
+    ],
+    [
+      45.944090319792565,
+      43.02112143474503
+    ],
+    [
+      47.0,
+      47.0
+    ]
+  ]
+}
