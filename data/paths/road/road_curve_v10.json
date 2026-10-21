@@ -1,0 +1,45 @@
+{
+  "design_speed_mps": 10.0,
+  "ds_m": 0.1,
+  "end_heading_rad": 1.5707963267948968,
+  "end_x_m": 90.31953901840372,
+  "end_y_m": 90.31953901840376,
+  "family": "road",
+  "fine_ds_m": 0.005,
+  "gap_s": 2.0,
+  "lateral_jerk_mps3": 1.0,
+  "lead_s": 3.0,
+  "length_m": 158.53981633974485,
+  "min_radius_m": 50.0,
+  "name": "road_curve_v10",
+  "peak_curvature_per_m": 0.02,
+  "peak_lateral_accel_mps2": 2.0,
+  "profile_nodes": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      30.0,
+      0.0
+    ],
+    [
+      50.0,
+      0.02
+    ],
+    [
+      108.53981633974483,
+      0.02
+    ],
+    [
+      128.53981633974485,
+      0.0
+    ],
+    [
+      158.53981633974485,
+      0.0
+    ]
+  ],
+  "ramp_length_m": 20.0,
+  "shape": "curve"
+}

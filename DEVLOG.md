@@ -151,3 +151,14 @@
   1.0 and 1.5 m on parallel_park and side_slot. Suspected cause is the steering rate limit
   meeting a curvature step; not shown. Road family and dynamic controllers are not built yet.
 - 175 tests pass. Results: data/results/benchmark_parking*.csv, docs/figures/benchmark_parking.png.
+- Road family (second half of Task 14): src/trackloop/road_paths.py builds 12 forward paths,
+  4 shapes (curve, lateral_shift, s_curve, double_shift) x design speeds 5, 10 and 20 m/s,
+  each with peak lateral acceleration 2.0 m/s^2 and lateral jerk 1.0 m/s^3 (placeholders).
+  Curvature is v^2-scaled and ramps as a clothoid, so the steering never makes an instant
+  step. Exported to data/paths/road/ with its own manifest and frozen before any controller
+  was run on it. The 19-path parking manifest is unchanged.
+- All 12 pass curvature, steering-rate and lateral-acceleration checks at their design speed.
+  Derived: tire slip angles at 2.0 m/s^2 are about 1 degree, well inside the linear-tire
+  range of the dynamic model. Renamed lane_change to lateral_shift: the sideways move is
+  about 15 m, not a lane.
+- 211 tests pass (36 new). Next: dynamic controllers on the road family.

@@ -1,0 +1,69 @@
+{
+  "design_speed_mps": 10.0,
+  "ds_m": 0.1,
+  "end_heading_rad": 0.0,
+  "end_x_m": 235.14224873734466,
+  "end_y_m": -2.7851825121694475e-14,
+  "family": "road",
+  "fine_ds_m": 0.005,
+  "gap_s": 2.0,
+  "lateral_jerk_mps3": 1.0,
+  "lead_s": 3.0,
+  "length_m": 240.0,
+  "min_radius_m": 50.0,
+  "name": "road_double_shift_v10",
+  "peak_curvature_per_m": 0.02,
+  "peak_lateral_accel_mps2": 2.0,
+  "profile_nodes": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      30.0,
+      0.0
+    ],
+    [
+      50.0,
+      0.02
+    ],
+    [
+      70.0,
+      0.0
+    ],
+    [
+      90.0,
+      -0.02
+    ],
+    [
+      110.0,
+      0.0
+    ],
+    [
+      130.0,
+      0.0
+    ],
+    [
+      150.0,
+      -0.02
+    ],
+    [
+      170.0,
+      0.0
+    ],
+    [
+      190.0,
+      0.02
+    ],
+    [
+      210.0,
+      0.0
+    ],
+    [
+      240.0,
+      0.0
+    ]
+  ],
+  "ramp_length_m": 20.0,
+  "shape": "double_shift"
+}

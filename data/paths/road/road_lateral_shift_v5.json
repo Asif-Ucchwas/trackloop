@@ -1,0 +1,49 @@
+{
+  "design_speed_mps": 5.0,
+  "ds_m": 0.1,
+  "end_heading_rad": 0.0,
+  "end_x_m": 65.28639332921799,
+  "end_y_m": 14.918847813320887,
+  "family": "road",
+  "fine_ds_m": 0.005,
+  "gap_s": 2.0,
+  "lateral_jerk_mps3": 1.0,
+  "lead_s": 3.0,
+  "length_m": 70.0,
+  "min_radius_m": 12.5,
+  "name": "road_lateral_shift_v5",
+  "peak_curvature_per_m": 0.08,
+  "peak_lateral_accel_mps2": 2.0,
+  "profile_nodes": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      15.0,
+      0.0
+    ],
+    [
+      25.0,
+      0.08
+    ],
+    [
+      35.0,
+      0.0
+    ],
+    [
+      45.0,
+      -0.08
+    ],
+    [
+      55.0,
+      0.0
+    ],
+    [
+      70.0,
+      0.0
+    ]
+  ],
+  "ramp_length_m": 10.0,
+  "shape": "lateral_shift"
+}
