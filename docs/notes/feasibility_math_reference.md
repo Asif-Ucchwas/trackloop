@@ -124,3 +124,50 @@ All from `trackloop/feasibility.py`, per path, at speed v:
 Code: `testset.py`, `feasibility.py`, `scripts/build_testset_manifest.py`,
 `scripts/check_testset_feasibility.py`, `scripts/plot_feasibility.py`, and tests in
 `tests/test_testset.py` and `tests/test_feasibility.py`.
+
+## 7. Addendum: lateral acceleration and speed applicability
+
+Added after Task 12 was pushed, when the benchmark speeds fixed in Task 4 (5, 10 and
+20 m/s) were compared with the paths.
+
+Driving curvature kappa at speed v needs a lateral acceleration a = v^2 |kappa| (kinematic
+model, no slip). Tires hold about mu g; with mu = 0.8 (a placeholder) and g = 9.81 that is
+7.848 m/s^2. A path is drivable at speed v when v^2 max|kappa| <= mu g, so its largest
+drivable speed is
+
+    v_max = sqrt(mu g / max|kappa|),
+
+and a straight path has no limit.
+
+Worked examples (derived):
+
+- Reeds-Shepp, kappa = 0.2 (5 m radius): v_max = sqrt(7.848 / 0.2) = 6.264 m/s. At 5 m/s the
+  path needs 25 x 0.2 = 5.0 m/s^2 (drivable); at 10 m/s, 20.0; at 20 m/s, 80.0, about 8 g.
+- Thesis, 6 m corners, kappa = 0.1667: v_max = 6.86 m/s. `thesis_hybrid_seed0` (0.214): 6.05
+  m/s. The two seed-3 paths (0.294 and 0.279): 5.17 and 5.30 m/s.
+
+Result (measured, `data/results/speed_applicability.csv`): drivable at 1.5 m/s, 19 of 19
+paths; at 5 m/s, 19 of 19; at 10 m/s, 1 of 19 (`rs_ahead`); at 20 m/s, 1 of 19 (`rs_ahead`).
+The frozen paths therefore cannot be driven at the 10 and 20 m/s benchmark speeds. At 5 m/s
+the seed-3 thesis paths pass this check but still fail the steering-limit check.
+
+Why it matters: the syllabus describes the dynamic model as using linear tires, which do not
+saturate, so it would simulate 8 g without complaint and return a tracking error that means
+nothing. I have not confirmed this from the model's code.
+
+Decision (the user's, taken after this check): two path families. A parking family, the 19
+frozen paths at low speed, tracked with the kinematic controllers. A road family, paths whose
+curve radius grows with the square of the speed so each benchmark speed sees the same lateral
+acceleration, run at 5, 10 and 20 m/s with the dynamic controllers. The road family does not
+exist yet. It has to be exported and frozen in the manifest before any benchmark run.
+
+`check_path` now also returns lateral_accel_limit (mu g), max_lateral_accel (v^2 max|kappa|
+at the given speed), max_feasible_speed and lateral_ok, and `feasible` needs all three
+checks. mu is a parameter of `check_path`.
+
+Limits: v^2 kappa ignores load transfer, banking and the shape of tire saturation; mu is a
+placeholder; v_max comes from the sharpest corner only, so a path can be drivable faster over
+most of its length.
+
+Code: `scripts/speed_applicability.py` and `tests/test_lateral.py`; the third panel of
+`docs/figures/feasibility.png` shows v_max against the benchmark speeds.

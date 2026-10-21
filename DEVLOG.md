@@ -112,3 +112,14 @@
   thesis paths. Failing paths stay in the set and are flagged.
 - 151 tests pass. Wrote docs/notes/feasibility_math_reference.md. Results:
   data/results/feasibility.csv.
+- Added a lateral-acceleration check to feasibility.py after comparing the Task 4
+  benchmark speeds (5, 10, 20 m/s) with the frozen paths: a path is drivable at speed v
+  when v^2 times its largest curvature is at most mu g (mu = 0.8, a placeholder).
+- Result: 19 of 19 paths are drivable at 1.5 and 5 m/s, but only rs_ahead at 10 and 20
+  m/s (a 5 m arc needs 20 and 80 m/s^2 there, against 7.85). I missed this in Task 12.
+- Decision: two path families. Parking: the 19 frozen paths at low speed with the
+  kinematic controllers. Road: paths scaled so each speed sees the same lateral
+  acceleration, at 5, 10 and 20 m/s with the dynamic controllers. The road family is
+  not built yet and must be frozen before any benchmark run.
+- 157 tests pass. Results: data/results/speed_applicability.csv. Figure now has a third
+  panel (largest drivable speed against the benchmark speeds).
