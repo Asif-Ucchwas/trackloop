@@ -1,0 +1,73 @@
+{
+  "family": "parking",
+  "speeds": [
+    0.5,
+    1.5,
+    3.0
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "offset_range_m": 0.3,
+  "heading_range_rad": 0.1,
+  "controllers": [
+    "Pure Pursuit",
+    "Stanley",
+    "Kinematic LQR",
+    "Kinematic MPC"
+  ],
+  "paths": [
+    "rs_ahead",
+    "rs_behind",
+    "rs_diag",
+    "rs_lane_shift",
+    "rs_parallel_park",
+    "rs_reverse_in",
+    "rs_side_slot",
+    "rs_three_point",
+    "rs_u_turn",
+    "thesis_hybrid_seed0",
+    "thesis_hybrid_seed1",
+    "thesis_hybrid_seed2",
+    "thesis_hybrid_seed3",
+    "thesis_hybrid_seed4",
+    "thesis_theta_star_tight_seed0",
+    "thesis_theta_star_tight_seed1",
+    "thesis_theta_star_tight_seed2",
+    "thesis_theta_star_tight_seed3",
+    "thesis_theta_star_tight_seed4"
+  ],
+  "runner": {
+    "speed": 1.5,
+    "accel": 1.0,
+    "v_floor": 0.2,
+    "arrive": 0.03,
+    "settle": 0.02,
+    "settle_timeout": 5.0,
+    "dt": 0.05,
+    "max_time": 300.0
+  },
+  "vehicle": {
+    "wheelbase": 2.7,
+    "max_steer": 0.6,
+    "max_steer_rate": 0.8
+  },
+  "friction_mu": 0.8,
+  "gravity": 9.81,
+  "metrics_v_drive": 0.01,
+  "metrics_deadband": 0.01,
+  "git_commit": "8d592ce07c22e44ca6fecee2a11665c367098a98",
+  "git_dirty": false,
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "osqp": "1.1.3",
+    "control": "0.10.2",
+    "matplotlib": "3.11.2"
+  }
+}
