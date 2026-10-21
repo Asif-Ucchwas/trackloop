@@ -22,6 +22,7 @@ from trackloop.controllers.stanley import Stanley, StanleyParams
 from trackloop.feasibility import check_path
 from trackloop.harness import HEADING_RANGE, OFFSET_RANGE, SEEDS, start_condition
 from trackloop.metrics import DEADBAND, V_DRIVE
+from trackloop.model_error import dynamic_plant
 from trackloop.models.dynamic import DynamicParams
 from trackloop.testset import ROAD_DIR, load_test_set
 
@@ -68,8 +69,11 @@ def path_names():
 
 
 def run_one(task):
-    """task = (path_name, controller, seed). Returns one result row (a dict)."""
-    name, controller, seed = task
+    """task = (path_name, controller, seed) or (..., seed, case). Returns one result row (a dict).
+    The controller is always built on nominal parameters; the case changes only the plant."""
+    name, controller, seed = task[:3]
+    case = task[3] if len(task) > 3 else None
+    plant = dynamic_plant(case)
     index, path, info = _road_set()[name]
     speed = float(info["design_speed_mps"])
     e0, dpsi = start_condition(seed, index)
@@ -77,10 +81,12 @@ def run_one(task):
     row = {"family": FAMILY, "path": name, "shape": info["shape"], "controller": controller,
            "speed": speed, "seed": seed, "e0": round(e0, 5), "dpsi0": round(dpsi, 5),
            "drivable": feas.curvature_ok and feas.lateral_ok, "feasible": feas.feasible}
+    if case is not None:
+        row["case"] = case
     try:
-        res = dr.run(path, CONTROLLERS[controller](path), speed, e0, dpsi)
-        m = dr.score_run(path, res)
-        af, ar, ay = dr.tire_use(res.states)
+        res = dr.run(path, CONTROLLERS[controller](path), speed, e0, dpsi, params=plant)
+        m = dr.score_run(path, res, plant)
+        af, ar, ay = dr.tire_use(res.states, plant)
         row.update(status=res.status, finished=res.status == "finished", **m.as_dict(),
                    max_slip_front_deg=math.degrees(af), max_slip_rear_deg=math.degrees(ar),
                    max_body_lateral_accel=ay)
@@ -89,10 +95,12 @@ def run_one(task):
     return {k: (round(v, 5) if isinstance(v, float) else v) for k, v in row.items()}
 
 
-def all_tasks(names=None, controllers=None, seeds=SEEDS):
+def all_tasks(names=None, controllers=None, seeds=SEEDS, cases=None):
     names = names if names is not None else path_names()
     controllers = controllers if controllers is not None else list(CONTROLLERS)
-    return [(n, c, s) for n in names for c in controllers for s in seeds]
+    if cases is None:
+        return [(n, c, s) for n in names for c in controllers for s in seeds]
+    return [(n, c, s, k) for k in cases for n in names for c in controllers for s in seeds]
 
 
 def settings():

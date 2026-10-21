@@ -21,6 +21,7 @@ from trackloop.controllers.stanley import Stanley, StanleyParams
 from trackloop.cusp_runner import RunnerParams, track_with_cusps
 from trackloop.feasibility import G, MU, check_path
 from trackloop.metrics import DEADBAND, V_DRIVE, score_cusp_run
+from trackloop.model_error import kinematic_plant
 from trackloop.models.kinematic import KinematicParams
 from trackloop.segments import split_at_cusps
 from trackloop.testset import load_test_set
@@ -97,8 +98,10 @@ def _reasons(f):
 
 
 def run_one(task):
-    """task = (path_name, controller, speed, seed). Returns one result row (a dict)."""
-    name, controller, speed, seed = task
+    """task = (path_name, controller, speed, seed) or (..., seed, case). Returns one result row.
+    The controller is always built on nominal parameters; the case changes only the plant."""
+    name, controller, speed, seed = task[:4]
+    case = task[4] if len(task) > 4 else None
     index, path = _test_set()[name]
     e0, dpsi = start_condition(seed, index)
     feas = check_path(path, speed=speed)
@@ -108,9 +111,12 @@ def run_one(task):
            "infeasible_reasons": _reasons(feas), "steering_events": feas.steering_events,
            "lag_distance_m": round(feas.worst_lag_distance, 4),
            "max_lateral_accel": round(feas.max_lateral_accel, 3)}
+    if case is not None:
+        row["case"] = case
     params = RunnerParams(speed=speed, max_time=max_time(path, speed))
     try:
-        res = track_with_cusps(path, CONTROLLERS[controller], start_state(path, e0, dpsi), params=params)
+        res = track_with_cusps(path, CONTROLLERS[controller], start_state(path, e0, dpsi), params=params,
+                              kin_params=kinematic_plant(case))
         m, extra = score_cusp_run(path, res)
         row.update(status="ok", **m.as_dict(), **extra)
     except Exception as exc:    # recorded, not hidden
@@ -118,10 +124,12 @@ def run_one(task):
     return {k: (round(v, 5) if isinstance(v, float) else v) for k, v in row.items()}
 
 
-def all_tasks(names=None, controllers=None, speeds=SPEEDS, seeds=SEEDS):
+def all_tasks(names=None, controllers=None, speeds=SPEEDS, seeds=SEEDS, cases=None):
     names = names if names is not None else path_names()
     controllers = controllers if controllers is not None else list(CONTROLLERS)
-    return [(n, c, v, s) for n in names for c in controllers for v in speeds for s in seeds]
+    if cases is None:
+        return [(n, c, v, s) for n in names for c in controllers for v in speeds for s in seeds]
+    return [(n, c, v, s, k) for k in cases for n in names for c in controllers for v in speeds for s in seeds]
 
 
 def settings():

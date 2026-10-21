@@ -4,6 +4,7 @@ State layout: [x, y, heading, speed, steering_angle]
 Inputs: steering command (rad) and acceleration (m/s^2).
 Negative speed (reverse driving) is supported without changes.
 """
+import math
 from dataclasses import dataclass
 
 import numpy as np
@@ -16,6 +17,7 @@ class KinematicParams:
     wheelbase: float = 2.7          # m, placeholder value
     max_steer: float = 0.6          # rad, steering angle limit, placeholder value
     max_steer_rate: float = 0.8     # rad/s, steering rate limit, placeholder value
+    steer_lag: float = 0.0          # s, first-order steering actuator lag; 0 means none
 
 
 def _derivatives(q, delta, accel, params):
@@ -32,6 +34,8 @@ def _derivatives(q, delta, accel, params):
 def step(state, steer_cmd, accel, dt, params=KinematicParams()):
     """Advance one time step: steering actuator first, then RK4 on pose and speed."""
     state = np.asarray(state, dtype=float)
+    if params.steer_lag > 0.0:
+        steer_cmd = state[DELTA] + (steer_cmd - state[DELTA]) * (1.0 - math.exp(-dt / params.steer_lag))
     max_change = params.max_steer_rate * dt
     delta = state[DELTA] + np.clip(steer_cmd - state[DELTA], -max_change, max_change)
     delta = float(np.clip(delta, -params.max_steer, params.max_steer))

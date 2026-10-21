@@ -11,6 +11,7 @@ Simplifications: accel is the body-x acceleration (the vy*r coupling is
 dropped), and slip angles use max(vx, v_min) so they stay finite near zero
 speed. Below roughly v_min the model is not trusted.
 """
+import math
 from dataclasses import dataclass
 
 import numpy as np
@@ -29,6 +30,7 @@ class DynamicParams:
     max_steer: float = 0.6
     max_steer_rate: float = 0.8
     v_min: float = 1.0
+    steer_lag: float = 0.0          # s, first-order steering actuator lag; 0 means none
 
     @property
     def wheelbase(self):
@@ -60,6 +62,8 @@ def _derivatives(q, delta, accel, params):
 def step(state, steer_cmd, accel, dt, params=DynamicParams()):
     state = np.asarray(state, dtype=float)
     delta = state[DELTA]
+    if params.steer_lag > 0.0:
+        steer_cmd = delta + (steer_cmd - delta) * (1.0 - math.exp(-dt / params.steer_lag))
     max_change = params.max_steer_rate * dt
     delta = delta + np.clip(steer_cmd - delta, -max_change, max_change)
     delta = np.clip(delta, -params.max_steer, params.max_steer)
