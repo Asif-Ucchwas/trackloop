@@ -1,0 +1,58 @@
+{
+  "family": "road",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "offset_range_m": 0.3,
+  "heading_range_rad": 0.1,
+  "controllers": [
+    "Pure Pursuit",
+    "Stanley",
+    "Dynamic LQR",
+    "Dynamic MPC"
+  ],
+  "paths": [
+    "road_curve_v10",
+    "road_curve_v20",
+    "road_curve_v5",
+    "road_double_shift_v10",
+    "road_double_shift_v20",
+    "road_double_shift_v5",
+    "road_lateral_shift_v10",
+    "road_lateral_shift_v20",
+    "road_lateral_shift_v5",
+    "road_s_curve_v10",
+    "road_s_curve_v20",
+    "road_s_curve_v5"
+  ],
+  "plant_dt_s": 0.05,
+  "arrive_m": 0.5,
+  "max_error_m": 25.0,
+  "dynamic_params": {
+    "mass": 1500.0,
+    "inertia": 2500.0,
+    "lf": 1.2,
+    "lr": 1.5,
+    "cf": 80000.0,
+    "cr": 100000.0,
+    "max_steer": 0.6,
+    "max_steer_rate": 0.8,
+    "v_min": 1.0
+  },
+  "metrics_v_drive": 0.01,
+  "metrics_deadband": 0.01,
+  "git_commit": "a737cc61e88177210d5a72116eca1ec9bf85ff3b",
+  "git_dirty": false,
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "osqp": "1.1.3",
+    "control": "0.10.2",
+    "matplotlib": "3.11.2"
+  }
+}
