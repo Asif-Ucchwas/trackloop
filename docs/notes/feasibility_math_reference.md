@@ -153,7 +153,7 @@ the seed-3 thesis paths pass this check but still fail the steering-limit check.
 
 Why it matters: the syllabus describes the dynamic model as using linear tires, which do not
 saturate, so it would simulate 8 g without complaint and return a tracking error that means
-nothing. I have not confirmed this from the model's code.
+nothing. Confirmed: dynamic_math_reference.md line 8 states linear tires and line 105 says real tires saturate.
 
 Decision (the user's, taken after this check): two path families. A parking family, the 19
 frozen paths at low speed, tracked with the kinematic controllers. A road family, paths whose

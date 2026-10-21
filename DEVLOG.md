@@ -123,3 +123,17 @@
   not built yet and must be frozen before any benchmark run.
 - 157 tests pass. Results: data/results/speed_applicability.csv. Figure now has a third
   panel (largest drivable speed against the benchmark speeds).
+- Task 13: wrote src/trackloop/metrics.py and docs/notes/metrics_math_reference.md. The
+  repository measured lateral error two ways (nearest vertex in the kinematic runs,
+  projection onto segments at the centre of gravity in the dynamic ones), so one definition
+  now scores everything: signed distance to the path polyline at the rear axle, from the
+  logged run only.
+- Metrics: lateral and heading error (RMS, max), steering effort, steering-rate RMS and max,
+  steering chatter (rate reversals per second), driving and total time, plus the cusp
+  position error and settle time from the runner.
+- Old and new lateral error agree to 0.0005 m on all 36 cusp runs, so Task 11 results stand.
+  Stanley reverses its steering rate 3.6 times a second on average against about 0.33 for the
+  other three controllers, which lateral error alone did not show. Cause not diagnosed.
+- The dynamic-model path (centre of gravity to rear axle) is written down but not yet run.
+  Also corrected the feasibility note: linear tires are confirmed from the dynamic note.
+- 166 tests pass. Results: data/results/cusp_metrics.csv, docs/figures/metrics.png.
