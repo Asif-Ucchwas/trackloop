@@ -1,0 +1,157 @@
+family,controller,speed,case,runs,finished,median_rms,paired_change,ratio
+road,Pure Pursuit,5.0,nominal,20,20,0.08477,0.0,1.0
+road,Pure Pursuit,5.0,mass_p20,20,20,0.08863,0.0038,1.04675
+road,Pure Pursuit,5.0,mass_m20,20,20,0.08139,-0.00293,0.96518
+road,Pure Pursuit,5.0,stiff_p30,20,20,0.08091,-0.0033,0.96168
+road,Pure Pursuit,5.0,stiff_m30,20,20,0.09405,0.00929,1.11225
+road,Pure Pursuit,5.0,lag_0.1,20,20,0.07575,-0.00915,0.8912
+road,Pure Pursuit,5.0,lag_0.2,20,20,0.07399,-0.01078,0.87285
+road,Pure Pursuit,5.0,combined,20,20,0.09861,0.01224,1.14777
+road,Pure Pursuit,10.0,nominal,20,20,0.10945,0.0,1.0
+road,Pure Pursuit,10.0,mass_p20,20,20,0.13003,0.01796,1.1659
+road,Pure Pursuit,10.0,mass_m20,20,20,0.08994,-0.01695,0.84271
+road,Pure Pursuit,10.0,stiff_p30,20,20,0.08747,-0.01944,0.81932
+road,Pure Pursuit,10.0,stiff_m30,20,20,0.1524,0.03938,1.36311
+road,Pure Pursuit,10.0,lag_0.1,20,20,0.10958,0.00129,1.01147
+road,Pure Pursuit,10.0,lag_0.2,20,20,0.11571,0.00896,1.08288
+road,Pure Pursuit,10.0,combined,20,20,0.18399,0.06933,1.64896
+road,Pure Pursuit,20.0,nominal,20,20,0.25073,0.0,1.0
+road,Pure Pursuit,20.0,mass_p20,20,20,0.30197,0.05131,1.20435
+road,Pure Pursuit,20.0,mass_m20,20,20,0.20077,-0.04996,0.79972
+road,Pure Pursuit,20.0,stiff_p30,20,20,0.19318,-0.05755,0.7692
+road,Pure Pursuit,20.0,stiff_m30,20,20,0.36191,0.11173,1.44383
+road,Pure Pursuit,20.0,lag_0.1,20,20,0.25746,0.00539,1.02311
+road,Pure Pursuit,20.0,lag_0.2,20,20,0.27946,0.02244,1.09712
+road,Pure Pursuit,20.0,combined,20,20,0.44932,0.19797,1.79928
+road,Stanley,5.0,nominal,20,20,0.09236,0.0,1.0
+road,Stanley,5.0,mass_p20,20,20,0.08475,-0.00771,0.91423
+road,Stanley,5.0,mass_m20,20,20,0.09976,0.00832,1.09275
+road,Stanley,5.0,stiff_p30,20,20,0.10105,0.00955,1.10833
+road,Stanley,5.0,stiff_m30,20,20,0.07532,-0.01634,0.81759
+road,Stanley,5.0,lag_0.1,20,20,0.08386,-0.00718,0.92159
+road,Stanley,5.0,lag_0.2,20,20,0.08018,-0.01102,0.87799
+road,Stanley,5.0,combined,20,20,0.0579,-0.03411,0.65171
+road,Stanley,10.0,nominal,20,20,0.07556,0.0,1.0
+road,Stanley,10.0,mass_p20,20,20,0.09784,0.01843,1.24798
+road,Stanley,10.0,mass_m20,20,20,0.05745,-0.01711,0.779
+road,Stanley,10.0,stiff_p30,20,20,0.05516,-0.01967,0.74672
+road,Stanley,10.0,stiff_m30,20,20,0.12318,0.04021,1.53655
+road,Stanley,10.0,lag_0.1,20,20,0.07636,0.00071,1.00935
+road,Stanley,10.0,lag_0.2,20,20,0.08039,0.00422,1.05037
+road,Stanley,10.0,combined,20,20,0.15138,0.06982,1.9223
+road,Stanley,20.0,nominal,20,20,0.19316,0.0,1.0
+road,Stanley,20.0,mass_p20,20,20,0.23394,0.04139,1.21338
+road,Stanley,20.0,mass_m20,20,20,0.15302,-0.04086,0.78914
+road,Stanley,20.0,stiff_p30,20,20,0.14694,-0.04706,0.75692
+road,Stanley,20.0,stiff_m30,20,20,0.28192,0.08937,1.45864
+road,Stanley,20.0,lag_0.1,20,20,0.19377,0.00036,1.00217
+road,Stanley,20.0,lag_0.2,20,20,0.19709,0.00334,1.01657
+road,Stanley,20.0,combined,20,20,0.3431,0.15055,1.77236
+road,Dynamic LQR,5.0,nominal,20,20,0.06562,0.0,1.0
+road,Dynamic LQR,5.0,mass_p20,20,20,0.06254,-0.00404,0.9403
+road,Dynamic LQR,5.0,mass_m20,20,20,0.06961,0.00497,1.0746
+road,Dynamic LQR,5.0,stiff_p30,20,20,0.07029,0.00581,1.08727
+road,Dynamic LQR,5.0,stiff_m30,20,20,0.06028,-0.0072,0.89376
+road,Dynamic LQR,5.0,lag_0.1,20,20,0.05946,-0.00592,0.91092
+road,Dynamic LQR,5.0,lag_0.2,20,20,0.05412,-0.01071,0.8354
+road,Dynamic LQR,5.0,combined,20,20,0.05364,-0.01299,0.81275
+road,Dynamic LQR,10.0,nominal,20,20,0.0455,0.0,1.0
+road,Dynamic LQR,10.0,mass_p20,20,20,0.0479,0.00251,1.05942
+road,Dynamic LQR,10.0,mass_m20,20,20,0.04602,0.0018,1.03409
+road,Dynamic LQR,10.0,stiff_p30,20,20,0.04634,0.00229,1.04894
+road,Dynamic LQR,10.0,stiff_m30,20,20,0.05393,0.00901,1.20495
+road,Dynamic LQR,10.0,lag_0.1,20,20,0.04387,-0.00196,0.95857
+road,Dynamic LQR,10.0,lag_0.2,20,20,0.04258,-0.00267,0.9284
+road,Dynamic LQR,10.0,combined,20,20,0.06472,0.0238,1.45284
+road,Dynamic LQR,20.0,nominal,20,20,0.03431,0.0,1.0
+road,Dynamic LQR,20.0,mass_p20,20,20,0.04304,0.0107,1.31243
+road,Dynamic LQR,20.0,mass_m20,20,20,0.03318,-0.00089,0.95326
+road,Dynamic LQR,20.0,stiff_p30,20,20,0.03302,-0.00032,0.99016
+road,Dynamic LQR,20.0,stiff_m30,20,20,0.06324,0.02731,1.83766
+road,Dynamic LQR,20.0,lag_0.1,20,20,0.03416,0.0001,1.00433
+road,Dynamic LQR,20.0,lag_0.2,20,20,0.03386,9e-05,1.00258
+road,Dynamic LQR,20.0,combined,20,20,0.08745,0.04618,2.60799
+road,Dynamic MPC,5.0,nominal,20,20,0.06662,0.0,1.0
+road,Dynamic MPC,5.0,mass_p20,20,20,0.06309,-0.00447,0.93389
+road,Dynamic MPC,5.0,mass_m20,20,20,0.07123,0.00556,1.0838
+road,Dynamic MPC,5.0,stiff_p30,20,20,0.07201,0.0065,1.098
+road,Dynamic MPC,5.0,stiff_m30,20,20,0.06052,-0.00785,0.88491
+road,Dynamic MPC,5.0,lag_0.1,20,20,0.06393,-0.00332,0.95132
+road,Dynamic MPC,5.0,lag_0.2,20,20,0.06373,-0.00291,0.94849
+road,Dynamic MPC,5.0,combined,20,20,0.05807,-0.00973,0.83484
+road,Dynamic MPC,10.0,nominal,20,20,0.04636,0.0,1.0
+road,Dynamic MPC,10.0,mass_p20,20,20,0.04917,0.00346,1.0758
+road,Dynamic MPC,10.0,mass_m20,20,20,0.04793,0.00173,1.04555
+road,Dynamic MPC,10.0,stiff_p30,20,20,0.04856,0.00246,1.06168
+road,Dynamic MPC,10.0,stiff_m30,20,20,0.05705,0.01232,1.2616
+road,Dynamic MPC,10.0,lag_0.1,20,20,0.05246,0.00401,1.09576
+road,Dynamic MPC,10.0,lag_0.2,20,20,0.05767,0.00867,1.24866
+road,Dynamic MPC,10.0,combined,20,20,0.07522,0.03124,1.69924
+road,Dynamic MPC,20.0,nominal,20,20,0.03744,0.0,1.0
+road,Dynamic MPC,20.0,mass_p20,20,20,0.0482,0.01207,1.3476
+road,Dynamic MPC,20.0,mass_m20,20,20,0.03779,-0.00218,0.934
+road,Dynamic MPC,20.0,stiff_p30,20,20,0.03866,-0.00127,0.95432
+road,Dynamic MPC,20.0,stiff_m30,20,20,0.07295,0.02961,1.88699
+road,Dynamic MPC,20.0,lag_0.1,20,20,0.0378,0.00291,1.09353
+road,Dynamic MPC,20.0,lag_0.2,20,15,0.03817,0.00437,1.13663
+road,Dynamic MPC,20.0,combined,20,20,0.10612,0.06263,2.75512
+parking,Pure Pursuit,0.5,nominal,95,95,0.04517,0.0,1.0
+parking,Pure Pursuit,0.5,lag_0.1,95,95,0.04357,-0.0011,0.97356
+parking,Pure Pursuit,0.5,lag_0.2,95,95,0.04193,-0.0024,0.94271
+parking,Pure Pursuit,0.5,wheelbase_p5,95,95,0.0477,0.00192,1.04388
+parking,Pure Pursuit,0.5,wheelbase_m5,95,95,0.04403,-0.00088,0.97992
+parking,Pure Pursuit,1.5,nominal,95,95,0.06591,0.0,1.0
+parking,Pure Pursuit,1.5,lag_0.1,95,95,0.06091,-0.00389,0.93721
+parking,Pure Pursuit,1.5,lag_0.2,95,95,0.05528,-0.00827,0.86091
+parking,Pure Pursuit,1.5,wheelbase_p5,95,95,0.06909,0.00257,1.04104
+parking,Pure Pursuit,1.5,wheelbase_m5,95,95,0.06404,-0.00144,0.97768
+parking,Pure Pursuit,3.0,nominal,95,95,0.10022,0.0,1.0
+parking,Pure Pursuit,3.0,lag_0.1,95,95,0.08913,-0.00917,0.89986
+parking,Pure Pursuit,3.0,lag_0.2,95,95,0.07404,-0.01867,0.78793
+parking,Pure Pursuit,3.0,wheelbase_p5,95,95,0.10445,0.00387,1.04009
+parking,Pure Pursuit,3.0,wheelbase_m5,95,95,0.09785,-0.00214,0.97696
+parking,Stanley,0.5,nominal,95,95,0.12873,0.0,1.0
+parking,Stanley,0.5,lag_0.1,95,95,0.12831,-0.00023,0.99811
+parking,Stanley,0.5,lag_0.2,95,95,0.13022,-0.0005,0.99565
+parking,Stanley,0.5,wheelbase_p5,95,95,0.1328,-0.00321,0.97573
+parking,Stanley,0.5,wheelbase_m5,95,95,0.13174,0.00337,1.02441
+parking,Stanley,1.5,nominal,95,95,0.13946,0.0,1.0
+parking,Stanley,1.5,lag_0.1,95,95,0.13743,-0.00138,0.9886
+parking,Stanley,1.5,lag_0.2,95,95,0.13514,-0.00305,0.97367
+parking,Stanley,1.5,wheelbase_p5,95,95,0.13362,-0.00437,0.96591
+parking,Stanley,1.5,wheelbase_m5,95,95,0.14465,0.0049,1.03555
+parking,Stanley,3.0,nominal,95,95,0.14521,0.0,1.0
+parking,Stanley,3.0,lag_0.1,95,95,0.13783,-0.00477,0.96311
+parking,Stanley,3.0,lag_0.2,95,95,0.12735,-0.01009,0.91413
+parking,Stanley,3.0,wheelbase_p5,95,95,0.1379,-0.00609,0.95483
+parking,Stanley,3.0,wheelbase_m5,95,95,0.15197,0.00635,1.04781
+parking,Kinematic LQR,0.5,nominal,95,95,0.04198,0.0,1.0
+parking,Kinematic LQR,0.5,lag_0.1,95,95,0.042,9e-05,1.00226
+parking,Kinematic LQR,0.5,lag_0.2,95,95,0.04232,0.00064,1.01627
+parking,Kinematic LQR,0.5,wheelbase_p5,95,95,0.04934,0.00237,1.0695
+parking,Kinematic LQR,0.5,wheelbase_m5,95,95,0.04022,0.00114,1.04587
+parking,Kinematic LQR,1.5,nominal,95,95,0.0635,0.0,1.0
+parking,Kinematic LQR,1.5,lag_0.1,95,95,0.0634,-0.0002,0.99639
+parking,Kinematic LQR,1.5,lag_0.2,95,95,0.06694,0.001,1.01838
+parking,Kinematic LQR,1.5,wheelbase_p5,95,95,0.07516,0.00247,1.04297
+parking,Kinematic LQR,1.5,wheelbase_m5,95,95,0.06554,8e-05,1.002
+parking,Kinematic LQR,3.0,nominal,95,95,0.19681,0.0,1.0
+parking,Kinematic LQR,3.0,lag_0.1,95,95,0.19662,-0.00043,0.99701
+parking,Kinematic LQR,3.0,lag_0.2,95,95,0.17955,0.00015,1.00125
+parking,Kinematic LQR,3.0,wheelbase_p5,95,95,0.20554,0.0062,1.03029
+parking,Kinematic LQR,3.0,wheelbase_m5,95,95,0.17584,-0.0029,0.98592
+parking,Kinematic MPC,0.5,nominal,95,95,0.04256,0.0,1.0
+parking,Kinematic MPC,0.5,lag_0.1,95,95,0.0435,0.00179,1.06688
+parking,Kinematic MPC,0.5,lag_0.2,95,95,0.05359,0.01443,1.47809
+parking,Kinematic MPC,0.5,wheelbase_p5,95,95,0.05064,0.00267,1.07562
+parking,Kinematic MPC,0.5,wheelbase_m5,95,95,0.04065,0.00127,1.05027
+parking,Kinematic MPC,1.5,nominal,95,95,0.06474,0.0,1.0
+parking,Kinematic MPC,1.5,lag_0.1,95,95,0.0954,0.03543,1.52447
+parking,Kinematic MPC,1.5,lag_0.2,95,95,0.29061,0.20181,3.11188
+parking,Kinematic MPC,1.5,wheelbase_p5,95,95,0.07669,0.00249,1.04383
+parking,Kinematic MPC,1.5,wheelbase_m5,95,95,0.0673,1e-05,1.00025
+parking,Kinematic MPC,3.0,nominal,95,95,0.18957,0.0,1.0
+parking,Kinematic MPC,3.0,lag_0.1,95,95,0.37193,0.13023,1.69529
+parking,Kinematic MPC,3.0,lag_0.2,95,95,1.75743,1.35931,6.9597
+parking,Kinematic MPC,3.0,wheelbase_p5,95,95,0.20592,0.00594,1.03801
+parking,Kinematic MPC,3.0,wheelbase_m5,95,95,0.17492,-0.0025,0.98702
