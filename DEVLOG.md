@@ -137,3 +137,17 @@
 - The dynamic-model path (centre of gravity to rear axle) is written down but not yet run.
   Also corrected the feasibility note: linear tires are confirmed from the dynamic note.
 - 166 tests pass. Results: data/results/cusp_metrics.csv, docs/figures/metrics.png.
+- Task 14 (parking family): wrote src/trackloop/harness.py and scripts/run_benchmark_parking.py.
+  19 frozen paths x 4 kinematic controllers x 3 speeds (0.5, 1.5, 3.0 m/s) x 5 seeds = 1140
+  runs, one row each, scored by trackloop.metrics. The seed fixes a start offset (up to 0.3 m)
+  and heading error (up to 0.1 rad) that depend on the seed and path but not the controller.
+- Runs are flagged, not dropped. The steering-rate check fails on 15 of 19 paths at every
+  speed, so it is reported as a lag distance instead of a flag; "drivable" uses curvature and
+  lateral acceleration only (2 paths fail it). Settings, git commit and package versions go
+  to a JSON file. The time limit now scales with path length, since 300 s would cut off
+  0.5 m/s thesis runs.
+- Result: all 1140 finish, no errors, run is deterministic. LQR and MPC are not separable
+  (within 0.007 m). At 3.0 m/s Pure Pursuit is lowest on 18 of 19 paths; LQR and MPC reach
+  1.0 and 1.5 m on parallel_park and side_slot. Suspected cause is the steering rate limit
+  meeting a curvature step; not shown. Road family and dynamic controllers are not built yet.
+- 175 tests pass. Results: data/results/benchmark_parking*.csv, docs/figures/benchmark_parking.png.
