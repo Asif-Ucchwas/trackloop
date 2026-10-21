@@ -162,3 +162,14 @@
   range of the dynamic model. Renamed lane_change to lateral_shift: the sideways move is
   about 15 m, not a lane.
 - 211 tests pass (36 new). Next: dynamic controllers on the road family.
+
+## Task 14 closed: road-family benchmark
+
+- Built a dynamic-model runner (constant speed, stops at the path end), a rear-axle adapter for
+  Pure Pursuit and Stanley, and a road harness with the same paired seeded starts as parking.
+- 240 runs, 0 errors, 0 unfinished. Results at commit a737cc6.
+- Found that LQR and MPC at 20 m/s exceed the linear-tire friction limit in 10 and 5 of 20 runs;
+  the figure shows the limits and the note says what that does to the claim.
+- Not yet shown: whether Pure Pursuit and Stanley are tuned fairly at 20 m/s, why Stanley chatters
+  at 5 m/s, why the seed 2 curve_v20 start is the worst for all four. All three go to Task 16.
+- Next: Task 15, model-error cases on both families.

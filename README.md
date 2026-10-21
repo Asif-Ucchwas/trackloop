@@ -99,3 +99,11 @@ All scores come from one definition (`src/trackloop/metrics.py`, `docs/notes/met
 The parking paths cannot be driven at the 5, 10 and 20 m/s benchmark speeds, so the road family has 12 forward paths sized to their speed: four shapes (curve, lateral shift, S-curve, double shift) at each speed, all with a peak lateral acceleration of 2.0 m/s^2 and a clothoid curvature ramp, so the steering never has to step. They are exported to `data/paths/road/` with a hashed manifest and frozen before any controller runs on them (`docs/notes/road_family_math_reference.md`). At 2.0 m/s^2 the tire slip angles are about 1 degree, inside the dynamic model's linear tire range.
 
 ![road family](docs/figures/road_family.png)
+
+## Road-family benchmark (Task 14)
+
+4 controllers on the dynamic model, 12 frozen road paths (5, 10, 20 m/s), 5 seeds, 240 runs, all
+finished. At 5 m/s the controllers are indistinguishable; at 10 and 20 m/s the dynamic LQR and MPC
+have lower median RMS lateral error, but at 20 m/s they leave the linear tire model's range
+(front slip up to 7 deg against a 4.7 deg friction limit). See `docs/notes/benchmark_road_note.md`
+and `docs/figures/benchmark_road.png`. Run it with `python scripts/run_benchmark_road.py`.
