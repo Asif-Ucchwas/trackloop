@@ -1,0 +1,253 @@
+{
+  "rule": "Every exported path is in the set. No path is chosen or dropped by how a controller scores on it. Paths beyond the car's curvature limit stay in and are flagged.",
+  "count": 19,
+  "paths": [
+    {
+      "id": "rs_ahead",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 401,
+      "length_m": 40.0,
+      "max_abs_curvature": 0.0,
+      "cusps": 0,
+      "sha256": {
+        "npz": "6edc9ab14d9fce3e4b82a7f67329e8b83f56b2be76287347c1eef8bdf13733af",
+        "json": "797b8c088d1fc7f12cc260c3d747711bd8a6c0c6083af445a58068354da18fab"
+      }
+    },
+    {
+      "id": "rs_behind",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 112,
+      "length_m": 10.8996,
+      "max_abs_curvature": 0.2,
+      "cusps": 0,
+      "sha256": {
+        "npz": "fdadffa11dac2b0cff8175103b3e4e84f016ff4f5c7f59b32f37a179bb43788b",
+        "json": "f94c9c22ef8699df2be3ea32844ac93eda8c8e8c3ec4b9c48259f9806038b1e7"
+      }
+    },
+    {
+      "id": "rs_diag",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 315,
+      "length_m": 31.1188,
+      "max_abs_curvature": 0.2,
+      "cusps": 0,
+      "sha256": {
+        "npz": "a87c979d9f9f47975e1837a02cd631d71ee4b3a111069e1309de879e894b516c",
+        "json": "3c11c6fbccade1943b9a11c5e3fde4e0f8ff4ec4ba0bbb99138d1289f72f2fb3"
+      }
+    },
+    {
+      "id": "rs_lane_shift",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 412,
+      "length_m": 40.8054,
+      "max_abs_curvature": 0.2,
+      "cusps": 0,
+      "sha256": {
+        "npz": "fb71f6b9e6cac07eec6aaff2aacbb5760e1b0a2e2b56580adede7968008a7ad7",
+        "json": "7877473ab2d0750e77f65051cccb697c7a95a18d5b498e6519996be56f85c662"
+      }
+    },
+    {
+      "id": "rs_parallel_park",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 85,
+      "length_m": 8.0023,
+      "max_abs_curvature": 0.2,
+      "cusps": 2,
+      "sha256": {
+        "npz": "399d77855c98f8247ebaa195875929f7b3d594e6c901b5cce974288b2b962fcd",
+        "json": "9e4acb1ef23497ebcc38c9059fb9e5ae5a09e9f532b1ff8331921843fd3398e1"
+      }
+    },
+    {
+      "id": "rs_reverse_in",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 203,
+      "length_m": 19.8505,
+      "max_abs_curvature": 0.2,
+      "cusps": 1,
+      "sha256": {
+        "npz": "48782910f82b33855ffa5b70fd83e75b2bee995dd8bad14373c86cf0fa540e75",
+        "json": "6453a07db217df58f3ca7179de1e845a94cca5bcf62735dafdbc570630ca17c7"
+      }
+    },
+    {
+      "id": "rs_side_slot",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 129,
+      "length_m": 12.4083,
+      "max_abs_curvature": 0.2,
+      "cusps": 2,
+      "sha256": {
+        "npz": "7604b0d18c8f670abce40df510192b910879323f15b8127a7396419a0f6bbc42",
+        "json": "3060026d53baaea375c7fa0163b9d7ed1ef8066602a1be7b0d641bc769d4035f"
+      }
+    },
+    {
+      "id": "rs_three_point",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 161,
+      "length_m": 15.708,
+      "max_abs_curvature": 0.2,
+      "cusps": 2,
+      "sha256": {
+        "npz": "c9aba39fc47954f32f2688053e2299a5a1b54f470e319e6ba10ba289b5e6ba7e",
+        "json": "729dee9a258fb1c59f7e754517c3ffa41bf3ca930858a58e648ab28b3f48f26e"
+      }
+    },
+    {
+      "id": "rs_u_turn",
+      "group": "reeds_shepp",
+      "map_seed": null,
+      "samples": 181,
+      "length_m": 17.708,
+      "max_abs_curvature": 0.2,
+      "cusps": 0,
+      "sha256": {
+        "npz": "569b446b8a46f2b819789182a66d03e06ef8313bcd44a9f7204472f862212025",
+        "json": "85d90954ee2e452093fbac34e5b4339e494879a515219d51b1ac009dcde3133c"
+      }
+    },
+    {
+      "id": "thesis_hybrid_seed0",
+      "group": "thesis_hybrid",
+      "map_seed": 0,
+      "samples": 1955,
+      "length_m": 195.3757,
+      "max_abs_curvature": 0.2145,
+      "cusps": 0,
+      "sha256": {
+        "npz": "f59a7155932a9df7b0d38b347821f66c1a63e6f6583ad54f8fdd00f2e7c9f3a3",
+        "json": "94f3e8495434a08f2ce54f1e63546850b38a5485b08ce1736315a395653543ae"
+      }
+    },
+    {
+      "id": "thesis_hybrid_seed1",
+      "group": "thesis_hybrid",
+      "map_seed": 1,
+      "samples": 1970,
+      "length_m": 196.8676,
+      "max_abs_curvature": 0.1667,
+      "cusps": 0,
+      "sha256": {
+        "npz": "aa34c6bab0324985fe0a52deb425d6f113e4b5ff361caabb1615eddc0068517d",
+        "json": "aac9afe5bd865d36eca8dae1c897aa8f2a0b3f54eac1180cd64a184f99518220"
+      }
+    },
+    {
+      "id": "thesis_hybrid_seed2",
+      "group": "thesis_hybrid",
+      "map_seed": 2,
+      "samples": 2019,
+      "length_m": 201.7978,
+      "max_abs_curvature": 0.1667,
+      "cusps": 0,
+      "sha256": {
+        "npz": "f03cca34338dd60ab6750f3b6c48082a583b0984c9816c56ca938c30dafe268a",
+        "json": "1ab29cb494a2e09e61b1858fd09471076052bea9438252290f0e77b4c2d17aad"
+      }
+    },
+    {
+      "id": "thesis_hybrid_seed3",
+      "group": "thesis_hybrid",
+      "map_seed": 3,
+      "samples": 2008,
+      "length_m": 200.6971,
+      "max_abs_curvature": 0.2937,
+      "cusps": 0,
+      "sha256": {
+        "npz": "18e9c8238b72f11d22fca05d106f90800bb36a1bdc00b889378fc7f493da8343",
+        "json": "6e07661b8ce70dc42dc12ae0a31e4fafa70afe586d2fd08cc29619959880d5a1"
+      }
+    },
+    {
+      "id": "thesis_hybrid_seed4",
+      "group": "thesis_hybrid",
+      "map_seed": 4,
+      "samples": 2028,
+      "length_m": 202.6562,
+      "max_abs_curvature": 0.2268,
+      "cusps": 0,
+      "sha256": {
+        "npz": "dfecf679af8ba4d4b2aff86e8abdac7c0227503030bdc4608bbd336bf1a7d38f",
+        "json": "de1e5282e782fa5bdde13b5b03759679f5ca461555c3e176146f8d8a1dda7da7"
+      }
+    },
+    {
+      "id": "thesis_theta_star_tight_seed0",
+      "group": "thesis_theta_star_tight",
+      "map_seed": 0,
+      "samples": 1974,
+      "length_m": 197.2072,
+      "max_abs_curvature": 0.1867,
+      "cusps": 0,
+      "sha256": {
+        "npz": "b37bf14fe0ca908f9f4bc1966ff0f68b952764361c0d41e7531a424f8bba684e",
+        "json": "91823be868c37e549c245ff7ba5b560d2d0b6098c0d5a64a3a1cde9a4c1d458b"
+      }
+    },
+    {
+      "id": "thesis_theta_star_tight_seed1",
+      "group": "thesis_theta_star_tight",
+      "map_seed": 1,
+      "samples": 1994,
+      "length_m": 199.2712,
+      "max_abs_curvature": 0.1667,
+      "cusps": 0,
+      "sha256": {
+        "npz": "799fca7f629698a93484f6bd45c3bfee120bd5286673fcaa78454ae6187ba360",
+        "json": "bf54f49c29efbbb78f27cfa331d09f1be159bfd4a959972c88cc3a0ecad59562"
+      }
+    },
+    {
+      "id": "thesis_theta_star_tight_seed2",
+      "group": "thesis_theta_star_tight",
+      "map_seed": 2,
+      "samples": 2041,
+      "length_m": 203.9866,
+      "max_abs_curvature": 0.1679,
+      "cusps": 0,
+      "sha256": {
+        "npz": "9abc39a86bdc2b004cfa847a7bdf7bfbcd9fab083a1460301a0e970da2316829",
+        "json": "52fc9ab420d559c5439513d1c55d9eabc6149c885ed502e0b2a2cea1b3705ec1"
+      }
+    },
+    {
+      "id": "thesis_theta_star_tight_seed3",
+      "group": "thesis_theta_star_tight",
+      "map_seed": 3,
+      "samples": 2001,
+      "length_m": 199.9043,
+      "max_abs_curvature": 0.2789,
+      "cusps": 0,
+      "sha256": {
+        "npz": "12958a66248f95ea02a8185b97e8944aa8a0d1d349110f31ea341da808f3dc1d",
+        "json": "1b2cbf5a0ab5093d0e3f8fbb3ac114d6c89fe170191993bfbc702708792cd057"
+      }
+    },
+    {
+      "id": "thesis_theta_star_tight_seed4",
+      "group": "thesis_theta_star_tight",
+      "map_seed": 4,
+      "samples": 2084,
+      "length_m": 208.2701,
+      "max_abs_curvature": 0.1667,
+      "cusps": 0,
+      "sha256": {
+        "npz": "17b73b58e60b35689bdd4f413002ea78ec4e1972ad8fb73376e9154a8523c6f3",
+        "json": "f99147d5b871ddbaea5f3539a7f74ca3e834f9a1bdc52a6438a06b5542343766"
+      }
+    }
+  ]
+}

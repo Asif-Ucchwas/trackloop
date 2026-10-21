@@ -96,3 +96,19 @@
   worst case is 1.1 m (parallel_park and side_slot, LQR and MPC).
 - 136 tests pass. Wrote docs/notes/cusp_tracking_math_reference.md. Results table:
   data/results/cusp_tracking.csv.
+- Fixed the test set and added feasibility checks (Task 12). The set is every exported
+  path (10 thesis, 9 Reeds-Shepp, 19 in all); no path is chosen or dropped by controller
+  scores. data/paths/manifest.json holds the sha256 of each path file, and a test fails
+  if a file changes or a path is added or removed.
+- The Reeds-Shepp paths were used while developing the Task 11 controllers, so they are
+  development paths, not held-out ones. No controller was run on a thesis path in Task 11.
+- feasibility.py checks each path against the car's curvature limit (tan(0.6) / 2.7 =
+  0.2534 per metre) and its steering rate (0.8 rad/s). A curvature step that the steering
+  cannot follow at the benchmark speed is an event; its lag distance is the metres driven
+  with the steering behind the path. Steps across a cusp are not counted.
+- Result at 1.5 m/s: 2 of 19 paths pass both checks (rs_ahead and rs_three_point). Only
+  the two seed-3 thesis paths exceed the curvature limit. Lag is 0.93 m on most
+  Reeds-Shepp paths, 1.86 m on parallel_park and side_slot, and 0.79 to 1.76 m on the
+  thesis paths. Failing paths stay in the set and are flagged.
+- 151 tests pass. Wrote docs/notes/feasibility_math_reference.md. Results:
+  data/results/feasibility.csv.

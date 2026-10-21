@@ -1,0 +1,69 @@
+"""The frozen test set: every exported reference path, with hashes, recorded in a manifest.
+
+Rule: no path is chosen or dropped by how a controller scores on it. The manifest records
+each path's files (sha256), source and plain geometry facts. A test fails if a path file
+changes or a path is added or removed without regenerating the manifest on purpose.
+"""
+import hashlib
+import json
+from pathlib import Path
+
+import numpy as np
+
+from trackloop.planner_export import load_path
+
+DATA_DIR = Path("data/paths")
+MANIFEST = DATA_DIR / "manifest.json"
+RULE = ("Every exported path is in the set. No path is chosen or dropped by how a "
+        "controller scores on it. Paths beyond the car's curvature limit stay in and are flagged.")
+PREFIXES = ("thesis_", "rs_")
+
+
+def _sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def _group(name):
+    if name.startswith("rs_"):
+        return "reeds_shepp"
+    return name.rsplit("_seed", 1)[0]
+
+
+def path_ids(data_dir=DATA_DIR):
+    return sorted(p.stem for p in Path(data_dir).glob("*.npz") if p.stem.startswith(PREFIXES))
+
+
+def build_manifest(data_dir=DATA_DIR):
+    data_dir = Path(data_dir)
+    entries = []
+    for name in path_ids(data_dir):
+        path = load_path(data_dir / name)
+        direction = np.asarray(path.direction)
+        entries.append({
+            "id": name,
+            "group": _group(name),
+            "map_seed": int(name.rsplit("_seed", 1)[1]) if "_seed" in name else None,
+            "samples": len(path),
+            "length_m": round(float(path.s[-1]), 4),
+            "max_abs_curvature": round(float(np.abs(path.curvature).max()), 4),
+            "cusps": int(np.count_nonzero(direction[1:] != direction[:-1])),
+            "sha256": {"npz": _sha256(data_dir / f"{name}.npz"),
+                       "json": _sha256(data_dir / f"{name}.json")},
+        })
+    return {"rule": RULE, "count": len(entries), "paths": entries}
+
+
+def write_manifest(data_dir=DATA_DIR, out=MANIFEST):
+    manifest = build_manifest(data_dir)
+    Path(out).write_text(json.dumps(manifest, indent=2) + "\n")
+    return manifest
+
+
+def load_manifest(path=MANIFEST):
+    return json.loads(Path(path).read_text())
+
+
+def load_test_set(data_dir=DATA_DIR):
+    """[(id, Path)] for every path in the manifest, in manifest order."""
+    data_dir = Path(data_dir)
+    return [(e["id"], load_path(data_dir / e["id"])) for e in load_manifest(data_dir / "manifest.json")["paths"]]
