@@ -72,9 +72,10 @@ T = 0.1 s: Pure Pursuit 1.18 and 1.09, Stanley 1.59 and 1.47, Dynamic LQR 1.53 a
 - At 0.05 m the models reproduce the simulation to about 2e-5 m. That checks the gain formulas
   and the lag discretisation. It does not check them against a real vehicle, and the plant here
   is the same model the error equations were derived from.
-- The difference grows with the offset size. I have not examined why (steering limits and the
-  rate limit are the first candidates, not tested), nor why it reaches 161 percent for the MPC at 2 m.
-  Task 19 compares the linear predictions with the nonlinear simulation where it matters.
+- The difference grows with the offset size. Almost all of it is the 0.8 rad/s steering rate limit, which the
+  linear model leaves out, and for the MPC its own QP rate constraint as well: with those removed the gap at 2 m
+  falls from 16 to 161 percent to 0.4 to 2.6 percent (Task 20, part 6). Task 19 compares the linear
+  predictions with the nonlinear simulation where it matters.
 - Pure Pursuit and Stanley are linearised with small angles and the controller's nearest-point
   lookup is treated as continuous. The path-spacing effect found in the Task 16 notes
   (`root_cause_note.md`, section 2) is not in the linear model.
@@ -164,3 +165,122 @@ Code: `src/trackloop/stability_limit.py`. Script: `scripts/check_stability_limit
 - **What this does not show.** Both sides use the same plant: linear tires, no drag, constant speed, no tire
   saturation. The agreement checks the algebra and the discretisation, not a real vehicle. The limits of 55 to 270 m/s
   are properties of this model, far outside the 20 m/s benchmark (200 km/h is 56 m/s), not predictions for a car.
+
+## Derivations, and where linearisation stops being valid (Task 20)
+
+Code: `src/trackloop/linearization.py`. Script: `scripts/linearization_limits.py`. Data:
+`data/results/linearization_limits.csv`. Figure: `docs/figures/linearization_limits.png`. Each part below gives the
+formula, how it follows, and a worked example at 10 m/s (L = 2.7 m, lf = 1.2, lr = 1.5, m = 1500 kg, Iz = 2500,
+cf = 80000, cr = 100000 N/rad).
+
+### 1. The error model
+
+**Formula.** State x = [e1, e1_dot, e2, e2_dot], input the front steering angle delta, constant speed v, straight path:
+x_dot = A x + B delta with
+
+    A = [[0, 1, 0, 0],
+         [0, -(cf+cr)/(m v), (cf+cr)/m, (-cf lf + cr lr)/(m v)],
+         [0, 0, 0, 1],
+         [0, (-lf cf + lr cr)/(Iz v), (lf cf - lr cr)/Iz, -(lf^2 cf + lr^2 cr)/(Iz v)]]
+    B = [0, cf/m, 0, lf cf/Iz]^T
+
+**Derivation.** Linear tires and small angles give the front and rear lateral forces
+Fyf = cf (delta - (vy + lf r)/v) and Fyr = cr (-(vy - lr r)/v). The vehicle equations are
+m (vy_dot + v r) = Fyf + Fyr and Iz r_dot = lf Fyf - lr Fyr. On a straight path e2_dot = r and
+e1_dot = vy + v e2, so vy = e1_dot - v e2 and e1_ddot = vy_dot + v r = (Fyf + Fyr)/m. Substituting vy:
+
+    Fyf + Fyr = cf delta - (cf+cr)(e1_dot - v e2)/v + (-cf lf + cr lr) e2_dot / v
+    Iz e2_ddot = lf cf delta + (-lf cf + lr cr)(e1_dot - v e2)/v - (lf^2 cf + lr^2 cr) e2_dot / v
+
+Dividing by m and Iz gives rows 2 and 4 of A and B; rows 1 and 3 are the definitions of the rates.
+
+**Worked example, v = 10 m/s.** A[1,1] = -180000/(1500 x 10) = -12; A[1,2] = 180000/1500 = 120;
+A[1,3] = (-80000 x 1.2 + 100000 x 1.5)/15000 = 3.6; A[3,1] = 54000/25000 = 2.16; A[3,2] = -54000/2500 = -21.6;
+A[3,3] = -(1.44 x 80000 + 2.25 x 100000)/25000 = -13.608; B = [0, 53.33, 0, 38.4]. The two integrators leave
+A with eigenvalues 0, 0 and -12.80 +/- 3.63j (checked numerically against `error_model`).
+
+### 2. Sampling and the steering lag
+
+**Formula.** With the input held over a step dt (zero-order hold), exp([[A dt, B dt], [0, 0]]) = [[Ad, Bu], [0, I]].
+A first-order actuator with time constant T, delta_dot = (u - delta)/T, over one step gives
+delta+ = a delta + (1 - a) u with a = exp(-dt/T). The simulation holds delta+ over the step, so the closed loop is
+x+ = Ad x + Bu delta+ with u = -K x (the matrices of `closed_loop`).
+
+**Derivation.** The first is the standard solution of x_dot = A x + B u for constant u; the second is the solution
+of the scalar lag equation for constant u. Both match `models/dynamic.py` (RK4 for the plant, exact lag step).
+
+**Worked example.** At v = 10 m/s, dt = 0.05 s: Ad[1,1] = 0.5574, Ad[1,2] = 4.4261, Bu = [0.0583, 2.1973, 0.0404, 1.4809].
+For T = 0.1 s, a = exp(-0.5) = 0.6065.
+
+### 3. LQR and the MPC
+
+**Formula.** Minimise the integral of x^T Q x + u^T R u. The gain is K = R^-1 B^T P with P the solution of
+A^T P + P A - P B R^-1 B^T P + Q = 0. Weights as in the code (Bryson's rule): Q = diag(1/xmax^2) with
+xmax = (0.5, 1.0, 0.1, 0.3), R = 1/0.2^2 = 25, so Q = diag(4, 1, 100, 11.1).
+
+**Worked example, v = 10 m/s.** K = [0.4000, 0.1034, 2.4929, 0.4552]. The continuous closed-loop poles of A - B K are
+-29.16, -14.32, -3.57 and -1.54 (decay rates, 1/s). The first gain, 0.4000, equals sqrt(Q11/R) = sqrt(4/25) at each of
+2, 5, 10, 20 and 30 m/s that I checked; I have not derived why.
+
+**MPC.** The terminal cost is the discrete Riccati solution, so while no constraint is active the first move of the
+finite-horizon problem equals the infinite-horizon discrete LQR gain at dt (derived from the cost; the simulation
+agreement of the tables above is the evidence). It is computed from (Ad, Bu) with `discrete_lqr`.
+
+### 4. Pure Pursuit and Stanley
+
+The formulas and the 10 m/s worked example are in "Gains" above. The step from the code to the gains is the small-angle
+replacement atan(x) = x, sin(x) = x, which is what stops being exact at large errors (part 6).
+
+### 5. Margins and the stability limit
+
+**Formulas.** Broken at the steering command, the loop is L(z) = K (zI - A_o)^-1 B_o for the sampled model with the lag
+state, so that the closed-loop poles are the roots of 1 + L(z) = 0. Phase margin: PM = 180 deg + arg L(e^{j wc dt}) at the unity-gain
+frequency wc; delay margin = PM (rad) / wc; upward gain margin: the factor on L at which a closed-loop pole reaches the
+unit circle. The stability limit is the lowest speed at which the largest pole magnitude reaches 1.
+
+**Worked example, v = 10 m/s, T = 0.1 s, Pure Pursuit.** wc = 2.537 rad/s, PM = 32.99 deg = 0.5758 rad, so
+the delay margin is 0.5758/2.537 = 0.227 s (4.5 samples; the added-delay test in `tests/test_margins.py` confirms
+that 3 extra samples are stable and 6 are not), and the upward gain margin is 6.97. For Stanley at T = 0.1 s the largest
+pole magnitude is 0.9972 at 57.7 m/s and 1.0026 at 63.8 m/s, and the bisected limit is 60.7 m/s.
+
+### 6. Where linearisation stops being valid
+
+Measured: the lateral error of the simulation against the sampled linear model, from an offset on a straight path
+(`scripts/linearization_limits.py`), worst case over 3 speeds (5, 10, 20 m/s) and 3 steering lags (0, 0.1, 0.2 s), as
+a share of the offset. "Rate limit removed" takes the 0.8 rad/s steering rate limit out of the plant; for the MPC the
+second column removes its own constraints from the QP and the third removes both.
+
+| offset | Pure Pursuit | | Stanley | | Dynamic LQR | | Dynamic MPC | | | |
+|---|---|---|---|---|---|---|---|---|---|---|
+| | default | rate limit removed | default | rate limit removed | default | rate limit removed | default | plant removed | MPC constraints removed | both removed |
+| 0.25 m | 1.8% | 0.0% | 1.4% | 0.1% | 2.2% | 0.0% | 2.6% | 2.6% | 1.3% | 0.0% |
+| 1 m | 11.6% | 0.6% | 8.6% | 0.7% | 7.8% | 0.4% | 25.2% | 25.2% | 6.5% | 0.1% |
+| 2 m | 21.6% | 2.2% | 15.8% | 2.6% | 28.4% | 1.9% | 161.1% | 161.1% | 11.8% | 0.4% |
+
+- **Steering rate limit (0.8 rad/s): the main cause.** This answers the question left open in the Task 17 section. For
+  Pure Pursuit, Stanley and LQR the gap at 2 m falls from 16 to 28 percent to 2 to 3 percent when the plant rate limit is
+  removed. At a 2 m offset the controllers ask for 9 to 12 rad/s (Pure Pursuit 9.8, Stanley 9.3, LQR 12.0, MPC 11.1 in the
+  runs with the limit removed). A steering lag lowers the demanded rate (for Stanley the worst cases are at lag 0).
+  For the MPC the plant limit alone changes nothing (the MPC's own rate constraint, also 0.8 rad/s, binds first); removing the MPC's constraints cuts 161 to 11.8 percent, and removing both gives 0.4 percent.
+- **Steering angle limit (0.6 rad): not a cause here.** The peak steering angle at 2 m is 0.46 to 0.55 rad for Pure
+  Pursuit, Stanley and MPC and just reaches 0.60 for LQR, whose own output clip stays on in these runs; its remaining
+  gap is 1.9 percent. It would matter at larger offsets or higher gains.
+- **Large errors (the small-angle terms).** With the rate limit removed the remaining gap is 0.4 to 2.6 percent at 2 m: the
+  atan in the slip angles and in Stanley, the sin in Pure Pursuit, sin and cos of the heading error. It is small but
+  grows roughly with the square of the offset (0.1 to 0.7 percent at 1 m, 2 to 3 percent at 2 m), as small-angle errors do.
+- **Tire nonlinearity: not tested, and the simulation cannot test it.** The simulation's tires are linear in the slip
+  angle (with an atan in the slip angle but no force saturation), so the linear models and the simulation share the plant
+  up to those trigonometric terms. Real tires saturate near a slip angle of mu Fz/C; the Task 16 note
+  (`root_cause_note.md`, section 5) counts how many benchmark runs exceed it (only dynamic LQR and MPC at 20 m/s, and
+  two Stanley runs). Past it the linear tire model overstates the available force, so the stability limits and
+  margins here are optimistic about large manoeuvres.
+- **Constraints and limits of the controllers themselves.** The MPC's QP constraints are the reason for its 161 percent;
+  the unconstrained first move that the linear model uses is not what it does at large offsets. The linear models also
+  leave out the path-spacing artefact of the nearest-point lookup (Task 16), noise, curvature, speed changes and
+  longitudinal dynamics. (The LQR model uses its gain schedule, held constant above 30 m/s, since Task 19.)
+- **Past the stability limit** the Task 19 runs left the linear model at about 1e-2 m. The rate limit delays that for LQR
+  but does not remove it, and does nothing for MPC, so it is not the whole story there; that stays open.
+
+Summary: the linear models are good to a few percent for offsets up to about 0.25 m in all four controllers, and
+for larger offsets they ignore the steering rate limit, which is the first nonlinearity to bite. They are not a model
+of tire saturation or of anything beyond straight-line driving at constant speed.

@@ -1,0 +1,51 @@
+controller,variant,offset,worst_gap_share,peak_steer_rate,peak_steer_angle
+Pure Pursuit,default,0.05,0.0003,0.267,0.0133
+Pure Pursuit,default,0.25,0.01848,0.8,0.0649
+Pure Pursuit,default,0.5,0.05199,0.8,0.12
+Pure Pursuit,default,1.0,0.11567,0.8,0.2151
+Pure Pursuit,default,2.0,0.21639,0.8,0.36
+Pure Pursuit,plant rate limit removed,0.05,0.0003,0.267,0.0133
+Pure Pursuit,plant rate limit removed,0.25,0.00048,1.331,0.0666
+Pure Pursuit,plant rate limit removed,0.5,0.00158,2.651,0.1326
+Pure Pursuit,plant rate limit removed,1.0,0.00593,5.212,0.2606
+Pure Pursuit,plant rate limit removed,2.0,0.02227,9.799,0.49
+Stanley,default,0.05,0.00028,0.25,0.0125
+Stanley,default,0.25,0.01377,0.8,0.0601
+Stanley,default,0.5,0.03879,0.8,0.1149
+Stanley,default,1.0,0.08581,0.8,0.2
+Stanley,default,2.0,0.15821,0.8,0.32
+Stanley,plant rate limit removed,0.05,0.00028,0.25,0.0125
+Stanley,plant rate limit removed,0.25,0.00053,1.248,0.0624
+Stanley,plant rate limit removed,0.5,0.00181,2.487,0.1244
+Stanley,plant rate limit removed,1.0,0.00688,4.9,0.245
+Stanley,plant rate limit removed,2.0,0.02596,9.273,0.4636
+Dynamic LQR,default,0.05,0.00045,0.561,0.02
+Dynamic LQR,default,0.25,0.02244,0.8,0.0754
+Dynamic LQR,default,0.5,0.04743,0.8,0.12
+Dynamic LQR,default,1.0,0.07801,0.8,0.2
+Dynamic LQR,default,2.0,0.28399,0.8,0.32
+Dynamic LQR,plant rate limit removed,0.05,0.00045,0.561,0.02
+Dynamic LQR,plant rate limit removed,0.25,0.00038,2.794,0.1
+Dynamic LQR,plant rate limit removed,0.5,0.00087,5.512,0.2
+Dynamic LQR,plant rate limit removed,1.0,0.00357,10.423,0.4
+Dynamic LQR,plant rate limit removed,2.0,0.01891,12.0,0.6
+Dynamic MPC,default,0.05,0.00031,0.277,0.0139
+Dynamic MPC,default,0.25,0.02649,0.8,0.0572
+Dynamic MPC,default,0.5,0.09649,0.8,0.1051
+Dynamic MPC,default,1.0,0.25168,0.8,0.1751
+Dynamic MPC,default,2.0,1.61072,0.8,0.28
+Dynamic MPC,plant rate limit removed,0.05,0.00031,0.277,0.0139
+Dynamic MPC,plant rate limit removed,0.25,0.02649,0.8,0.0572
+Dynamic MPC,plant rate limit removed,0.5,0.09649,0.8,0.1051
+Dynamic MPC,plant rate limit removed,1.0,0.25168,0.8,0.1751
+Dynamic MPC,plant rate limit removed,2.0,1.61072,0.8,0.28
+Dynamic MPC,controller limits removed (MPC only),0.05,0.00031,0.277,0.0139
+Dynamic MPC,controller limits removed (MPC only),0.25,0.01296,0.8,0.0572
+Dynamic MPC,controller limits removed (MPC only),0.5,0.03226,0.8,0.1051
+Dynamic MPC,controller limits removed (MPC only),1.0,0.06499,0.8,0.1751
+Dynamic MPC,controller limits removed (MPC only),2.0,0.11758,0.8,0.2834
+Dynamic MPC,both removed,0.05,0.00031,0.277,0.0139
+Dynamic MPC,both removed,0.25,0.00029,1.386,0.0693
+Dynamic MPC,both removed,0.5,0.00027,2.773,0.1386
+Dynamic MPC,both removed,1.0,0.00107,5.545,0.2773
+Dynamic MPC,both removed,2.0,0.00437,11.09,0.5545

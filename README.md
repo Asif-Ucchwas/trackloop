@@ -158,7 +158,7 @@ without lag, and at 10 m/s with lags of 0, 0.1 and 0.2 s.
 
 Against the nonlinear simulation (offset start, straight path, 4 s) the models agree to about 2e-5 m at a
 0.05 m offset. The difference grows with the offset (worst case over 3 speeds and 3 lags: 22, 16, 28 and
-161 percent of a 2 m offset for Pure Pursuit, Stanley, LQR and MPC). I have not examined why it grows.
+161 percent of a 2 m offset for Pure Pursuit, Stanley, LQR and MPC). The steering rate limit explains it (Task 20).
 The plant is the same model the equations came from, so this checks the algebra, not a real vehicle.
 Details: [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).
 
@@ -203,3 +203,18 @@ regenerated. Past the limit the simulation departs from the linear model (LQR an
 did not find why). Both sides use the same plant, so this checks the algebra, not a real vehicle, and the limits
 (55 to 270 m/s) are far outside the 20 m/s benchmark. Details in
 [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).
+
+## Derivations and where linearisation stops being valid (Task 20)
+
+The math note now derives the error model, the sampling and steering-lag model, the LQR and MPC gains and the
+margins, each with a worked example at 10 m/s, and measures where the linear models stop matching the simulation.
+The gap grows with the start offset, and almost all of it is the 0.8 rad/s steering rate limit, which a linear model
+leaves out: with the rate limit removed from the plant (and, for the MPC, from its own constraints) the worst-case gap
+at a 2 m offset falls from 16 to 161 percent to 0.4 to 2.6 percent.
+
+![Where the linear model stops matching](docs/figures/linearization_limits.png)
+
+The linear models are good to a few percent up to about a 0.25 m offset. The steering angle limit is not the cause in
+these runs. Tire saturation could not be tested: the simulation's tires are linear in slip angle, so the margins and
+stability limits are optimistic about large manoeuvres. See
+[docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), part 6.

@@ -211,7 +211,7 @@
   optional first-order steering lag state, `is_stable`. 24 tests (273 in total).
 - Validated against the nonlinear simulation: about 2e-5 m at a 0.05 m offset; the difference grows to
   22/16/28/161 percent of a 2 m offset (Pure Pursuit/Stanley/LQR/MPC, worst of 9 speed-lag cases).
-  Cause of the growth not examined (steering limits are the first candidate, untested).
+  The growth is the steering rate limit (found in Task 20).
 - The MPC gain equals discrete LQR at dt: derived from the cost, supported by the simulation agreement.
 - Next: Task 18, Bode plots and margins against speed.
 
@@ -238,3 +238,13 @@
   the estimator was at fault.
 - Not found: why LQR and MPC grow faster than the linear model past the limit (departure near 1e-2 m).
 - Next: Task 20, derivations and the limits of linearisation in the math note.
+
+## Task 20: derivations and where linearisation stops
+
+- Wrote the derivations (error model, sampling and lag, LQR and MPC gains, margins) with worked examples in the math
+  note, and `linearization.py` to measure the model-versus-simulation gap with each limit removed. 3 tests (307 in total).
+- Answered the Task 17 open question: the gap growing with offset is the 0.8 rad/s steering rate limit (and, for the
+  MPC, its own rate constraint). With them removed the worst gap at 2 m is 0.4 to 2.6 percent instead of 16 to 161.
+- Steering angle limit: not a cause. Tire saturation: cannot be tested, the simulation has linear tires.
+- Still open: why LQR and MPC leave the linear model near 1e-2 m past the stability limit (Task 19).
+- Stage 5 done. Next: Stage 6, Task 21, system identification.
