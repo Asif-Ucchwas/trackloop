@@ -186,3 +186,21 @@
   diverged at 20 m/s with 0.2 s lag, whether the softer-tire cases push more runs past the
   tire friction limit. All go to Task 16.
 - Next: Task 16, Monte Carlo sized by confidence-interval width, BENCHMARKS.md, root causes.
+
+## Task 16 closed: Monte Carlo, BENCHMARKS.md, root causes
+
+- Seeds sized by interval width: 150 road, 120 parking. The first full run used 120 for both and
+  four road cells (dynamic LQR and MPC at 10 and 20 m/s) were at 5.1 to 5.4 percent, so the road
+  family was rerun at 150. All 36 cells are within 5 percent. Results at commit d44377d, clean tree.
+- BENCHMARKS.md is generated from the result CSVs. I found a bug in my own generator (the relative
+  column in parking used the wrong scope) and fixed it with a test. 249 tests pass.
+- Root causes, each with a test and its limits in `docs/notes/root_cause_note.md`: the Kinematic MPC
+  and the road MPC fail under steering lag because their first-step rate bound is measured from the
+  lagging steering angle; Stanley's 5 m/s chatter is a path-spacing artifact (RMS unchanged); the
+  worst start (`road_curve_v20`, seed 2) is driven by the heading error.
+- Wrong hypothesis: I guessed that softer tires would push more runs past the friction limit. The
+  data say fewer, because the limit angle rises as stiffness falls. The Task 15 note is corrected.
+- Not shown: the mechanisms inside the dynamic model, and the open items listed in the note (why
+  Pure Pursuit beats the kinematic LQR and MPC in parking, tuning fairness at 20 m/s, why lag helps
+  Pure Pursuit and Stanley, why the LQR's mean exceeds its median at 20 m/s).
+- Next: Stage 5, Task 17, linear closed-loop models of each controller in python-control.

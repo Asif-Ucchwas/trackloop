@@ -108,11 +108,15 @@ def render(summary, pairs, cfg):
           "a tail of worse runs (not examined).",
           "- **The 20 m/s road numbers for the dynamic LQR and MPC are partly outside the linear tire model's range** "
           "(front slip above the friction-limit angle in 10 of 20 runs for the LQR and 5 of 20 for the MPC in the "
-          "5-seed benchmark; not rechecked here). See `docs/notes/benchmark_road_note.md`.",
+          "5-seed benchmark on the nominal plant, counted again with each model-error case in "
+          "`docs/notes/root_cause_note.md`, section 5). See also `docs/notes/benchmark_road_note.md`.",
           "- **Pure Pursuit and Stanley were not tuned for the road speeds.** I have not checked that their settings "
           "are fair at 20 m/s, so the size of the gap to the LQR and MPC there is not yet a statement about the "
           "controllers' designs.",
-          "- **No cause is claimed for any difference in this file.** Anything not investigated is unexplained.", ""]
+          "- **Causes are given only where they were tested.** The worst runs (the Kinematic MPC's and the road MPC's "
+          "failures under steering lag, the worst start on `road_curve_v20`, Stanley's chatter at 5 m/s) are explained "
+          "in `docs/notes/root_cause_note.md`, with what each test does and does not show. No cause is claimed for any "
+          "other difference in this file.", ""]
     return "\n".join(L)
 
 

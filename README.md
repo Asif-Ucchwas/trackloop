@@ -117,6 +117,25 @@ The controllers are designed on nominal parameters and the plant is changed: on 
 more mass or softer tires raises the error and the effect grows with speed; the combined case is
 worst (up to 2.8 times nominal for the dynamic MPC at 20 m/s). In parking only the kinematic MPC
 is badly hurt by steering lag (about 7 times nominal at 3 m/s with 0.2 s lag). Five runs did not
-finish (dynamic MPC, 20 m/s, 0.2 s lag). The mechanisms are not diagnosed yet. See
+finish (dynamic MPC, 20 m/s, 0.2 s lag). The causes of the worst of these are in `docs/notes/root_cause_note.md`. See
 `docs/notes/model_error_note.md` and `docs/figures/model_error.png`. Run it with
 `python scripts/run_model_error.py`.
+
+## Monte Carlo benchmark and root causes (Task 16)
+
+The benchmark now runs 150 seeds on the road family and 120 on the parking family, sized so that
+every cell's 95 percent interval is within 5 percent of its mean (largest achieved 4.9 percent;
+34,560 runs, all finished). `BENCHMARKS.md` gives the means with intervals and the seed-by-seed
+differences between controllers. On the road at 20 m/s the dynamic LQR (0.045 m) and MPC (0.054 m)
+are well below Stanley (0.198 m) and Pure Pursuit (0.257 m); Pure Pursuit and Stanley were not
+tuned for those speeds, and the LQR and MPC are partly outside the linear tire model's range
+there. In parking, Pure Pursuit is below the kinematic LQR and MPC at 1.5 and 3 m/s (0.084 and
+0.109 m against 0.132 and 0.286 m for the LQR); I have not investigated why.
+
+The worst runs were traced in `docs/notes/root_cause_note.md`: both MPCs fail under steering lag
+when their steering-rate bound is measured from the lagging steering angle (anchoring it to the
+previous command removes the failures); Stanley's chatter at 5 m/s comes from the 0.1 m path
+spacing and leaves the error unchanged; the worst start is driven by the heading error; and the
+softer-tire cases push fewer runs past the tire friction limit, not more. The note lists what is
+still unexplained. Run it with `python scripts/run_monte_carlo.py` and
+`python scripts/make_benchmarks_md.py`.

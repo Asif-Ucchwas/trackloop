@@ -57,3 +57,8 @@ def test_render_counts_pairs_that_exclude_zero_and_names_the_smallest():
 
 def test_render_states_the_rerun_history():
     assert "rerun with 150 seeds" in mod.render(SUMMARY, PAIRS, CFG)
+
+
+def test_render_points_to_the_root_cause_note():
+    text = mod.render(SUMMARY, PAIRS, CFG)
+    assert "docs/notes/root_cause_note.md" in text and "No cause is claimed for any other difference" in text
