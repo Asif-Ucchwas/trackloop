@@ -134,11 +134,40 @@ the dynamic model, so the mechanism is not shown. Only the 20 m/s paths and lags
 tested; the MPC's larger lag sensitivity at 10 m/s (median ratios 1.10 and 1.25 in Task 15) was not
 examined. The anchored MPC is a diagnostic, not a proposed design.
 
+## 5. Runs beyond the tire friction limit (road family)
+
+**Question.** The plant keeps linear tires, so a run whose slip angle exceeds the angle at which
+the tire force would reach mu * Fz is outside what a real tire could do. Task 15 guessed that the
+softer-tire cases would push more runs past it. `scripts/tire_limit_exposure.py` counts them from
+`data/results/model_error_road.csv` (peak front and rear slip per run), using the friction-limit angle
+of each case: mu * Fz / C per axle, which depends on mass (load) and stiffness. Front limit in degrees:
+4.68 nominal, 5.62 mass +20%, 3.75 mass -20%, 3.60 stiffness +30%, 6.69 stiffness -30%, 8.03 combined
+(rear: 3.00, 3.60, 2.40, 2.31, 4.28, 5.14); the lag cases leave it at nominal.
+
+**Evidence.** Runs over the limit (front or rear), out of 20 per cell. Every cell at 5 and 10 m/s is 0.
+At 20 m/s:
+
+| controller | nominal | mass +20% | mass -20% | stiff +30% | stiff -30% | lag 0.1 | lag 0.2 | combined |
+|---|---|---|---|---|---|---|---|---|
+| Pure Pursuit | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Stanley | 0 | 0 | 2 | 2 | 0 | 0 | 0 | 0 |
+| Dynamic LQR | 10 | 5 | 8 | 8 | 6 | 7 | 6 | 4 |
+| Dynamic MPC | 5 | 2 | 6 | 6 | 1 | 1 | 5 | 0 |
+
+**What this supports.** The guess was wrong. Lower stiffness raises the angle at which the tire
+saturates, so fewer runs exceed it (LQR 10 to 6, MPC 5 to 1 with stiffness -30%), and the combined
+case, which has the largest error ratios in Task 15 (2.61 and 2.76), has the fewest (4 and 0). The
+exposure is almost entirely the dynamic LQR and MPC at 20 m/s; Pure Pursuit never exceeds the limit.
+
+**Limits.** Each run counts once if its single largest slip angle is above the limit, however briefly.
+The plant keeps linear tires, so nothing here says what a real tire would do past the limit, and the
+20 m/s LQR and MPC numbers stay partly outside the model's validity. Five seeds; the counts are out
+of 20 and carry no interval.
+
 ## Not yet investigated
 
 - Why Pure Pursuit beats the kinematic LQR and MPC in parking at 1.5 and 3 m/s.
 - Whether Pure Pursuit and Stanley are tuned fairly at 20 m/s.
-- Whether the softer-tire cases push more runs past the tire friction limit.
 - Why lag slightly helps Pure Pursuit and Stanley; why the combined model-error case improves
   Stanley, LQR and MPC at 5 m/s.
 - Why the dynamic LQR's mean (0.045 m) exceeds its median (0.034 m) at 20 m/s.

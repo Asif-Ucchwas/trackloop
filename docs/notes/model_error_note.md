@@ -95,10 +95,10 @@ Figure: `docs/figures/model_error.png`.
 - **The 5 runs that did not finish are left out of the ratio.** If they are the worst runs, the
   1.14 for Dynamic MPC at 20 m/s with 0.2 s lag is flattering (they are all divergences; see
   `docs/notes/root_cause_note.md`, section 4).
-- **The 20 m/s tire-limit caveat from Task 14 applies, and it is probably worse here.** The plant
-  keeps linear tires. With stiffness -30 percent, the same force needs a larger slip angle, so
-  more runs probably reach slip angles where a real tire at mu = 0.8 could not give the force.
-  I did not check slip angles in this task.
+- **The 20 m/s tire-limit caveat from Task 14 applies, but it is not worse under the softer-tire
+  cases.** The plant keeps linear tires. The slip angle at which a tire reaches mu * Fz rises when
+  stiffness falls (front 4.68 to 6.69 degrees at -30 percent), so fewer runs exceed it. The counts
+  are in `docs/notes/root_cause_note.md`, section 5.
 - **No mechanisms are shown.** I do not know why lower stiffness or more mass hurts more at
   speed, why Kinematic MPC is so sensitive to lag while Kinematic LQR is not (the MPC's
   prediction has no lag in it, but I have not tested that), why lag helps Pure Pursuit and Stanley
