@@ -204,3 +204,13 @@
   Pure Pursuit beats the kinematic LQR and MPC in parking, tuning fairness at 20 m/s, why lag helps
   Pure Pursuit and Stanley, why the LQR's mean exceeds its median at 20 m/s).
 - Next: Stage 5, Task 17, linear closed-loop models of each controller in python-control.
+
+## Task 17: linear closed-loop models
+
+- Built `linear_loops.py`: gains for the four controllers, continuous and exact-discrete closed loops with an
+  optional first-order steering lag state, `is_stable`. 24 tests (273 in total).
+- Validated against the nonlinear simulation: about 2e-5 m at a 0.05 m offset; the difference grows to
+  22/16/28/161 percent of a 2 m offset (Pure Pursuit/Stanley/LQR/MPC, worst of 9 speed-lag cases).
+  Cause of the growth not examined (steering limits are the first candidate, untested).
+- The MPC gain equals discrete LQR at dt: derived from the cost, supported by the simulation agreement.
+- Next: Task 18, Bode plots and margins against speed.

@@ -143,3 +143,21 @@ spacing and leaves the error unchanged; the worst start is driven by the heading
 softer-tire cases push fewer runs past the tire friction limit, not more. The note lists what is
 still unexplained. Run it with `python scripts/run_monte_carlo.py` and
 `python scripts/make_benchmarks_md.py`.
+
+## Linear closed-loop models (Task 17)
+
+Each road controller is written as a linear system on a straight path, `delta_cmd = -K x`, with
+error state `x = [lateral error, its rate, heading error, its rate]`, in `src/trackloop/linear_loops.py`
+(python-control). Pure Pursuit and Stanley have closed-form gains; Dynamic LQR uses its Riccati gain;
+Dynamic MPC uses the discrete LQR gain at the 0.05 s control period (equal to its first move while no
+constraint is active; I derived that, and the simulation check below is the evidence). A first-order
+steering lag adds the steering angle as a fifth state. All four loops are stable at 5, 10 and 20 m/s
+without lag, and at 10 m/s with lags of 0, 0.1 and 0.2 s.
+
+![Linear model against the nonlinear simulation](docs/figures/linear_loops.png)
+
+Against the nonlinear simulation (offset start, straight path, 4 s) the models agree to about 2e-5 m at a
+0.05 m offset. The difference grows with the offset (worst case over 3 speeds and 3 lags: 22, 16, 28 and
+161 percent of a 2 m offset for Pure Pursuit, Stanley, LQR and MPC). I have not examined why it grows.
+The plant is the same model the equations came from, so this checks the algebra, not a real vehicle.
+Details: [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).
