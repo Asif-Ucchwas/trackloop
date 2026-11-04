@@ -108,6 +108,8 @@ have lower median RMS lateral error, but at 20 m/s they leave the linear tire mo
 (front slip up to 7 deg against a 4.7 deg friction limit). See `docs/notes/benchmark_road_note.md`
 and `docs/figures/benchmark_road.png`. Run it with `python scripts/run_benchmark_road.py`.
 
+![Road benchmark: RMS lateral error per controller and speed](docs/figures/benchmark_road.png)
+
 ## Model-error cases (Task 15)
 
 The controllers are designed on nominal parameters and the plant is changed: on the road family
@@ -120,6 +122,8 @@ is badly hurt by steering lag (about 7 times nominal at 3 m/s with 0.2 s lag). F
 finish (dynamic MPC, 20 m/s, 0.2 s lag). The causes of the worst of these are in `docs/notes/root_cause_note.md`. See
 `docs/notes/model_error_note.md` and `docs/figures/model_error.png`. Run it with
 `python scripts/run_model_error.py`.
+
+![Model-error cases: median error ratio against the nominal plant](docs/figures/model_error.png)
 
 ## Monte Carlo benchmark and root causes (Task 16)
 
