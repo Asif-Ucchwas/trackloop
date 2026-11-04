@@ -173,3 +173,16 @@
 - Not yet shown: whether Pure Pursuit and Stanley are tuned fairly at 20 m/s, why Stanley chatters
   at 5 m/s, why the seed 2 curve_v20 start is the worst for all four. All three go to Task 16.
 - Next: Task 15, model-error cases on both families.
+
+## Task 15 closed: model-error cases
+
+- Added a first-order steering lag to both plants (0 by default, so earlier results are unchanged;
+  a test checks this) and case definitions that change only the plant, never the controller.
+- Road: 1,920 runs, 0 errors, 5 did not finish. Parking: 5,700 runs, 0 errors, all finished.
+  Results at commit 636f30c, clean tree. 232 tests pass.
+- Found: mass and tire stiffness errors grow with speed on the road, and the combined case is worst.
+  In parking, steering lag hurts only the kinematic MPC (about 7 times nominal at 3 m/s, 0.2 s).
+- Not yet shown: why the kinematic MPC is lag-sensitive and the LQR is not, why 5 dynamic MPC runs
+  diverged at 20 m/s with 0.2 s lag, whether the softer-tire cases push more runs past the
+  tire friction limit. All go to Task 16.
+- Next: Task 16, Monte Carlo sized by confidence-interval width, BENCHMARKS.md, root causes.

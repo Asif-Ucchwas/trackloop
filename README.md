@@ -107,3 +107,16 @@ finished. At 5 m/s the controllers are indistinguishable; at 10 and 20 m/s the d
 have lower median RMS lateral error, but at 20 m/s they leave the linear tire model's range
 (front slip up to 7 deg against a 4.7 deg friction limit). See `docs/notes/benchmark_road_note.md`
 and `docs/figures/benchmark_road.png`. Run it with `python scripts/run_benchmark_road.py`.
+
+## Model-error cases (Task 15)
+
+The controllers are designed on nominal parameters and the plant is changed: on the road family
+(dynamic plant) mass +-20 percent, cornering stiffness +-30 percent, steering lag of 0.1 s and
+0.2 s, and one combined case; on the parking family (kinematic plant) steering lag and wheelbase
++-5 percent, since that model has no mass or tire. The case sizes are placeholders. On the road,
+more mass or softer tires raises the error and the effect grows with speed; the combined case is
+worst (up to 2.8 times nominal for the dynamic MPC at 20 m/s). In parking only the kinematic MPC
+is badly hurt by steering lag (about 7 times nominal at 3 m/s with 0.2 s lag). Five runs did not
+finish (dynamic MPC, 20 m/s, 0.2 s lag). The mechanisms are not diagnosed yet. See
+`docs/notes/model_error_note.md` and `docs/figures/model_error.png`. Run it with
+`python scripts/run_model_error.py`.

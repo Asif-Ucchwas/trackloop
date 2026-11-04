@@ -159,7 +159,7 @@
     "metrics_v_drive": 0.01,
     "metrics_deadband": 0.01
   },
-  "git_commit": "5ccd67a29d4e507f9037525eb518d9e26af14d31",
+  "git_commit": "636f30c4ecd3ee4bda81dcdd0cbba229c7f8c776",
   "git_dirty": false,
   "environment": {
     "python": "3.12.3",
