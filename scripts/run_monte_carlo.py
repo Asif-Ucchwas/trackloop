@@ -17,8 +17,7 @@ from trackloop import monte_carlo as mc
 from trackloop.results_io import environment, git, write_csv
 
 OUT = Path("data/results")
-N_SEEDS = 120
-SEEDS = tuple(range(N_SEEDS))
+N_SEEDS = {"road": 150, "parking": 120}    # seeds per family, sized so every cell meets the target
 KEEP = ("path", "controller", "speed", "seed", "drivable", "status", "finished", "rms_lateral", "max_lateral")
 PAIRS = {
     "road": [("Dynamic LQR", "Dynamic MPC"), ("Pure Pursuit", "Dynamic LQR"), ("Stanley", "Dynamic LQR"),
@@ -29,7 +28,7 @@ PAIRS = {
 
 
 def run_family(name, module, pool):
-    rows = list(pool.map(module.run_one, module.all_tasks(seeds=SEEDS), chunksize=16))
+    rows = list(pool.map(module.run_one, module.all_tasks(seeds=tuple(range(N_SEEDS[name]))), chunksize=16))
     compact = [{k: r.get(k, "") for k in KEEP} for r in rows]
     write_csv(OUT / f"mc_{name}.csv", compact)
     return rows
@@ -63,7 +62,7 @@ def main():
     write_csv(OUT / "mc_summary.csv", r(summary))
     write_csv(OUT / "mc_pairs.csv", r(pairs))
     status = git("status", "--porcelain", "--", "src", "scripts", "data/paths")
-    cfg = {"seeds": [0, N_SEEDS - 1], "n_seeds": N_SEEDS, "target_rel_half_width": mc.TARGET, "level": mc.LEVEL,
+    cfg = {"n_seeds": N_SEEDS, "target_rel_half_width": mc.TARGET, "level": mc.LEVEL,
            "pairs": PAIRS, "road": road.settings(), "parking": parking.settings(),
            "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(status), "environment": environment()}
     (OUT / "mc_settings.json").write_text(json.dumps(cfg, indent=2, default=str) + "\n")
