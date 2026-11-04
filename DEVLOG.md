@@ -221,8 +221,20 @@
   checking the poles, phase margin from the frequency response. 20 tests (293 in total), including an analytic
   phase margin and an added-delay check against the delay margin.
 - Phase margin falls with speed for every controller and lag. Zero phase margin appears only with a steering lag,
-  at 54 to 64 m/s on the 1 m/s grid (Stanley 61 at 0.1 s; Stanley 56, LQR 54, MPC 64 at 0.2 s). Not tested in
-  the nonlinear simulation yet.
+  at 56 to 64 m/s on the 1 m/s grid (Stanley 61 at 0.1 s; Stanley 56, MPC 64 at 0.2 s; the LQR figure above
+  30 m/s was wrong and is corrected in Task 19). The nonlinear check is Task 19.
 - LQR with no lag has the smallest upward gain margin (about 2 dB at 40 m/s); its crossover is near Nyquist. Sampling
   delay as the cause is my reading, not tested.
 - Next: Task 19, find the zero-margin speeds precisely and check them in the nonlinear simulation.
+
+## Task 19: stability limits against the nonlinear simulation
+
+- Added `stability_limit.py`: lowest unstable speed of each sampled linear loop, and a comparison of the nonlinear
+  simulation with the linear model near that speed. 11 tests (304 in total).
+- Limits: Stanley 166.7 (no lag), 60.7 (0.1 s), 55.0 (0.2 s); Pure Pursuit 268.5 and 134.2 (0.1, 0.2 s); LQR 92.1 and
+  MPC 63.2 (0.2 s); none up to 300 m/s for the rest. The simulation agrees on growth or decay in 38 of 38 runs.
+- Found and fixed an error in Task 18: LQR holds its gain above 30 m/s, my model used the exact gain. LQR limit 54 -> 92.1.
+- Wrong first: an envelope-slope growth estimate disagreed for Stanley without lag; the trajectories agree to 1e-5 and
+  the estimator was at fault.
+- Not found: why LQR and MPC grow faster than the linear model past the limit (departure near 1e-2 m).
+- Next: Task 20, derivations and the limits of linearisation in the math note.

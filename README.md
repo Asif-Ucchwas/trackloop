@@ -148,7 +148,7 @@ still unexplained. Run it with `python scripts/run_monte_carlo.py` and
 
 Each road controller is written as a linear system on a straight path, `delta_cmd = -K x`, with
 error state `x = [lateral error, its rate, heading error, its rate]`, in `src/trackloop/linear_loops.py`
-(python-control). Pure Pursuit and Stanley have closed-form gains; Dynamic LQR uses its Riccati gain;
+(python-control). Pure Pursuit and Stanley have closed-form gains; Dynamic LQR uses its gain schedule (Riccati gains on a speed grid, constant above 30 m/s);
 Dynamic MPC uses the discrete LQR gain at the 0.05 s control period (equal to its first move while no
 constraint is active; I derived that, and the simulation check below is the evidence). A first-order
 steering lag adds the steering angle as a fifth state. All four loops are stable at 5, 10 and 20 m/s
@@ -174,9 +174,32 @@ Pursuit, 37 for Stanley, 54 for LQR and 61 for MPC.
 
 ![Margins against speed](docs/figures/margins_vs_speed.png)
 
-In this linear model the phase margin reaches zero only with a steering lag, and only at 54 to 64 m/s
-(Stanley 61 m/s at 0.1 s lag; Stanley 56, LQR 54, MPC 64 at 0.2 s lag; Pure Pursuit stays positive to 70 m/s).
+In this linear model the phase margin reaches zero only with a steering lag, and only at 56 to 64 m/s
+(Stanley 61 m/s at 0.1 s lag; Stanley 56 and MPC 64 at 0.2 s lag; Pure Pursuit and LQR stay positive to 70 m/s).
 The benchmark runs at most 20 m/s, so those speeds are an extrapolation of the linear tire model. Task 19 tests
-them in the nonlinear simulation. The margins are to a change at the steering command, they leave out the steering
+them in the nonlinear simulation, and corrects the LQR numbers above 30 m/s (the first version of the model used a
+gain the controller does not use there). The margins are to a change at the steering command, they leave out the steering
 and rate limits, and for the MPC they use its unconstrained first move. Details in
+[docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).
+
+## Where the linear loops lose stability, checked in the simulation (Task 19)
+
+Lowest speed at which the sampled linear loop is unstable (`src/trackloop/stability_limit.py`):
+
+| | no lag | lag 0.1 s | lag 0.2 s |
+|---|---|---|---|
+| Pure Pursuit | none to 300 m/s | 268.5 | 134.2 |
+| Stanley | 166.7 | 60.7 | 55.0 |
+| Dynamic LQR | none | none | 92.1 |
+| Dynamic MPC | none | none | 63.2 |
+
+![Linear model against the nonlinear simulation near the stability limit](docs/figures/stability_limit_check.png)
+
+From a 1 mm offset, the nonlinear simulation grows or decays as the linear model says in 38 of 38 runs (0.9 to 1.1
+times each limit, plus 100 and 300 m/s where there is none), so the instability appears at the predicted speed to
+within 3 percent. The check found an error in my Task 18 model: the LQR controller holds its gain constant above 30 m/s
+and I had used the exact gain, which put its limit at 54 m/s instead of 92 m/s. Fixed, and the Task 18 figures are
+regenerated. Past the limit the simulation departs from the linear model (LQR and MPC grow faster than predicted; I
+did not find why). Both sides use the same plant, so this checks the algebra, not a real vehicle, and the limits
+(55 to 270 m/s) are far outside the 20 m/s benchmark. Details in
 [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).

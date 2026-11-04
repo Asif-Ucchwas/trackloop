@@ -8,7 +8,8 @@ every controller is a fixed state feedback delta_cmd = -K x, with K depending on
                 axle on the path: K = [2L/ld^2, 0, (2L/ld)(1 - lr/ld), 0], ld = lookahead(v).
   Stanley       delta = psi_e - atan(k e_front / (v + k_soft)), small angles, e_front = e1 + lf e2:
                 K = [s, 0, 1 + s lf, 0] with s = k / (v + k_soft).
-  Dynamic LQR   K from the Riccati solution at speed v (lqr_gain).
+  Dynamic LQR   K from the controller's gain schedule: Riccati gains on a speed grid, interpolated,
+                held constant above 30 m/s (equal to the Riccati gain on the grid, e.g. at 10 m/s).
   Dynamic MPC   with no constraint active and the Riccati terminal cost, the first move equals the
                 infinite-horizon discrete LQR gain at the control period dt (discrete_lqr).
 
@@ -18,7 +19,7 @@ models/dynamic.py. Limits (steering angle, steering rate) are not in a linear mo
 import control as ct
 import numpy as np
 
-from trackloop.controllers.lqr import bryson_weights, error_model, lqr_gain
+from trackloop.controllers.lqr import GainSchedule, bryson_weights, error_model
 from trackloop.controllers.mpc import MIN_SPEED, discrete_lqr, discretize
 from trackloop.controllers.pure_pursuit import PurePursuitParams
 from trackloop.controllers.stanley import StanleyParams
@@ -28,8 +29,22 @@ CONTROLLERS = ("Pure Pursuit", "Stanley", "Dynamic LQR", "Dynamic MPC")
 DT = 0.05   # s, control period of the dynamic runner
 
 
+_SCHEDULES = {}
+
+
+def _schedule(p):
+    key = repr(p)
+    if key not in _SCHEDULES:
+        _SCHEDULES[key] = GainSchedule(p=p)
+    return _SCHEDULES[key]
+
+
 def feedback_gain(controller, vx, params=None, dt=DT):
-    """Row K (shape (4,)) with delta_cmd = -K x at speed vx."""
+    """Row K (shape (4,)) with delta_cmd = -K x at speed vx, as the controller computes it.
+
+    Dynamic LQR uses its gain schedule (Riccati gains on a speed grid, interpolated, held constant
+    above the grid's top speed, 30 m/s), not the exact Riccati gain at vx.
+    """
     p = params if params is not None else DynamicParams()
     if controller == "Pure Pursuit":
         pp = PurePursuitParams(wheelbase=p.wheelbase)
@@ -40,7 +55,7 @@ def feedback_gain(controller, vx, params=None, dt=DT):
         s = sp.k / (vx + sp.k_soft)
         return np.array([s, 0.0, 1.0 + s * p.lf, 0.0])
     if controller == "Dynamic LQR":
-        return lqr_gain(vx, p=p)[0][0]
+        return _schedule(p).gain(vx)
     if controller == "Dynamic MPC":
         ad, bu = discretize(max(vx, MIN_SPEED), dt, p)
         q, r = bryson_weights()
