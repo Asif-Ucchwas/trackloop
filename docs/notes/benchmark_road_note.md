@@ -58,7 +58,9 @@ RMS lateral error in metres. Figure: `docs/figures/benchmark_road.png`.
 - **A heading error of 0.1 rad at 20 m/s is a hard start.** I reused the parking ranges without
   checking they suit 20 m/s.
 - **Stanley's steering chatter at 5 m/s (median 1.67 reversals per second, others 0.2 to 0.3)
-  is unexplained.** LQR is at 0.5 at 10 and 20 m/s. These are observations, not diagnoses.
+  comes from the 0.1 m path spacing, not from the controller's tuning:** with 0.05 m spacing it
+  falls to 0.23 and the RMS error does not change. See `docs/notes/root_cause_note.md`, section 2.
+  LQR is at 0.5 at 10 and 20 m/s, which is not explained.
 - Most controllers reach the 0.8 rad/s steering-rate limit in the median run. I have not looked
   at where.
 - 5 seeds per cell, no confidence intervals. Small differences between controllers are noise
