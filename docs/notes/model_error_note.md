@@ -22,7 +22,7 @@ Figure: `docs/figures/model_error.png`.
   wheelbase +-5 percent. The kinematic model has no mass or tire, so nothing else applies.
 - Runs: road 1,920 rows, 0 errors, 5 did not finish. Parking 5,700 rows, 0 errors, all finished.
   The 5 road runs that did not finish are all Dynamic MPC at 20 m/s with 0.2 s lag (5 of that
-  cell's 20 runs). I have not looked at why they did not finish.
+  cell's 20 runs). Why they did not finish is examined in `docs/notes/root_cause_note.md`, section 4.
 - Metric: for each run, RMS lateral error divided by the RMS of the nominal run with the same
   path, controller, seed and speed. The tables give the median of those per-pair ratios, not a
   ratio of medians. 1.00 means no change; above 1 is worse. Pairs where either run did not
@@ -93,8 +93,8 @@ Figure: `docs/figures/model_error.png`.
 - **No intervals.** There are 5 seeds. Cells within about 0.95 to 1.05 are not evidence of an
   effect, and I have not compared two controllers' ratios.
 - **The 5 runs that did not finish are left out of the ratio.** If they are the worst runs, the
-  1.14 for Dynamic MPC at 20 m/s with 0.2 s lag is flattering. The reason they did not finish
-  is not examined.
+  1.14 for Dynamic MPC at 20 m/s with 0.2 s lag is flattering (they are all divergences; see
+  `docs/notes/root_cause_note.md`, section 4).
 - **The 20 m/s tire-limit caveat from Task 14 applies, and it is probably worse here.** The plant
   keeps linear tires. With stiffness -30 percent, the same force needs a larger slip angle, so
   more runs probably reach slip angles where a real tire at mu = 0.8 could not give the force.

@@ -103,10 +103,40 @@ tires build force are candidates, neither tested). Seeds 0 to 4 only. The start 
 for heading error was reused from parking without checking it against 20 m/s; this result is
 consistent with it being a hard start there.
 
+## 4. Dynamic MPC divergence at 20 m/s with 0.2 s lag (road family)
+
+**Observation.** In Task 15, 5 of the 20 runs of Dynamic MPC at 20 m/s with 0.2 s steering lag did
+not finish: `road_curve_v20` seed 2, `road_double_shift_v20` seed 1, and `road_s_curve_v20` seeds 0,
+2 and 4. All five ended as diverged (error beyond 25 m), with peak front slip angles of 13.7 to 17.9
+degrees, far above the 4.68 degrees at which the linear tire force reaches the friction limit.
+
+**Test.** The road MPC bounds its first steering step by one rate step from the measured steering
+angle (`state[6]`), the same structure as section 1. `scripts/test_road_mpc_anchor.py` replaces that
+angle with the MPC's own previous command (controller source unchanged) on the four 20 m/s road
+paths, seeds 0 to 4:
+
+| MPC | plant | runs diverged (of 20) | median RMS of finished runs (m) |
+|---|---|---|---|
+| standard | nominal | 0 | 0.0374 |
+| standard | lag 0.1 s | 0 | 0.0378 |
+| standard | lag 0.2 s | 5 | 0.0382 |
+| anchored | nominal | 0 | 0.0374 |
+| anchored | lag 0.1 s | 0 | 0.0378 |
+| anchored | lag 0.2 s | 0 | 0.0381 |
+
+**What this supports.** All five divergences follow the measured-angle anchor, as in the parking
+MPC. The divergence is a tail event: the median RMS of the finished runs hardly changes with lag,
+so the Task 15 median ratio of 1.14 for this cell, computed without these five runs, understates
+the damage.
+
+**Limits.** I did not trace why a rate bound anchored to a lagging angle ends in divergence in
+the dynamic model, so the mechanism is not shown. Only the 20 m/s paths and lags up to 0.2 s were
+tested; the MPC's larger lag sensitivity at 10 m/s (median ratios 1.10 and 1.25 in Task 15) was not
+examined. The anchored MPC is a diagnostic, not a proposed design.
+
 ## Not yet investigated
 
 - Why Pure Pursuit beats the kinematic LQR and MPC in parking at 1.5 and 3 m/s.
-- Why 5 Dynamic MPC runs did not finish at 20 m/s with 0.2 s lag.
 - Whether Pure Pursuit and Stanley are tuned fairly at 20 m/s.
 - Whether the softer-tire cases push more runs past the tire friction limit.
 - Why lag slightly helps Pure Pursuit and Stanley; why the combined model-error case improves
