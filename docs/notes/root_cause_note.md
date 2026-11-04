@@ -70,9 +70,41 @@ sit at the quiet points of the pattern by coincidence; the effect is not absent 
 scan was run on the four 5 m/s road paths. LQR and MPC use a projection with its own handling and
 were not tested. Other chatter values in earlier notes were not rechecked.
 
+## 3. The worst start: `road_curve_v20`, seed 2 (road family)
+
+**Observation.** In Task 14, seed 2 on `road_curve_v20` was the worst start for all four controllers
+(offset 0.237 m, heading error +0.071 rad, both on the side leaving the path). Peak rear-axle
+errors in `scripts/trace_worst_start.py`: Pure Pursuit 0.774 m, Stanley 0.644, dynamic LQR 0.616,
+dynamic MPC 0.630, all reached 0.35 to 0.6 s after the start.
+
+**Evidence.** Seed 2's offset and heading error applied one at a time (largest error in the first 3 s):
+
+| e0 (m) | dpsi (rad) | Pure Pursuit | Stanley | Dynamic LQR | Dynamic MPC |
+|---|---|---|---|---|---|
+| 0.237 | 0 | 0.237 | 0.237 | 0.237 | 0.237 |
+| 0 | 0.071 | 0.603 | 0.427 | 0.380 | 0.404 |
+| 0.237 | 0.071 | 0.774 | 0.644 | 0.616 | 0.630 |
+| 0.237 | -0.071 | 0.465 | 0.237 | 0.237 | 0.237 |
+
+On the other four seeds the LQR's and MPC's largest error is the starting offset itself (0.10 to
+0.29 m at t = 0). Pure Pursuit's (0.41 to 0.42 m) and Stanley's (0.31 m) largest errors on those
+seeds occur 6 s or more into the run, on the curve, which is a different effect.
+
+**What this supports.** The heading error, not the offset, drives the peak: the offset alone never
+grows past its starting value, while 0.071 rad alone gives 0.38 to 0.60 m. At 20 m/s that heading
+error is a sideways velocity of about 1.4 m/s that the steering has to turn around. The two effects
+add for the LQR (0.380 + 0.237 = 0.617 against 0.616 measured) but not exactly for Pure Pursuit
+(0.603 + 0.237 = 0.84 against 0.774). With the heading error pointing back toward the path, Stanley,
+the LQR and the MPC stay at the starting offset; Pure Pursuit still reaches 0.465 m.
+
+**Limits.** One path, one speed. Why a heading error of 0.071 rad needs about 0.4 s and 0.4 to
+0.6 m to be corrected is not shown (the 0.8 rad/s steering-rate limit and the rate at which the
+tires build force are candidates, neither tested). Seeds 0 to 4 only. The start range of 0.1 rad
+for heading error was reused from parking without checking it against 20 m/s; this result is
+consistent with it being a hard start there.
+
 ## Not yet investigated
 
-- Why `road_curve_v20` seed 2 is the worst start for all four controllers.
 - Why Pure Pursuit beats the kinematic LQR and MPC in parking at 1.5 and 3 m/s.
 - Why 5 Dynamic MPC runs did not finish at 20 m/s with 0.2 s lag.
 - Whether Pure Pursuit and Stanley are tuned fairly at 20 m/s.
