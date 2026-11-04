@@ -92,3 +92,27 @@ def is_stable(system):
     """True when every pole is inside the stability region (left half plane, or unit disc if sampled)."""
     poles = np.linalg.eigvals(system.A)
     return bool(np.all(np.abs(poles) < 1.0)) if system.dt else bool(np.all(poles.real < 0.0))
+
+
+def open_loop(controller, vx, lag=0.0, dt=DT, params=None, plant_params=None):
+    """Sampled loop transfer function L(z), broken at the steering command (Task 18).
+
+    Input: the commanded steering angle delta_cmd (after the controller, before the actuator lag);
+    output: the controller's feedback value K x, so that delta_cmd = -L delta_cmd closes the loop.
+    The closed loop of `closed_loop(..., dt)` is A_ol - B_ol C_ol exactly. Break point and sign are
+    a choice: margins computed here are margins to a gain or phase change at the steering command.
+    """
+    design = params if params is not None else DynamicParams()
+    plant = plant_params if plant_params is not None else design
+    k = feedback_gain(controller, vx, design, dt)
+    ad, bu = discretize(vx, dt, plant)
+    if lag <= 0.0:
+        return ct.StateSpace(ad, bu, k[None, :], np.zeros((1, 1)), dt)
+    g = np.exp(-dt / lag)
+    a = np.zeros((5, 5))
+    a[:4, :4], a[:4, 4:], a[4, 4] = ad, g * bu, g
+    b = np.zeros((5, 1))
+    b[:4, 0], b[4, 0] = (1.0 - g) * bu[:, 0], 1.0 - g
+    c = np.zeros((1, 5))
+    c[0, :4] = k
+    return ct.StateSpace(a, b, c, np.zeros((1, 1)), dt)

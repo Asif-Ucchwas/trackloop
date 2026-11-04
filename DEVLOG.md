@@ -214,3 +214,15 @@
   Cause of the growth not examined (steering limits are the first candidate, untested).
 - The MPC gain equals discrete LQR at dt: derived from the cost, supported by the simulation agreement.
 - Next: Task 18, Bode plots and margins against speed.
+
+## Task 18: Bode plots and margins against speed
+
+- Added `open_loop` (loop broken at the steering command) and `margins.py`: gain margin by scaling the gain and
+  checking the poles, phase margin from the frequency response. 20 tests (293 in total), including an analytic
+  phase margin and an added-delay check against the delay margin.
+- Phase margin falls with speed for every controller and lag. Zero phase margin appears only with a steering lag,
+  at 54 to 64 m/s on the 1 m/s grid (Stanley 61 at 0.1 s; Stanley 56, LQR 54, MPC 64 at 0.2 s). Not tested in
+  the nonlinear simulation yet.
+- LQR with no lag has the smallest upward gain margin (about 2 dB at 40 m/s); its crossover is near Nyquist. Sampling
+  delay as the cause is my reading, not tested.
+- Next: Task 19, find the zero-margin speeds precisely and check them in the nonlinear simulation.

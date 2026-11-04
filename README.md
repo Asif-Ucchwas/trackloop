@@ -161,3 +161,22 @@ Against the nonlinear simulation (offset start, straight path, 4 s) the models a
 161 percent of a 2 m offset for Pure Pursuit, Stanley, LQR and MPC). I have not examined why it grows.
 The plant is the same model the equations came from, so this checks the algebra, not a real vehicle.
 Details: [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).
+
+## Gain and phase margins against speed (Task 18)
+
+The Task 17 loops, broken at the steering command and sampled at 0.05 s, give a loop transfer function for each
+controller (`src/trackloop/margins.py`). Gain margins come from scaling the loop gain and checking the poles;
+phase margins from the frequency response at the unity-gain crossing. Phase margin falls with speed for all four
+controllers and all three steering lags (0, 0.1, 0.2 s). At 10 m/s with a 0.1 s lag it is 33 degrees for Pure
+Pursuit, 37 for Stanley, 54 for LQR and 61 for MPC.
+
+![Bode plot at 10 m/s](docs/figures/bode_10ms.png)
+
+![Margins against speed](docs/figures/margins_vs_speed.png)
+
+In this linear model the phase margin reaches zero only with a steering lag, and only at 54 to 64 m/s
+(Stanley 61 m/s at 0.1 s lag; Stanley 56, LQR 54, MPC 64 at 0.2 s lag; Pure Pursuit stays positive to 70 m/s).
+The benchmark runs at most 20 m/s, so those speeds are an extrapolation of the linear tire model. Task 19 tests
+them in the nonlinear simulation. The margins are to a change at the steering command, they leave out the steering
+and rate limits, and for the MPC they use its unconstrained first move. Details in
+[docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md).

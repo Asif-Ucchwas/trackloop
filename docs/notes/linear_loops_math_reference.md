@@ -78,3 +78,37 @@ T = 0.1 s: Pure Pursuit 1.18 and 1.09, Stanley 1.59 and 1.47, Dynamic LQR 1.53 a
   (`root_cause_note.md`, section 2) is not in the linear model.
 - Only straight-line driving at constant speed. Curves, speed changes and the gain schedule
   between grid speeds are not modelled.
+
+## Margins (Task 18)
+
+Code: `src/trackloop/margins.py` (`open_loop` in `linear_loops.py`). Figures: `docs/figures/bode_10ms.png`,
+`docs/figures/margins_vs_speed.png`. Data: `data/results/margins_vs_speed.csv` (speeds 2 to 70 m/s,
+lags 0, 0.1, 0.2 s). Script: `scripts/plot_margins.py`.
+
+- **Where the loop is broken.** At the steering command: input delta_cmd, output K x, so the loop
+  is L(z) = K (zI - A)^-1 B for the sampled model with the actuator lag included in A. A margin
+  here is the margin to a gain or phase change at the steering command. Breaking the loop
+  elsewhere (at the measured states, say) would give different numbers. This was my choice.
+- **Gain margin** is found by scaling the loop gain and checking the closed-loop poles, so it needs
+  no crossover definition. The upward margin is the factor the gain can grow by. Downward: the
+  loop stays stable down to a gain factor of 0.001 (the lowest tried) wherever the phase margin
+  is more than about 1 degree; very close to zero phase margin a lower limit appears (Dynamic LQR,
+  0.2 s lag, 52 m/s: 0.67). The phase is within about 2 degrees of -180 at 0.05 rad/s (the plant
+  behaves like a double integrator at low frequency, loop slope about -40 dB/decade), so the
+  downward margin is not comfortable in practice even where it is formally unlimited.
+- **Phase margin** is read from the response at the unity-gain crossings, up to the Nyquist
+  frequency (62.8 rad/s); the smallest is reported. Delay margin = phase margin / crossover frequency.
+- **Results.** Phase margin falls with speed for every controller and every lag. At 10 m/s with a 0.1 s
+  lag: Pure Pursuit 33.0, Stanley 36.8, Dynamic LQR 54.0, Dynamic MPC 60.5 degrees. At 40 m/s with
+  a 0.2 s lag: 15.2, 12.6, 5.0 and 9.1 degrees. On the 1 m/s grid the first speed with a phase margin
+  at or below zero is 61 m/s (Stanley, 0.1 s lag) and 56, 54 and 64 m/s (Stanley, LQR, MPC, 0.2 s lag);
+  none for Pure Pursuit up to 70 m/s, none with no lag. Task 19 refines these and tests them in
+  the nonlinear simulation. The benchmark runs at most 20 m/s, so most of that range is
+  extrapolation of the linear tire model.
+- **Dynamic LQR with no lag** has the smallest upward gain margin (1.27 at 40 m/s, about 2 dB) because
+  its crossover (36 rad/s) is close to Nyquist. A lag lowers the loop gain there and raises the
+  margin (5.2 with 0.1 s) while lowering the phase margin. That the sampling delay is the cause is my
+  reading of the crossover frequencies, not a separate test.
+- Pure Pursuit curves bend at 56 m/s where the lookahead reaches its 30 m clip.
+- Not in the margins: the steering and rate limits, and for the MPC everything that makes it differ
+  from its unconstrained first move.
