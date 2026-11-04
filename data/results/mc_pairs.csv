@@ -1,0 +1,37 @@
+family,scope,a,b,speed,difference,half_width,excludes_zero
+road,all,Dynamic LQR,Dynamic MPC,5.0,-0.000777,4e-05,True
+road,all,Dynamic LQR,Dynamic MPC,10.0,-0.001877,0.000213,True
+road,all,Dynamic LQR,Dynamic MPC,20.0,-0.008515,0.000572,True
+road,all,Pure Pursuit,Dynamic LQR,5.0,0.020924,0.000582,True
+road,all,Pure Pursuit,Dynamic LQR,10.0,0.067121,0.000991,True
+road,all,Pure Pursuit,Dynamic LQR,20.0,0.21155,0.001054,True
+road,all,Stanley,Dynamic LQR,5.0,0.028305,0.000561,True
+road,all,Stanley,Dynamic LQR,10.0,0.034522,0.00081,True
+road,all,Stanley,Dynamic LQR,20.0,0.153116,0.001211,True
+road,all,Pure Pursuit,Stanley,5.0,-0.007381,0.000118,True
+road,all,Pure Pursuit,Stanley,10.0,0.032599,0.000252,True
+road,all,Pure Pursuit,Stanley,20.0,0.058433,0.000775,True
+parking,all,Kinematic LQR,Kinematic MPC,0.5,-0.000669,3.8e-05,True
+parking,all,Kinematic LQR,Kinematic MPC,1.5,-0.001033,0.00013,True
+parking,all,Kinematic LQR,Kinematic MPC,3.0,-0.000859,0.000167,True
+parking,all,Pure Pursuit,Kinematic LQR,0.5,0.009365,0.001513,True
+parking,all,Pure Pursuit,Kinematic LQR,1.5,-0.048402,0.001231,True
+parking,all,Pure Pursuit,Kinematic LQR,3.0,-0.177269,0.001368,True
+parking,all,Stanley,Kinematic LQR,0.5,0.098057,0.001159,True
+parking,all,Stanley,Kinematic LQR,1.5,0.048096,0.001092,True
+parking,all,Stanley,Kinematic LQR,3.0,-0.08106,0.001059,True
+parking,all,Pure Pursuit,Stanley,0.5,-0.088692,0.001379,True
+parking,all,Pure Pursuit,Stanley,1.5,-0.096498,0.000976,True
+parking,all,Pure Pursuit,Stanley,3.0,-0.096209,0.001059,True
+parking,drivable,Kinematic LQR,Kinematic MPC,0.5,-0.000625,4.2e-05,True
+parking,drivable,Kinematic LQR,Kinematic MPC,1.5,-0.000922,0.000145,True
+parking,drivable,Kinematic LQR,Kinematic MPC,3.0,-0.000863,0.000173,True
+parking,drivable,Pure Pursuit,Kinematic LQR,0.5,0.012396,0.001693,True
+parking,drivable,Pure Pursuit,Kinematic LQR,1.5,-0.048529,0.001373,True
+parking,drivable,Pure Pursuit,Kinematic LQR,3.0,-0.175588,0.001524,True
+parking,drivable,Stanley,Kinematic LQR,0.5,0.09809,0.001301,True
+parking,drivable,Stanley,Kinematic LQR,1.5,0.048269,0.001221,True
+parking,drivable,Stanley,Kinematic LQR,3.0,-0.07489,0.001175,True
+parking,drivable,Pure Pursuit,Stanley,0.5,-0.085693,0.001542,True
+parking,drivable,Pure Pursuit,Stanley,1.5,-0.096798,0.00109,True
+parking,drivable,Pure Pursuit,Stanley,3.0,-0.100698,0.001181,True

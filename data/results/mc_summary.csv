@@ -1,0 +1,37 @@
+family,scope,controller,speed,seeds,runs,finished,mean_rms,half_width,rel_half_width,meets_target,n_required
+road,all,Pure Pursuit,5.0,150,600,600,0.084849,0.001033,0.012178,True,9
+road,all,Pure Pursuit,10.0,150,600,600,0.108237,0.001063,0.009825,True,6
+road,all,Pure Pursuit,20.0,150,600,600,0.256586,0.001797,0.007002,True,3
+road,all,Stanley,5.0,150,600,600,0.09223,0.001041,0.011286,True,8
+road,all,Stanley,10.0,150,600,600,0.075638,0.001222,0.016159,True,16
+road,all,Stanley,20.0,150,600,600,0.198152,0.001155,0.005827,True,3
+road,all,Dynamic LQR,5.0,150,600,600,0.063925,0.001591,0.024888,True,37
+road,all,Dynamic LQR,10.0,150,600,600,0.041116,0.001959,0.047647,True,135
+road,all,Dynamic LQR,20.0,150,600,600,0.045036,0.002192,0.048682,True,140
+road,all,Dynamic MPC,5.0,150,600,600,0.064703,0.001622,0.025065,True,38
+road,all,Dynamic MPC,10.0,150,600,600,0.042993,0.002102,0.048892,True,142
+road,all,Dynamic MPC,20.0,150,600,600,0.053551,0.002643,0.049351,True,144
+parking,all,Pure Pursuit,0.5,120,2280,2280,0.06609,0.001637,0.024774,True,29
+parking,all,Pure Pursuit,1.5,120,2280,2280,0.083914,0.001218,0.01452,True,10
+parking,all,Pure Pursuit,3.0,120,2280,2280,0.108661,0.001119,0.010297,True,5
+parking,all,Stanley,0.5,120,2280,2280,0.154783,0.000962,0.006217,True,2
+parking,all,Stanley,1.5,120,2280,2280,0.180412,0.000866,0.004799,True,2
+parking,all,Stanley,3.0,120,2280,2280,0.20487,0.000729,0.003557,True,1
+parking,all,Kinematic LQR,0.5,120,2280,2280,0.056726,0.001035,0.018238,True,16
+parking,all,Kinematic LQR,1.5,120,2280,2280,0.132315,0.000877,0.00663,True,3
+parking,all,Kinematic LQR,3.0,120,2280,2280,0.28593,0.000999,0.003495,True,1
+parking,all,Kinematic MPC,0.5,120,2280,2280,0.057395,0.001043,0.018181,True,16
+parking,all,Kinematic MPC,1.5,120,2280,2280,0.133348,0.000876,0.006568,True,3
+parking,all,Kinematic MPC,3.0,120,2280,2280,0.286788,0.000976,0.003405,True,1
+parking,drivable,Pure Pursuit,0.5,120,2040,2040,0.068402,0.001828,0.026719,True,34
+parking,drivable,Pure Pursuit,1.5,120,2040,2040,0.086014,0.001357,0.01578,True,12
+parking,drivable,Pure Pursuit,3.0,120,2040,2040,0.109702,0.001244,0.011344,True,7
+parking,drivable,Stanley,0.5,120,2040,2040,0.154096,0.001074,0.006969,True,3
+parking,drivable,Stanley,1.5,120,2040,2040,0.182812,0.000965,0.00528,True,2
+parking,drivable,Stanley,3.0,120,2040,2040,0.210399,0.000813,0.003862,True,1
+parking,drivable,Kinematic LQR,0.5,120,2040,2040,0.056006,0.001156,0.020635,True,21
+parking,drivable,Kinematic LQR,1.5,120,2040,2040,0.134543,0.000982,0.007298,True,3
+parking,drivable,Kinematic LQR,3.0,120,2040,2040,0.285289,0.001113,0.003902,True,1
+parking,drivable,Kinematic MPC,0.5,120,2040,2040,0.056631,0.001166,0.020584,True,20
+parking,drivable,Kinematic MPC,1.5,120,2040,2040,0.135464,0.000979,0.007225,True,3
+parking,drivable,Kinematic MPC,3.0,120,2040,2040,0.286152,0.00109,0.003809,True,1

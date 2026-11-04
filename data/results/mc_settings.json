@@ -1,0 +1,169 @@
+{
+  "n_seeds": {
+    "road": 150,
+    "parking": 120
+  },
+  "target_rel_half_width": 0.05,
+  "level": 0.95,
+  "pairs": {
+    "road": [
+      [
+        "Dynamic LQR",
+        "Dynamic MPC"
+      ],
+      [
+        "Pure Pursuit",
+        "Dynamic LQR"
+      ],
+      [
+        "Stanley",
+        "Dynamic LQR"
+      ],
+      [
+        "Pure Pursuit",
+        "Stanley"
+      ]
+    ],
+    "parking": [
+      [
+        "Kinematic LQR",
+        "Kinematic MPC"
+      ],
+      [
+        "Pure Pursuit",
+        "Kinematic LQR"
+      ],
+      [
+        "Stanley",
+        "Kinematic LQR"
+      ],
+      [
+        "Pure Pursuit",
+        "Stanley"
+      ]
+    ]
+  },
+  "road": {
+    "family": "road",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "offset_range_m": 0.3,
+    "heading_range_rad": 0.1,
+    "controllers": [
+      "Pure Pursuit",
+      "Stanley",
+      "Dynamic LQR",
+      "Dynamic MPC"
+    ],
+    "paths": [
+      "road_curve_v10",
+      "road_curve_v20",
+      "road_curve_v5",
+      "road_double_shift_v10",
+      "road_double_shift_v20",
+      "road_double_shift_v5",
+      "road_lateral_shift_v10",
+      "road_lateral_shift_v20",
+      "road_lateral_shift_v5",
+      "road_s_curve_v10",
+      "road_s_curve_v20",
+      "road_s_curve_v5"
+    ],
+    "plant_dt_s": 0.05,
+    "arrive_m": 0.5,
+    "max_error_m": 25.0,
+    "dynamic_params": {
+      "mass": 1500.0,
+      "inertia": 2500.0,
+      "lf": 1.2,
+      "lr": 1.5,
+      "cf": 80000.0,
+      "cr": 100000.0,
+      "max_steer": 0.6,
+      "max_steer_rate": 0.8,
+      "v_min": 1.0,
+      "steer_lag": 0.0
+    },
+    "metrics_v_drive": 0.01,
+    "metrics_deadband": 0.01
+  },
+  "parking": {
+    "family": "parking",
+    "speeds": [
+      0.5,
+      1.5,
+      3.0
+    ],
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "offset_range_m": 0.3,
+    "heading_range_rad": 0.1,
+    "controllers": [
+      "Pure Pursuit",
+      "Stanley",
+      "Kinematic LQR",
+      "Kinematic MPC"
+    ],
+    "paths": [
+      "rs_ahead",
+      "rs_behind",
+      "rs_diag",
+      "rs_lane_shift",
+      "rs_parallel_park",
+      "rs_reverse_in",
+      "rs_side_slot",
+      "rs_three_point",
+      "rs_u_turn",
+      "thesis_hybrid_seed0",
+      "thesis_hybrid_seed1",
+      "thesis_hybrid_seed2",
+      "thesis_hybrid_seed3",
+      "thesis_hybrid_seed4",
+      "thesis_theta_star_tight_seed0",
+      "thesis_theta_star_tight_seed1",
+      "thesis_theta_star_tight_seed2",
+      "thesis_theta_star_tight_seed3",
+      "thesis_theta_star_tight_seed4"
+    ],
+    "runner": {
+      "speed": 1.5,
+      "accel": 1.0,
+      "v_floor": 0.2,
+      "arrive": 0.03,
+      "settle": 0.02,
+      "settle_timeout": 5.0,
+      "dt": 0.05,
+      "max_time": 300.0
+    },
+    "vehicle": {
+      "wheelbase": 2.7,
+      "max_steer": 0.6,
+      "max_steer_rate": 0.8,
+      "steer_lag": 0.0
+    },
+    "friction_mu": 0.8,
+    "gravity": 9.81,
+    "metrics_v_drive": 0.01,
+    "metrics_deadband": 0.01
+  },
+  "git_commit": "d44377d1b5ac90fbdb6770075599b49aad351d7a",
+  "git_dirty": false,
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "osqp": "1.1.3",
+    "control": "0.10.2",
+    "matplotlib": "3.11.2"
+  }
+}
