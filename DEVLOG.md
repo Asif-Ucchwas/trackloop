@@ -248,3 +248,12 @@
 - Steering angle limit: not a cause. Tire saturation: cannot be tested, the simulation has linear tires.
 - Still open: why LQR and MPC leave the linear model near 1e-2 m past the stability limit (Task 19).
 - Stage 5 done. Next: Stage 6, Task 21, system identification.
+
+## Task 21: simulated identification data
+
+- `sysid_data.py` generates noisy yaw rate and lateral acceleration from the dynamic model under a sweep or a random
+  binary steering signal; seeded, with the settings and true parameters written beside each CSV. 7 tests (314 total).
+- Finding before estimating: m, Iz, cf and cr scaled together change nothing, so mass is not identifiable from these
+  signals. The syllabus's four parameters become three (cf, cr, Iz with mass fixed) in Task 22.
+- The random signal is rate limited on 14.8 percent of steps; the file holds the applied steering angle, not the command.
+- Steering is treated as measured exactly (an easier problem than a real one); noise levels are my choice.

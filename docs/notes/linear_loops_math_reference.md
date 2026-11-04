@@ -284,3 +284,71 @@ second column removes its own constraints from the QP and the third removes both
 Summary: the linear models are good to a few percent for offsets up to about 0.25 m in all four controllers, and
 for larger offsets they ignore the steering rate limit, which is the first nonlinearity to bite. They are not a model
 of tire saturation or of anything beyond straight-line driving at constant speed.
+
+## System identification data (Task 21)
+
+Code: `src/trackloop/sysid_data.py`. Script: `scripts/make_sysid_data.py`. Data: `data/sysid/sweep_v15.csv`,
+`prbs_v15.csv` and their `.json` files (settings and the true parameters). Figure: `docs/figures/sysid_data.png`.
+
+**This is simulated data.** The vehicle is the dynamic model of `models/dynamic.py` with the nominal parameters
+(m = 1500 kg, Iz = 2500 kg m^2, lf = 1.2 m, lr = 1.5 m, cf = 80000, cr = 100000 N/rad). Nothing here supports a
+claim about identifying a real vehicle; that would need data from a real car.
+
+### What the estimator is given and what it is not
+
+- **Given** (columns of the CSV): time `t`, the steering angle `delta` in force over each 0.01 s step (the angle after
+  the plant's rate and angle limits, held constant over the step), the measured yaw rate `r_meas` and the measured
+  lateral acceleration `ay_meas`. The speed is constant and known (15 m/s). The steering angle is treated as measured
+  exactly: this is an assumption that makes the problem easier than a real one, where the steering sensor also has
+  noise and an offset. Task 23 can relax it.
+- **Not given:** the lateral velocity (`vy_true` is in the file only to check results) and the true yaw rate and
+  acceleration (`r_true`, `ay_true`, there to measure the noise and the fit).
+- **Lateral acceleration** is the body-frame accelerometer reading, ay = vy_dot + vx r = (Fyf cos(delta) + Fyr)/m.
+- **Noise:** independent Gaussian, standard deviation 0.003 rad/s on yaw rate and 0.05 m/s^2 on lateral acceleration
+  (about 0.17 deg/s and 0.005 g). These are my choices for a plausible low-cost sensor, not figures from a datasheet.
+  The noise has its own seeded random stream, so a dataset's noise is the same for either excitation signal.
+
+### Excitation
+
+| signal | definition | peak steering | RMS yaw rate | RMS ay | SNR (yaw rate, ay) | steps limited |
+|---|---|---|---|---|---|---|
+| sweep | linear chirp 0.1 to 3 Hz over 40 s, amplitude 0.03 rad | 0.030 rad | 0.070 rad/s | 0.92 m/s^2 | 23, 18 | 0 % |
+| prbs | random plus or minus 0.03 rad, each level held 0.25 s | 0.030 rad | 0.102 rad/s | 1.34 m/s^2 | 34, 27 | 14.8 % |
+
+SNR is the RMS of the true signal over the noise standard deviation, over the whole record. At 15 m/s the lateral
+dynamics have a pair of poles at -8.54 +/- 4.23j rad/s (1.5 Hz natural frequency), inside the sweep band and in the
+region where the random signal has most of its power (spectrum panel of the figure). The amplitude 0.03 rad keeps
+the sweep's steering rate (peak 0.56 rad/s) below the 0.8 rad/s plant limit. The random signal switches by 0.06 rad,
+which needs 0.075 s at the limit, so 14.8 percent of its steps are rate limited: the commanded and applied angles
+differ at the edges. Because the data file holds the applied angle, this does not matter for identification, but the
+command column should not be used as the input.
+
+### What the data can and cannot tell: only three parameter combinations
+
+**Formula.** With the geometry lf, lr known, the measured signals depend on the parameters only through
+cf/m, cr/m and Iz/m. In particular, multiplying m, Iz, cf and cr by the same factor k leaves every signal unchanged.
+
+**Derivation.** The model is vy_dot = (cf alpha_f cos(delta) + cr alpha_r)/m - vx r,
+r_dot = (lf cf alpha_f cos(delta) - lr cr alpha_r)/Iz and ay = (cf alpha_f cos(delta) + cr alpha_r)/m, with the slip
+angles alpha_f and alpha_r functions of velocities, yaw rate, delta and geometry only. The parameters appear only as
+A = cf/m, B = cr/m, C = lf cf/Iz and D = lr cr/Iz. These four are not independent: C/A = lf m/Iz and D/B = lr m/Iz,
+so (C/A)/(D/B) = lf/lr, which is known. Three numbers remain: cf/m, cr/m and Iz/m. The four unknowns m, Iz, cf, cr
+therefore cannot all be recovered from these measurements, whatever the noise level or the excitation: one direction
+in parameter space has no effect on the data.
+
+**Worked example, 15 m/s.** cf/m = 53.33 and cr/m = 66.67 (N per rad per kg, that is m/s^2 per rad) and Iz/m = 1.667 m^2. Scaling
+all four by k = 1.7 (m = 2550, Iz = 4250, cf = 136000, cr = 170000) gives the same three numbers and, in
+`tests/test_sysid_data.py`, the same yaw rate, lateral acceleration and lateral velocity to a relative difference
+of 1e-9.
+
+**Consequence for Task 22.** The syllabus lists cornering stiffnesses, mass and yaw inertia. Mass cannot be estimated
+separately from these signals. Task 22 will estimate cf, cr and Iz with the mass fixed at its known value (a
+vehicle's mass can be weighed), and will report that choice. Whether the three combinations are well determined at
+the noise level used here, and how correlated their estimates are, is for Tasks 22 and 23 to measure; the argument
+above shows only that three is the most that can be determined.
+
+### Reproducing
+
+`python scripts/make_sysid_data.py` regenerates all four data files and the figure from the seed (21). The files are
+rounded to six decimals, so a last digit could differ between machines: I check the line counts (4001 for each CSV)
+rather than checksums.

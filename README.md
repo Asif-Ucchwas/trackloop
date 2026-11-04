@@ -218,3 +218,17 @@ The linear models are good to a few percent up to about a 0.25 m offset. The ste
 these runs. Tire saturation could not be tested: the simulation's tires are linear in slip angle, so the margins and
 stability limits are optimistic about large manoeuvres. See
 [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), part 6.
+
+## Simulated identification data (Task 21)
+
+Stage 6 starts with data to identify. `scripts/make_sysid_data.py` drives the dynamic model at 15 m/s with a steering
+sweep (0.1 to 3 Hz) and with a random binary steering signal, and records yaw rate and lateral acceleration with
+Gaussian noise (0.003 rad/s and 0.05 m/s^2). **This is simulated data**; it says nothing about identifying a real
+vehicle.
+
+![Simulated identification data](docs/figures/sysid_data.png)
+
+One result before any estimation: scaling mass, yaw inertia and both cornering stiffnesses by the same factor leaves
+every measured signal unchanged (shown by derivation and by a test), so only cf/m, cr/m and Iz/m can be identified.
+Task 22 therefore fixes the mass and estimates cf, cr and Iz. See
+[docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), "System identification data".
