@@ -2,14 +2,55 @@
 
 Path-tracking controllers on a vehicle model, with stability analysis and system identification.
 
-Status: in progress.
+Status: Phase A (simulation study) is written up in this README, section by section; everything here is simulation, nothing was run on a real vehicle.
 
-## Current results
+## Overview
 
-Stages 1 and 2 are done: kinematic and dynamic bicycle models, and four tracking
-controllers (Pure Pursuit, Stanley, scheduled LQR with curvature feedforward, and
-linear MPC solved with OSQP). Benchmarks, stability analysis and system
-identification are still to come.
+TrackLoop compares four path-tracking controllers (Pure Pursuit, Stanley, scheduled LQR with curvature feedforward, and linear MPC solved with OSQP) on kinematic and dynamic bicycle models, with paths from my own planners. It then asks three further questions: where do the linear closed-loop models of the controllers stop being valid, how well can the vehicle parameters be identified from noisy data, and does designing the controllers on the identified model remove the penalty of a wrong model. Every section below states its limits; the plant and the controllers' design model are usually the same simulated model, so the results check the algebra and the comparisons, not a real vehicle.
+
+![Architecture](docs/figures/architecture.png)
+
+Code is in `src/trackloop/` (models, controllers, runners, metrics, analysis), one script per result in `scripts/`, tests in `tests/`, results in `data/results/`, figures in `docs/figures/`, and derivations in `docs/notes/`.
+
+## Main results
+
+| Question | Result (simulation) | Section |
+| --- | --- | --- |
+| Road family, 20 m/s, mean RMS lateral error | LQR 0.045 m, MPC 0.054 m, Stanley 0.198 m, Pure Pursuit 0.257 m; LQR and MPC are partly outside the linear tire range | Monte Carlo benchmark (Task 16), `BENCHMARKS.md` |
+| Parking family, 1.5 and 3 m/s | Pure Pursuit 0.084 and 0.109 m against 0.132 and 0.286 m for the kinematic LQR; cause not investigated | Monte Carlo benchmark (Task 16) |
+| Phase margin at 10 m/s, 0.1 s steering lag | Pure Pursuit 33, Stanley 37, LQR 54, MPC 61 degrees | Gain and phase margins (Task 18) |
+| Linear model against the simulation | within a few percent up to about a 0.25 m offset; the 0.8 rad/s steering rate limit explains the gap | Linearisation (Task 20) |
+| Identification from simulated noisy data | cf, cr, Iz within 0.2 percent; mass is not identifiable | Tasks 21 to 23 |
+| Wrong-model penalty, combined case, 20 m/s | LQR 2.6 times the nominal error, 1.4 with the identified model; MPC 2.8 and 1.6 | Controllers on the identified model (Task 24) |
+
+![Road benchmark: RMS lateral error per controller and speed](docs/figures/benchmark_road.png)
+
+![Controllers on the identified model](docs/figures/identified_design.png)
+
+## Reproduce each stage
+
+Run from the repository root after `pip install -e ".[dev]"`. One command per stage; the sections below list every script and the notes behind each number.
+
+| Stage | Command | Writes |
+| --- | --- | --- |
+| 1 and 2: models and controllers | `python scripts/plot_recovery.py` | `docs/figures/lqr_vs_mpc_recovery.png` |
+| 3: benchmark, parking family | `python scripts/run_benchmark_parking.py` | `data/results/benchmark_parking.csv` |
+| 3: benchmark, road family | `python scripts/run_benchmark_road.py` | `data/results/benchmark_road.csv` |
+| 3: Monte Carlo and `BENCHMARKS.md` | `python scripts/run_monte_carlo.py && python scripts/make_benchmarks_md.py` | `data/results/mc_*.csv`, `BENCHMARKS.md` |
+| 4: model-error cases | `python scripts/run_model_error.py` | `data/results/model_error_*.csv` |
+| 5: linear loops and margins | `python scripts/validate_linear_loops.py && python scripts/plot_margins.py` | `data/results/linear_loops_validation.csv`, `margins_vs_speed.csv` |
+| 5: stability limits | `python scripts/check_stability_limits.py` | `data/results/stability_limits.csv` |
+| 5: where linearisation stops | `python scripts/linearization_limits.py` | `data/results/linearization_limits.csv` |
+| 6: identification data and fit | `python scripts/make_sysid_data.py && python scripts/run_identification.py` | `data/sysid/`, `data/results/identification.csv` |
+| 6: identification quality | `python scripts/study_identifiability.py` | `data/results/identifiability_*.csv` |
+| 6: controllers on the identified model | `python scripts/run_identified_design.py` | `data/results/identified_design*.csv` |
+| Tests | `python -m pytest -q` | |
+
+The Monte Carlo run is the longest (34,560 runs); `scripts/study_identifiability.py` takes a few minutes. The planner export scripts need the thesis and MultiPlan repositories (see "Paths from my planners"); the exported paths are already committed in `data/paths/`.
+
+## Stages 1 and 2: models and controllers
+
+Kinematic and dynamic bicycle models, and four tracking controllers (Pure Pursuit, Stanley, scheduled LQR with curvature feedforward, and linear MPC solved with OSQP). The early results below were written before the later stages.
 
 ![LQR and MPC recovering from a 5 m lateral offset](docs/figures/lqr_vs_mpc_recovery.png)
 
