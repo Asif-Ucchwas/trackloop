@@ -7,10 +7,17 @@ name = "trackloop"
 version = "0.1.0"
 description = "Path-tracking controllers on a vehicle model, with stability analysis and system identification"
 requires-python = ">=3.10"
+authors = [{name = "Md Asifuzzaman"}]
+license = {text = "MIT"}
+readme = "README.md"
+classifiers = ["License :: OSI Approved :: MIT License", "Programming Language :: Python :: 3"]
 dependencies = ["numpy", "scipy", "matplotlib", "control", "osqp"]
 
 [project.optional-dependencies]
 dev = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/Asif-Ucchwas/trackloop"
 
 [tool.setuptools.packages.find]
 where = ["src"]

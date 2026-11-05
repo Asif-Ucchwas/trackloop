@@ -338,3 +338,16 @@ Open and not explained:
 - Why at 5 m/s the nominal design beats the true-parameter design on RMS error in softer plants.
 - Tire saturation cannot be tested: the simulated tires are linear.
 - Everything here is simulation with placeholder vehicle parameters; nothing was tested on a real vehicle.
+
+## Task 28: repository audit and release
+
+- Audit of the tracked files (grep, read-only): no local paths or machine names, no unfinished-work markers, no tokens or passwords, no mentions
+  of assistants, no attribution trailers in the whole history. The "personal data" pattern matched only digits inside numbers.
+  The largest tracked files are `mc_parking.csv` (1.8 MB) and `model_error_parking.csv` (1.2 MB). CI passed on GitHub for Tasks 26 and 27.
+- Found and fixed: no LICENSE (added MIT, copyright Md Asifuzzaman), no authors, license, readme or URL in `pyproject.toml`, two README
+  sentences that still said the road family "will be" built and "comes next", and the GitHub description ended in "Work in progress".
+- `tests/test_repo_hygiene.py` keeps the first two results true: no local paths or unfinished markers in text files, licence and metadata
+  present, no attribution trailers in the history. 373 tests.
+- Left as they are: four diagnostic scripts named `scripts/test_*.py` (they are run by hand, not collected by pytest, and the notes
+  refer to them by name); pyflakes was not run because it is not installed in the venv.
+- Tag `v1.0-portfolio` is created on this commit once CI passes on it.

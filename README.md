@@ -4,7 +4,7 @@
 
 Path-tracking controllers on a vehicle model, with stability analysis and system identification.
 
-Status: Phase A (simulation study) is written up in this README, section by section; everything here is simulation, nothing was run on a real vehicle.
+Status: version 1.0 (tag `v1.0-portfolio`). Everything here is simulation with placeholder vehicle parameters; nothing was run on a real vehicle.
 
 ## Overview
 
@@ -133,7 +133,7 @@ Reproduce: `python scripts/build_testset_manifest.py`, `python scripts/check_tes
 
 ## Speed applicability
 
-The benchmark speeds from the model validation are 5, 10 and 20 m/s, but at those speeds the frozen paths need far more lateral acceleration than tires give: a 5 m arc needs 5.0 m/s^2 at 5 m/s, 20 at 10 m/s and 80 at 20 m/s, against about 7.8 (mu = 0.8, a placeholder). Only the straight path is drivable at 10 and 20 m/s. So the 19 frozen paths are the parking family for low speeds, and a road family with paths scaled to each speed will be exported and frozen before any benchmark run. `scripts/speed_applicability.py` computes the table (`data/results/speed_applicability.csv`), and the figure above has a third panel for it.
+The benchmark speeds from the model validation are 5, 10 and 20 m/s, but at those speeds the frozen paths need far more lateral acceleration than tires give: a 5 m arc needs 5.0 m/s^2 at 5 m/s, 20 at 10 m/s and 80 at 20 m/s, against about 7.8 (mu = 0.8, a placeholder). Only the straight path is drivable at 10 and 20 m/s. So the 19 frozen paths are the parking family for low speeds, and a road family with paths scaled to each speed was exported and frozen before any benchmark run (see "Road family"). `scripts/speed_applicability.py` computes the table (`data/results/speed_applicability.csv`), and the figure above has a third panel for it.
 
 ## Metrics
 
@@ -143,7 +143,7 @@ All scores come from one definition (`src/trackloop/metrics.py`, `docs/notes/met
 
 ## Benchmark, parking family
 
-`scripts/run_benchmark_parking.py` runs the four kinematic controllers on all 19 frozen paths at 0.5, 1.5 and 3.0 m/s with 5 seeds (1140 runs, `data/results/benchmark_parking.csv`). The seed sets the start offset and heading error, the same for every controller. Runs that break a limit are flagged, not dropped; the settings, git commit and package versions are saved with the results (`docs/notes/benchmark_design.md`). All runs finish. Kinematic LQR and MPC are indistinguishable (the plant is their own design model); at 3.0 m/s Pure Pursuit has the lowest median error on 18 of 19 paths, and LQR and MPC reach 1.0 to 1.5 m on the two tightest parking maneuvers. The cause is suspected, not shown. The road family with the dynamic controllers comes next.
+`scripts/run_benchmark_parking.py` runs the four kinematic controllers on all 19 frozen paths at 0.5, 1.5 and 3.0 m/s with 5 seeds (1140 runs, `data/results/benchmark_parking.csv`). The seed sets the start offset and heading error, the same for every controller. Runs that break a limit are flagged, not dropped; the settings, git commit and package versions are saved with the results (`docs/notes/benchmark_design.md`). All runs finish. Kinematic LQR and MPC are indistinguishable (the plant is their own design model); at 3.0 m/s Pure Pursuit has the lowest median error on 18 of 19 paths, and LQR and MPC reach 1.0 to 1.5 m on the two tightest parking maneuvers. The cause is suspected, not shown. The road family with the dynamic controllers follows below.
 
 ![benchmark](docs/figures/benchmark_parking.png)
 
@@ -328,3 +328,7 @@ and Iz/m enter the design). Steering lag is not identified, so the lag cases are
 
 **Limit:** the identification data come from the same model as the plant, with exact steering measurement; this is a best case. See
 [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), "Controllers designed on the identified model".
+
+## License
+
+MIT. See [LICENSE](LICENSE).
