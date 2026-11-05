@@ -1,0 +1,253 @@
+controller,speed,case,variant,runs,finished,median_rms,rms_ratio_vs_nominal_plant,rms_ratio_vs_oracle,effort_ratio_vs_oracle
+Pure Pursuit,5.0,mass_p20,nominal,20,20,0.08863,1.0467,1.0,1.0
+Pure Pursuit,5.0,mass_p20,identified,20,20,0.08863,1.0467,1.0,1.0
+Pure Pursuit,5.0,mass_p20,oracle,20,20,0.08863,1.0467,1.0,1.0
+Pure Pursuit,5.0,mass_m20,nominal,20,20,0.08139,0.9652,1.0,1.0
+Pure Pursuit,5.0,mass_m20,identified,20,20,0.08139,0.9652,1.0,1.0
+Pure Pursuit,5.0,mass_m20,oracle,20,20,0.08139,0.9652,1.0,1.0
+Pure Pursuit,5.0,stiff_p30,nominal,20,20,0.08091,0.9617,1.0,1.0
+Pure Pursuit,5.0,stiff_p30,identified,20,20,0.08091,0.9617,1.0,1.0
+Pure Pursuit,5.0,stiff_p30,oracle,20,20,0.08091,0.9617,1.0,1.0
+Pure Pursuit,5.0,stiff_m30,nominal,20,20,0.09405,1.1123,1.0,1.0
+Pure Pursuit,5.0,stiff_m30,identified,20,20,0.09405,1.1123,1.0,1.0
+Pure Pursuit,5.0,stiff_m30,oracle,20,20,0.09405,1.1123,1.0,1.0
+Pure Pursuit,5.0,lag_0.1,nominal,20,20,0.07575,0.8912,1.0,1.0
+Pure Pursuit,5.0,lag_0.1,identified,20,20,0.07575,0.8912,1.0,1.0
+Pure Pursuit,5.0,lag_0.1,oracle,20,20,0.07575,0.8912,1.0,1.0
+Pure Pursuit,5.0,lag_0.2,nominal,20,20,0.07399,0.8728,1.0,1.0
+Pure Pursuit,5.0,lag_0.2,identified,20,20,0.07399,0.8728,1.0,1.0
+Pure Pursuit,5.0,lag_0.2,oracle,20,20,0.07399,0.8728,1.0,1.0
+Pure Pursuit,5.0,combined,nominal,20,20,0.09861,1.1478,1.0,1.0
+Pure Pursuit,5.0,combined,identified,20,20,0.09861,1.1478,1.0,1.0
+Pure Pursuit,5.0,combined,oracle,20,20,0.09861,1.1478,1.0,1.0
+Pure Pursuit,10.0,mass_p20,nominal,20,20,0.13003,1.1659,1.0,1.0
+Pure Pursuit,10.0,mass_p20,identified,20,20,0.13003,1.1659,1.0,1.0
+Pure Pursuit,10.0,mass_p20,oracle,20,20,0.13003,1.1659,1.0,1.0
+Pure Pursuit,10.0,mass_m20,nominal,20,20,0.08994,0.8427,1.0,1.0
+Pure Pursuit,10.0,mass_m20,identified,20,20,0.08994,0.8427,1.0,1.0
+Pure Pursuit,10.0,mass_m20,oracle,20,20,0.08994,0.8427,1.0,1.0
+Pure Pursuit,10.0,stiff_p30,nominal,20,20,0.08747,0.8193,1.0,1.0
+Pure Pursuit,10.0,stiff_p30,identified,20,20,0.08747,0.8193,1.0,1.0
+Pure Pursuit,10.0,stiff_p30,oracle,20,20,0.08747,0.8193,1.0,1.0
+Pure Pursuit,10.0,stiff_m30,nominal,20,20,0.1524,1.3631,1.0,1.0
+Pure Pursuit,10.0,stiff_m30,identified,20,20,0.1524,1.3631,1.0,1.0
+Pure Pursuit,10.0,stiff_m30,oracle,20,20,0.1524,1.3631,1.0,1.0
+Pure Pursuit,10.0,lag_0.1,nominal,20,20,0.10958,1.0115,1.0,1.0
+Pure Pursuit,10.0,lag_0.1,identified,20,20,0.10958,1.0115,1.0,1.0
+Pure Pursuit,10.0,lag_0.1,oracle,20,20,0.10958,1.0115,1.0,1.0
+Pure Pursuit,10.0,lag_0.2,nominal,20,20,0.11571,1.0829,1.0,1.0
+Pure Pursuit,10.0,lag_0.2,identified,20,20,0.11571,1.0829,1.0,1.0
+Pure Pursuit,10.0,lag_0.2,oracle,20,20,0.11571,1.0829,1.0,1.0
+Pure Pursuit,10.0,combined,nominal,20,20,0.18399,1.649,1.0,1.0
+Pure Pursuit,10.0,combined,identified,20,20,0.18399,1.649,1.0,1.0
+Pure Pursuit,10.0,combined,oracle,20,20,0.18399,1.649,1.0,1.0
+Pure Pursuit,20.0,mass_p20,nominal,20,20,0.30197,1.2044,1.0,1.0
+Pure Pursuit,20.0,mass_p20,identified,20,20,0.30197,1.2044,1.0,1.0
+Pure Pursuit,20.0,mass_p20,oracle,20,20,0.30197,1.2044,1.0,1.0
+Pure Pursuit,20.0,mass_m20,nominal,20,20,0.20077,0.7997,1.0,1.0
+Pure Pursuit,20.0,mass_m20,identified,20,20,0.20077,0.7997,1.0,1.0
+Pure Pursuit,20.0,mass_m20,oracle,20,20,0.20077,0.7997,1.0,1.0
+Pure Pursuit,20.0,stiff_p30,nominal,20,20,0.19318,0.7692,1.0,1.0
+Pure Pursuit,20.0,stiff_p30,identified,20,20,0.19318,0.7692,1.0,1.0
+Pure Pursuit,20.0,stiff_p30,oracle,20,20,0.19318,0.7692,1.0,1.0
+Pure Pursuit,20.0,stiff_m30,nominal,20,20,0.36191,1.4438,1.0,1.0
+Pure Pursuit,20.0,stiff_m30,identified,20,20,0.36191,1.4438,1.0,1.0
+Pure Pursuit,20.0,stiff_m30,oracle,20,20,0.36191,1.4438,1.0,1.0
+Pure Pursuit,20.0,lag_0.1,nominal,20,20,0.25746,1.0231,1.0,1.0
+Pure Pursuit,20.0,lag_0.1,identified,20,20,0.25746,1.0231,1.0,1.0
+Pure Pursuit,20.0,lag_0.1,oracle,20,20,0.25746,1.0231,1.0,1.0
+Pure Pursuit,20.0,lag_0.2,nominal,20,20,0.27946,1.0971,1.0,1.0
+Pure Pursuit,20.0,lag_0.2,identified,20,20,0.27946,1.0971,1.0,1.0
+Pure Pursuit,20.0,lag_0.2,oracle,20,20,0.27946,1.0971,1.0,1.0
+Pure Pursuit,20.0,combined,nominal,20,20,0.44932,1.7993,1.0,1.0
+Pure Pursuit,20.0,combined,identified,20,20,0.44932,1.7993,1.0,1.0
+Pure Pursuit,20.0,combined,oracle,20,20,0.44932,1.7993,1.0,1.0
+Stanley,5.0,mass_p20,nominal,20,20,0.08475,0.9142,1.0,1.0
+Stanley,5.0,mass_p20,identified,20,20,0.08475,0.9142,1.0,1.0
+Stanley,5.0,mass_p20,oracle,20,20,0.08475,0.9142,1.0,1.0
+Stanley,5.0,mass_m20,nominal,20,20,0.09976,1.0927,1.0,1.0
+Stanley,5.0,mass_m20,identified,20,20,0.09976,1.0927,1.0,1.0
+Stanley,5.0,mass_m20,oracle,20,20,0.09976,1.0927,1.0,1.0
+Stanley,5.0,stiff_p30,nominal,20,20,0.10105,1.1083,1.0,1.0
+Stanley,5.0,stiff_p30,identified,20,20,0.10105,1.1083,1.0,1.0
+Stanley,5.0,stiff_p30,oracle,20,20,0.10105,1.1083,1.0,1.0
+Stanley,5.0,stiff_m30,nominal,20,20,0.07532,0.8176,1.0,1.0
+Stanley,5.0,stiff_m30,identified,20,20,0.07532,0.8176,1.0,1.0
+Stanley,5.0,stiff_m30,oracle,20,20,0.07532,0.8176,1.0,1.0
+Stanley,5.0,lag_0.1,nominal,20,20,0.08386,0.9216,1.0,1.0
+Stanley,5.0,lag_0.1,identified,20,20,0.08386,0.9216,1.0,1.0
+Stanley,5.0,lag_0.1,oracle,20,20,0.08386,0.9216,1.0,1.0
+Stanley,5.0,lag_0.2,nominal,20,20,0.08018,0.878,1.0,1.0
+Stanley,5.0,lag_0.2,identified,20,20,0.08018,0.878,1.0,1.0
+Stanley,5.0,lag_0.2,oracle,20,20,0.08018,0.878,1.0,1.0
+Stanley,5.0,combined,nominal,20,20,0.0579,0.6517,1.0,1.0
+Stanley,5.0,combined,identified,20,20,0.0579,0.6517,1.0,1.0
+Stanley,5.0,combined,oracle,20,20,0.0579,0.6517,1.0,1.0
+Stanley,10.0,mass_p20,nominal,20,20,0.09784,1.248,1.0,1.0
+Stanley,10.0,mass_p20,identified,20,20,0.09784,1.248,1.0,1.0
+Stanley,10.0,mass_p20,oracle,20,20,0.09784,1.248,1.0,1.0
+Stanley,10.0,mass_m20,nominal,20,20,0.05745,0.779,1.0,1.0
+Stanley,10.0,mass_m20,identified,20,20,0.05745,0.779,1.0,1.0
+Stanley,10.0,mass_m20,oracle,20,20,0.05745,0.779,1.0,1.0
+Stanley,10.0,stiff_p30,nominal,20,20,0.05516,0.7467,1.0,1.0
+Stanley,10.0,stiff_p30,identified,20,20,0.05516,0.7467,1.0,1.0
+Stanley,10.0,stiff_p30,oracle,20,20,0.05516,0.7467,1.0,1.0
+Stanley,10.0,stiff_m30,nominal,20,20,0.12318,1.5365,1.0,1.0
+Stanley,10.0,stiff_m30,identified,20,20,0.12318,1.5365,1.0,1.0
+Stanley,10.0,stiff_m30,oracle,20,20,0.12318,1.5365,1.0,1.0
+Stanley,10.0,lag_0.1,nominal,20,20,0.07636,1.0093,1.0,1.0
+Stanley,10.0,lag_0.1,identified,20,20,0.07636,1.0093,1.0,1.0
+Stanley,10.0,lag_0.1,oracle,20,20,0.07636,1.0093,1.0,1.0
+Stanley,10.0,lag_0.2,nominal,20,20,0.08039,1.0504,1.0,1.0
+Stanley,10.0,lag_0.2,identified,20,20,0.08039,1.0504,1.0,1.0
+Stanley,10.0,lag_0.2,oracle,20,20,0.08039,1.0504,1.0,1.0
+Stanley,10.0,combined,nominal,20,20,0.15138,1.9223,1.0,1.0
+Stanley,10.0,combined,identified,20,20,0.15138,1.9223,1.0,1.0
+Stanley,10.0,combined,oracle,20,20,0.15138,1.9223,1.0,1.0
+Stanley,20.0,mass_p20,nominal,20,20,0.23394,1.2134,1.0,1.0
+Stanley,20.0,mass_p20,identified,20,20,0.23394,1.2134,1.0,1.0
+Stanley,20.0,mass_p20,oracle,20,20,0.23394,1.2134,1.0,1.0
+Stanley,20.0,mass_m20,nominal,20,20,0.15302,0.7891,1.0,1.0
+Stanley,20.0,mass_m20,identified,20,20,0.15302,0.7891,1.0,1.0
+Stanley,20.0,mass_m20,oracle,20,20,0.15302,0.7891,1.0,1.0
+Stanley,20.0,stiff_p30,nominal,20,20,0.14694,0.7569,1.0,1.0
+Stanley,20.0,stiff_p30,identified,20,20,0.14694,0.7569,1.0,1.0
+Stanley,20.0,stiff_p30,oracle,20,20,0.14694,0.7569,1.0,1.0
+Stanley,20.0,stiff_m30,nominal,20,20,0.28192,1.4586,1.0,1.0
+Stanley,20.0,stiff_m30,identified,20,20,0.28192,1.4586,1.0,1.0
+Stanley,20.0,stiff_m30,oracle,20,20,0.28192,1.4586,1.0,1.0
+Stanley,20.0,lag_0.1,nominal,20,20,0.19377,1.0022,1.0,1.0
+Stanley,20.0,lag_0.1,identified,20,20,0.19377,1.0022,1.0,1.0
+Stanley,20.0,lag_0.1,oracle,20,20,0.19377,1.0022,1.0,1.0
+Stanley,20.0,lag_0.2,nominal,20,20,0.19709,1.0166,1.0,1.0
+Stanley,20.0,lag_0.2,identified,20,20,0.19709,1.0166,1.0,1.0
+Stanley,20.0,lag_0.2,oracle,20,20,0.19709,1.0166,1.0,1.0
+Stanley,20.0,combined,nominal,20,20,0.3431,1.7724,1.0,1.0
+Stanley,20.0,combined,identified,20,20,0.3431,1.7724,1.0,1.0
+Stanley,20.0,combined,oracle,20,20,0.3431,1.7724,1.0,1.0
+Dynamic LQR,5.0,mass_p20,nominal,20,20,0.06254,0.9403,0.9529,1.002
+Dynamic LQR,5.0,mass_p20,identified,20,20,0.06549,0.9879,1.0002,1.0
+Dynamic LQR,5.0,mass_p20,oracle,20,20,0.06547,0.9877,1.0,1.0
+Dynamic LQR,5.0,mass_m20,nominal,20,20,0.06961,1.0746,1.0597,0.998
+Dynamic LQR,5.0,mass_m20,identified,20,20,0.06587,1.0139,1.0002,1.0
+Dynamic LQR,5.0,mass_m20,oracle,20,20,0.06585,1.0138,1.0,1.0
+Dynamic LQR,5.0,stiff_p30,nominal,20,20,0.07029,1.0873,1.0697,0.9977
+Dynamic LQR,5.0,stiff_p30,identified,20,20,0.0659,1.0161,1.0002,1.0
+Dynamic LQR,5.0,stiff_p30,oracle,20,20,0.06589,1.0161,1.0,1.0
+Dynamic LQR,5.0,stiff_m30,nominal,20,20,0.06028,0.8938,0.919,1.0043
+Dynamic LQR,5.0,stiff_m30,identified,20,20,0.06537,0.9759,1.0003,1.0
+Dynamic LQR,5.0,stiff_m30,oracle,20,20,0.06535,0.9755,1.0,1.0
+Dynamic LQR,5.0,lag_0.1,nominal,20,20,0.05946,0.9109,1.0,1.0
+Dynamic LQR,5.0,lag_0.1,identified,20,20,0.05946,0.9108,1.0,1.0
+Dynamic LQR,5.0,lag_0.1,oracle,20,20,0.05946,0.9109,1.0,1.0
+Dynamic LQR,5.0,lag_0.2,nominal,20,20,0.05412,0.8354,1.0,1.0
+Dynamic LQR,5.0,lag_0.2,identified,20,20,0.05411,0.8353,0.9998,1.0
+Dynamic LQR,5.0,lag_0.2,oracle,20,20,0.05412,0.8354,1.0,1.0
+Dynamic LQR,5.0,combined,nominal,20,20,0.05364,0.8128,0.9047,1.0072
+Dynamic LQR,5.0,combined,identified,20,20,0.05927,0.8963,0.9997,1.0
+Dynamic LQR,5.0,combined,oracle,20,20,0.05929,0.8966,1.0,1.0
+Dynamic LQR,10.0,mass_p20,nominal,20,20,0.0479,1.0594,1.0255,1.0019
+Dynamic LQR,10.0,mass_p20,identified,20,20,0.04684,1.0231,1.0,1.0
+Dynamic LQR,10.0,mass_p20,oracle,20,20,0.04684,1.0235,1.0,1.0
+Dynamic LQR,10.0,mass_m20,nominal,20,20,0.04602,1.0341,1.0546,0.9979
+Dynamic LQR,10.0,mass_m20,identified,20,20,0.04377,0.9755,1.0,1.0
+Dynamic LQR,10.0,mass_m20,oracle,20,20,0.04377,0.9751,1.0,1.0
+Dynamic LQR,10.0,stiff_p30,nominal,20,20,0.04634,1.0489,1.071,0.9976
+Dynamic LQR,10.0,stiff_p30,identified,20,20,0.0435,0.9739,1.0,1.0
+Dynamic LQR,10.0,stiff_p30,oracle,20,20,0.0435,0.9735,1.0,1.0
+Dynamic LQR,10.0,stiff_m30,nominal,20,20,0.05393,1.2049,1.1351,1.0042
+Dynamic LQR,10.0,stiff_m30,identified,20,20,0.04789,1.0672,0.9999,1.0
+Dynamic LQR,10.0,stiff_m30,oracle,20,20,0.0479,1.0674,1.0,1.0
+Dynamic LQR,10.0,lag_0.1,nominal,20,20,0.04387,0.9586,1.0,1.0
+Dynamic LQR,10.0,lag_0.1,identified,20,20,0.04387,0.9586,1.0,1.0
+Dynamic LQR,10.0,lag_0.1,oracle,20,20,0.04387,0.9586,1.0,1.0
+Dynamic LQR,10.0,lag_0.2,nominal,20,20,0.04258,0.9284,1.0,1.0
+Dynamic LQR,10.0,lag_0.2,identified,20,20,0.04258,0.9278,1.0,1.0
+Dynamic LQR,10.0,lag_0.2,oracle,20,20,0.04258,0.9284,1.0,1.0
+Dynamic LQR,10.0,combined,nominal,20,20,0.06472,1.4528,1.3559,1.0084
+Dynamic LQR,10.0,combined,identified,20,20,0.04963,1.1094,1.0,1.0
+Dynamic LQR,10.0,combined,oracle,20,20,0.04963,1.1089,1.0,1.0
+Dynamic LQR,20.0,mass_p20,nominal,20,20,0.04304,1.3124,1.2148,1.0009
+Dynamic LQR,20.0,mass_p20,identified,20,20,0.03709,1.0753,0.9994,1.0
+Dynamic LQR,20.0,mass_p20,oracle,20,20,0.03712,1.0759,1.0,1.0
+Dynamic LQR,20.0,mass_m20,nominal,20,20,0.03318,0.9533,1.0304,1.0
+Dynamic LQR,20.0,mass_m20,identified,20,20,0.03223,0.8957,0.9997,1.0
+Dynamic LQR,20.0,mass_m20,oracle,20,20,0.03223,0.8958,1.0,1.0
+Dynamic LQR,20.0,stiff_p30,nominal,20,20,0.03302,0.9902,1.0717,0.9997
+Dynamic LQR,20.0,stiff_p30,identified,20,20,0.03109,0.8764,0.9996,1.0
+Dynamic LQR,20.0,stiff_p30,oracle,20,20,0.03111,0.8767,1.0,1.0
+Dynamic LQR,20.0,stiff_m30,nominal,20,20,0.06324,1.8377,1.5565,1.0016
+Dynamic LQR,20.0,stiff_m30,identified,20,20,0.03919,1.1648,0.9993,1.0
+Dynamic LQR,20.0,stiff_m30,oracle,20,20,0.03922,1.166,1.0,1.0
+Dynamic LQR,20.0,lag_0.1,nominal,20,20,0.03416,1.0043,1.0,1.0
+Dynamic LQR,20.0,lag_0.1,identified,20,20,0.03416,1.004,1.0,1.0
+Dynamic LQR,20.0,lag_0.1,oracle,20,20,0.03416,1.0043,1.0,1.0
+Dynamic LQR,20.0,lag_0.2,nominal,20,20,0.03386,1.0026,1.0,1.0
+Dynamic LQR,20.0,lag_0.2,identified,20,20,0.03387,1.0027,1.0003,1.0
+Dynamic LQR,20.0,lag_0.2,oracle,20,20,0.03386,1.0026,1.0,1.0
+Dynamic LQR,20.0,combined,nominal,20,20,0.08745,2.608,1.9095,1.0
+Dynamic LQR,20.0,combined,identified,20,20,0.04125,1.3953,1.0005,1.0
+Dynamic LQR,20.0,combined,oracle,20,20,0.04123,1.3948,1.0,1.0
+Dynamic MPC,5.0,mass_p20,nominal,20,20,0.06309,0.9339,0.9467,1.0023
+Dynamic MPC,5.0,mass_p20,identified,20,20,0.06643,0.9888,1.0002,1.0
+Dynamic MPC,5.0,mass_p20,oracle,20,20,0.06642,0.9887,1.0,1.0
+Dynamic MPC,5.0,mass_m20,nominal,20,20,0.07123,1.0838,1.0686,0.9977
+Dynamic MPC,5.0,mass_m20,identified,20,20,0.06685,1.0125,1.0001,1.0
+Dynamic MPC,5.0,mass_m20,oracle,20,20,0.06685,1.0124,1.0,1.0
+Dynamic MPC,5.0,stiff_p30,nominal,20,20,0.07201,1.098,1.0801,0.9973
+Dynamic MPC,5.0,stiff_p30,identified,20,20,0.06689,1.0145,1.0001,1.0
+Dynamic MPC,5.0,stiff_p30,oracle,20,20,0.06689,1.0144,1.0,1.0
+Dynamic MPC,5.0,stiff_m30,nominal,20,20,0.06052,0.8849,0.9107,1.005
+Dynamic MPC,5.0,stiff_m30,identified,20,20,0.0663,0.9771,1.0002,1.0
+Dynamic MPC,5.0,stiff_m30,oracle,20,20,0.06628,0.9767,1.0,1.0
+Dynamic MPC,5.0,lag_0.1,nominal,20,20,0.06393,0.9513,1.0,1.0
+Dynamic MPC,5.0,lag_0.1,identified,20,20,0.06392,0.9512,0.9998,1.0
+Dynamic MPC,5.0,lag_0.1,oracle,20,20,0.06393,0.9513,1.0,1.0
+Dynamic MPC,5.0,lag_0.2,nominal,20,20,0.06373,0.9485,1.0,1.0
+Dynamic MPC,5.0,lag_0.2,identified,20,20,0.06372,0.9483,0.9998,1.0
+Dynamic MPC,5.0,lag_0.2,oracle,20,20,0.06373,0.9485,1.0,1.0
+Dynamic MPC,5.0,combined,nominal,20,20,0.05807,0.8348,0.9135,1.0091
+Dynamic MPC,5.0,combined,identified,20,20,0.06335,0.934,0.9997,1.0
+Dynamic MPC,5.0,combined,oracle,20,20,0.06337,0.9342,1.0,1.0
+Dynamic MPC,10.0,mass_p20,nominal,20,20,0.04917,1.0758,1.0331,1.0018
+Dynamic MPC,10.0,mass_p20,identified,20,20,0.04752,1.0339,1.0,1.0
+Dynamic MPC,10.0,mass_p20,oracle,20,20,0.04752,1.0339,1.0,1.0
+Dynamic MPC,10.0,mass_m20,nominal,20,20,0.04793,1.0455,1.0612,0.9986
+Dynamic MPC,10.0,mass_m20,identified,20,20,0.04521,0.968,1.0,1.0
+Dynamic MPC,10.0,mass_m20,oracle,20,20,0.04521,0.9678,1.0,1.0
+Dynamic MPC,10.0,stiff_p30,nominal,20,20,0.04856,1.0617,1.08,0.9984
+Dynamic MPC,10.0,stiff_p30,identified,20,20,0.04505,0.964,1.0,1.0
+Dynamic MPC,10.0,stiff_p30,oracle,20,20,0.04505,0.9637,1.0,1.0
+Dynamic MPC,10.0,stiff_m30,nominal,20,20,0.05705,1.2616,1.1737,1.0049
+Dynamic MPC,10.0,stiff_m30,identified,20,20,0.05076,1.0878,1.0,1.0
+Dynamic MPC,10.0,stiff_m30,oracle,20,20,0.05077,1.0877,1.0,1.0
+Dynamic MPC,10.0,lag_0.1,nominal,20,20,0.05246,1.0958,1.0,1.0
+Dynamic MPC,10.0,lag_0.1,identified,20,20,0.05246,1.0958,1.0,1.0
+Dynamic MPC,10.0,lag_0.1,oracle,20,20,0.05246,1.0958,1.0,1.0
+Dynamic MPC,10.0,lag_0.2,nominal,20,20,0.05767,1.2487,1.0,1.0
+Dynamic MPC,10.0,lag_0.2,identified,20,20,0.05766,1.249,1.0,1.0
+Dynamic MPC,10.0,lag_0.2,oracle,20,20,0.05767,1.2487,1.0,1.0
+Dynamic MPC,10.0,combined,nominal,20,20,0.07522,1.6992,1.3606,1.0065
+Dynamic MPC,10.0,combined,identified,20,20,0.06019,1.2646,1.0001,1.0
+Dynamic MPC,10.0,combined,oracle,20,20,0.06019,1.2641,1.0,1.0
+Dynamic MPC,20.0,mass_p20,nominal,20,20,0.0482,1.3476,1.2043,0.9976
+Dynamic MPC,20.0,mass_p20,identified,20,20,0.03838,1.1173,0.9996,1.0
+Dynamic MPC,20.0,mass_p20,oracle,20,20,0.03839,1.1176,1.0,1.0
+Dynamic MPC,20.0,mass_m20,nominal,20,20,0.03779,0.934,1.0339,1.0014
+Dynamic MPC,20.0,mass_m20,identified,20,20,0.03596,0.8917,0.9998,1.0
+Dynamic MPC,20.0,mass_m20,oracle,20,20,0.03598,0.8919,1.0,1.0
+Dynamic MPC,20.0,stiff_p30,nominal,20,20,0.03866,0.9543,1.0742,1.0013
+Dynamic MPC,20.0,stiff_p30,identified,20,20,0.03506,0.8749,0.9998,1.0
+Dynamic MPC,20.0,stiff_p30,oracle,20,20,0.03507,0.8751,1.0,1.0
+Dynamic MPC,20.0,stiff_m30,nominal,20,20,0.07295,1.887,1.5122,0.9978
+Dynamic MPC,20.0,stiff_m30,identified,20,20,0.04072,1.245,0.9995,1.0
+Dynamic MPC,20.0,stiff_m30,oracle,20,20,0.04076,1.2453,1.0,1.0
+Dynamic MPC,20.0,lag_0.1,nominal,20,20,0.0378,1.0935,1.0,1.0
+Dynamic MPC,20.0,lag_0.1,identified,20,20,0.0378,1.0935,1.0,1.0
+Dynamic MPC,20.0,lag_0.1,oracle,20,20,0.0378,1.0935,1.0,1.0
+Dynamic MPC,20.0,lag_0.2,nominal,20,15,0.03817,1.1366,1.0,1.0
+Dynamic MPC,20.0,lag_0.2,identified,20,15,0.03817,1.1386,1.0003,1.0
+Dynamic MPC,20.0,lag_0.2,oracle,20,15,0.03817,1.1366,1.0,1.0
+Dynamic MPC,20.0,combined,nominal,20,20,0.10612,2.7551,1.7824,0.9824
+Dynamic MPC,20.0,combined,identified,20,20,0.04809,1.5826,1.0003,1.0
+Dynamic MPC,20.0,combined,oracle,20,20,0.04806,1.5824,1.0,1.0

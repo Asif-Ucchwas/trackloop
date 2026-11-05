@@ -277,3 +277,14 @@
   reaches the reported std from 0.5 mrad (4 to 7 times it at 1 mrad); bias from the model difference crosses the std near 0.05 rad.
 - Not explained: the covariance overestimates the sweep Iz spread by 13 to 21 percent; the size of the steering-noise bias was not derived.
 - The Task 21 note said Task 23 could relax exact steering measurement; this is where it was relaxed, and it matters.
+
+## Task 24: controllers on the identified model
+
+- `identified_design.py`: identify each Stage 4 plant from a sweep (nominal mass assumed), design LQR and MPC on the nominal, identified
+  and true parameters, run on the true plant. 1680 new runs (about 1 minute on 2 cores), 5 tests (329 total). Pure Pursuit and Stanley use
+  no vehicle parameters and were not re-run.
+- Identified equals oracle: worst median ratio 1.0007, worst single run 0.49 percent. Wrong-model penalty (up to 1.9 times at 20 m/s) is removed.
+- Task 23's prediction that a wrong mass is harmless held (mass +/-20 percent cases identical to oracle).
+- Lag is not identified: lag cases unchanged, the same 5 MPC runs diverge at 0.2 s.
+- Unexplained: at 5 m/s the nominal design beats the oracle on RMS error in softer-plant cases (0.91 to 0.95) with the same effort.
+- Stage 6 done. Next: Stage 7, packaging (Task 25).

@@ -261,3 +261,17 @@ deviation.
 ![Identifiability](docs/figures/identifiability.png)
 
 See [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), "Identification quality".
+
+## Controllers on the identified model (Task 24)
+
+`scripts/run_identified_design.py` closes the identification stage. For each Stage 4 model-error case a sweep experiment on the true
+plant is fitted (simulated data, nominal mass assumed), and the LQR and MPC are designed on the identified model and on the true
+parameters, then run on the plant. The identified design matches the true-parameter design to within 0.07 percent (median over 835 paired
+runs, worst single run 0.5 percent), and removes the Stage 4 wrong-model penalty: at 20 m/s on the combined plant the LQR's RMS lateral
+error goes from 2.6 times the nominal result to 1.4, the MPC's from 2.8 to 1.6. A wrong assumed mass makes no difference (only cf/m, cr/m
+and Iz/m enter the design). Steering lag is not identified, so the lag cases are unchanged.
+
+![Controllers on the identified model](docs/figures/identified_design.png)
+
+**Limit:** the identification data come from the same model as the plant, with exact steering measurement; this is a best case. See
+[docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), "Controllers designed on the identified model".

@@ -516,3 +516,80 @@ That precision is a statement about noise only. In error size, the order is: a w
 angle (0.2 to 3 percent), a large amplitude (above about 0.05 rad), and last the measurement noise. Not studied: model error from a
 wrong tire model, sensor bias or offset, unknown noise levels, speed changes within a record, and the sample rate.
 The speed and bandwidth results are for this one vehicle model and one noise level.
+
+## Controllers designed on the identified model (Task 24)
+
+Code: `src/trackloop/identified_design.py`. Script: `scripts/run_identified_design.py`. Data: `data/results/identified_models.csv`,
+`identified_design_runs.csv` (1680 new runs) and `identified_design.csv` (summary). Figure: `docs/figures/identified_design.png`.
+**The identification data are simulated** (the Task 21 sweep, 15 m/s, noisy yaw rate and lateral acceleration); nothing here says
+how this would go on a real vehicle.
+
+### What was run
+
+For each Stage 4 dynamic case (mass, stiffness, steering lag, and the combined case) the plant is the true vehicle. A sweep
+experiment on that plant is fitted with the Task 22 estimator, starting from the nominal model and assuming the nominal mass
+(1500 kg), whatever the plant's real mass. The LQR and MPC are then designed on one of three models and run on the true
+plant on the 12 road paths with 5 seeds (60 runs per controller and case):
+
+- **nominal**: the nominal model. These are the committed Stage 4 results (`model_error_road.csv`), not re-run; the code's
+  nominal variant reproduces them exactly (`tests/test_identified_design.py`).
+- **identified**: the model fitted to the experiment on the true plant.
+- **oracle**: the true plant's own parameters. Not available in practice; it is what a redesign on a perfect model gives.
+
+Pure Pursuit and Stanley use only geometry (rear-axle distance, wheelbase), which is taken as known, and no mass or tire
+parameter, so their results do not depend on the design model and they were not re-run: their Stage 4 results stand for all three.
+
+### Why the mass does not matter for the design
+
+**Formula.** The error model of Task 20 (Part 1) that the LQR and MPC are designed on contains the parameters only as cf/m, cr/m and
+Iz/m (with the known lf and lr). Any model with the same three ratios gives the same gains and the same predictions.
+
+**Worked example (mass +20 percent, m = 1800, Iz = 3000, cf = 80000, cr = 100000).** The plant's ratios are cf/m = 44.44,
+cr/m = 55.56 and Iz/m = 1.667. The estimator assumes m = 1500 and returns cf = 66644, cr = 83251, Iz = 2499, whose ratios are
+44.43, 55.50 and 1.666: the absolute values are off by the mass factor 1.2, the ratios by 0.03, 0.10 and 0.04 percent. Task 23
+predicted this; the runs below confirm it.
+
+### Results
+
+The identified models reproduce the plant's dynamics (cf/m, cr/m, Iz/m) to within 0.2 percent in all eight cases (chi-squared per
+degree of freedom 1.01 in each, including the steering-lag cases: the data record the steering angle that was actually applied,
+so the actuator lag does not bias the fit and is not something this experiment identifies).
+
+**Identified against oracle:** over 835 paired runs, the median paired RMS lateral error ratio differs from 1 by at most 0.0007,
+and the worst single run by 0.49 percent. A controller designed on the identified model is, to the precision of these runs,
+a controller designed on the true parameters.
+
+**The cost of the wrong model (Stage 4) that identification removes.** Median paired RMS lateral error of the nominal design
+divided by the oracle design, on the same plant:
+
+| plant | LQR 5 m/s | LQR 10 m/s | LQR 20 m/s | MPC 5 m/s | MPC 10 m/s | MPC 20 m/s |
+|---|---|---|---|---|---|---|
+| mass +20% | 0.95 | 1.03 | 1.22 | 0.95 | 1.03 | 1.20 |
+| mass -20% | 1.06 | 1.06 | 1.03 | 1.07 | 1.06 | 1.03 |
+| stiffness +30% | 1.07 | 1.07 | 1.07 | 1.08 | 1.08 | 1.07 |
+| stiffness -30% | 0.92 | 1.14 | 1.56 | 0.91 | 1.17 | 1.51 |
+| combined | 0.91 | 1.36 | 1.91 | 0.91 | 1.36 | 1.78 |
+
+Against the same run on the nominal plant with the nominal design, at 20 m/s on the combined plant the LQR goes from 2.61
+(nominal design) to 1.40 (identified, oracle 1.39) and the MPC from 2.76 to 1.58 (oracle 1.58). Identification removes the
+penalty of the wrong model completely; what remains (1.4 to 1.6 times) is that the combined plant is harder to track than the
+nominal one even with a perfect model.
+
+- **Lag is untouched.** For the lag cases the three designs are the same (ratios to the oracle 1.000), because the design has no lag
+  parameter and the experiment does not estimate one. Five MPC runs at 0.2 s lag diverge under all three designs, as in Stage 4
+  (same runs; the paired ratios use only runs that finished).
+- **At 5 m/s the wrong model sometimes scores better than the right one** (ratios 0.91 to 0.95 for the heavier, the softer and the
+  combined plants) with about the same steering effort (within 0.9 percent). I have not looked into why; the controllers minimise a cost, not the
+  RMS lateral error, so a design that is not the optimum for the plant can still score lower on this one measure at low speed.
+  The steering effort ratio (nominal design over oracle) stays between 0.98 and 1.01 in every row.
+
+### What this does not show
+
+- **Best case.** The identification data come from the same model class as the plant and the controllers (linear tires, constant
+  speed, exact steering measurement, known noise levels). Task 23 showed 1 mrad of noise on the measured steering angle biases the
+  stiffness estimates by about -0.9 percent; that was not combined with this study.
+- **One experiment per case** (one noise seed, 15 m/s). The identification error (0.1 to 0.2 percent) is far below the model errors
+  being corrected, so repeating it would not change the ratios, but the error budget is not re-derived here.
+- **Linear tires.** The model identified at 15 m/s is used at 5, 10 and 20 m/s, which holds because the tires are linear in this
+  simulation; with saturating tires it would not.
+- The steering lag is not identified and cannot be designed around by this method.
