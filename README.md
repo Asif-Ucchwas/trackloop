@@ -1,5 +1,7 @@
 # TrackLoop
 
+![tests](https://github.com/Asif-Ucchwas/trackloop/actions/workflows/ci.yml/badge.svg)
+
 Path-tracking controllers on a vehicle model, with stability analysis and system identification.
 
 Status: Phase A (simulation study) is written up in this README, section by section; everything here is simulation, nothing was run on a real vehicle.
@@ -47,6 +49,16 @@ Run from the repository root after `pip install -e ".[dev]"`. One command per st
 | Tests | `python -m pytest -q` | |
 
 The Monte Carlo run is the longest (34,560 runs); `scripts/study_identifiability.py` takes a few minutes. The planner export scripts need the thesis and MultiPlan repositories (see "Paths from my planners"); the exported paths are already committed in `data/paths/`.
+
+## Tests and continuous integration
+
+`python -m pytest -q` runs 360 tests in about 15 seconds. Besides the unit tests for each module there are three kinds of check on the whole project:
+
+- **Closed-form model checks** (`tests/test_analytic_models.py`): the kinematic model drives a circle of radius L / tan(delta) and a constant-acceleration straight line; the dynamic model's steady-state yaw rate matches v delta / (L + K v^2) with its understeer gradient K at three speeds, is v delta / L at any speed when the vehicle is neutral steer, and turns less (understeer) or more (oversteer) than the kinematic model.
+- **Frozen regression runs** (`tests/test_regression_controllers.py`, `tests/reference_runs.json`): each of the four controllers on two road paths and two parking paths, seed 0. A change that moves RMS lateral error, maximum lateral error or steering effort by more than 0.5 percent fails the test; the same runs are checked against the committed benchmark CSVs, so the README numbers trace to the code. If a change is intended, regenerate the reference file and record why in the DEVLOG.
+- **README check** (`tests/test_readme.py`): every file the README names exists.
+
+GitHub Actions (`.github/workflows/ci.yml`) installs the package and runs the same command on every push to `main` and every pull request, on Python 3.12 only; I have not tested other Python versions.
 
 ## Stages 1 and 2: models and controllers
 

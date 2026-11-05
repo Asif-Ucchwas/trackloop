@@ -1,0 +1,178 @@
+[
+ {
+  "family": "road",
+  "path": "road_s_curve_v10",
+  "controller": "Pure Pursuit",
+  "speed": 10.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.12774,
+  "max_lateral": 0.37874,
+  "steering_effort": 0.04111
+ },
+ {
+  "family": "road",
+  "path": "road_s_curve_v10",
+  "controller": "Stanley",
+  "speed": 10.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.09287,
+  "max_lateral": 0.3319,
+  "steering_effort": 0.04166
+ },
+ {
+  "family": "road",
+  "path": "road_s_curve_v10",
+  "controller": "Dynamic LQR",
+  "speed": 10.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.06169,
+  "max_lateral": 0.32488,
+  "steering_effort": 0.04144
+ },
+ {
+  "family": "road",
+  "path": "road_s_curve_v10",
+  "controller": "Dynamic MPC",
+  "speed": 10.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.06419,
+  "max_lateral": 0.33243,
+  "steering_effort": 0.04122
+ },
+ {
+  "family": "road",
+  "path": "road_curve_v5",
+  "controller": "Pure Pursuit",
+  "speed": 5.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.09918,
+  "max_lateral": 0.26737,
+  "steering_effort": 0.11673
+ },
+ {
+  "family": "road",
+  "path": "road_curve_v5",
+  "controller": "Stanley",
+  "speed": 5.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.11639,
+  "max_lateral": 0.26731,
+  "steering_effort": 0.11501
+ },
+ {
+  "family": "road",
+  "path": "road_curve_v5",
+  "controller": "Dynamic LQR",
+  "speed": 5.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.09187,
+  "max_lateral": 0.26713,
+  "steering_effort": 0.11527
+ },
+ {
+  "family": "road",
+  "path": "road_curve_v5",
+  "controller": "Dynamic MPC",
+  "speed": 5.0,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.09285,
+  "max_lateral": 0.26753,
+  "steering_effort": 0.11521
+ },
+ {
+  "family": "parking",
+  "path": "rs_parallel_park",
+  "controller": "Pure Pursuit",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.26001,
+  "max_lateral": 0.53373,
+  "steering_effort": 0.48478
+ },
+ {
+  "family": "parking",
+  "path": "rs_parallel_park",
+  "controller": "Stanley",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.68115,
+  "max_lateral": 1.25326,
+  "steering_effort": 0.49012
+ },
+ {
+  "family": "parking",
+  "path": "rs_parallel_park",
+  "controller": "Kinematic LQR",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.56474,
+  "max_lateral": 0.95313,
+  "steering_effort": 0.52538
+ },
+ {
+  "family": "parking",
+  "path": "rs_parallel_park",
+  "controller": "Kinematic MPC",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.56439,
+  "max_lateral": 0.9526,
+  "steering_effort": 0.52544
+ },
+ {
+  "family": "parking",
+  "path": "thesis_hybrid_seed0",
+  "controller": "Pure Pursuit",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.0674,
+  "max_lateral": 0.23158,
+  "steering_effort": 0.13552
+ },
+ {
+  "family": "parking",
+  "path": "thesis_hybrid_seed0",
+  "controller": "Stanley",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.14957,
+  "max_lateral": 0.49008,
+  "steering_effort": 0.12009
+ },
+ {
+  "family": "parking",
+  "path": "thesis_hybrid_seed0",
+  "controller": "Kinematic LQR",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.04702,
+  "max_lateral": 0.19673,
+  "steering_effort": 0.2027
+ },
+ {
+  "family": "parking",
+  "path": "thesis_hybrid_seed0",
+  "controller": "Kinematic MPC",
+  "speed": 1.5,
+  "seed": 0,
+  "finished": true,
+  "rms_lateral": 0.0481,
+  "max_lateral": 0.19918,
+  "steering_effort": 0.20187
+ }
+]
