@@ -74,9 +74,9 @@ leg.axis("off")
 road_h = [Line2D([], [], color=COL[c], marker="o", ms=4, label=c) for c in order("road", "controller")]
 park_h = [Line2D([], [], color=COL[c], marker="o", ms=4, label=c) for c in order("parking", "controller")]
 x_h = Line2D([], [], color="red", marker="x", ls="", ms=11, mew=2.4, label="some runs did not finish\n(ratio uses finished pairs)")
-l1 = leg.legend(handles=road_h, title="road family", loc="upper left", fontsize=9)
+l1 = leg.legend(handles=road_h, title="road family", loc="upper left", bbox_to_anchor=(-0.05, 1.0), fontsize=8)
 leg.add_artist(l1)
-l2 = leg.legend(handles=park_h, title="parking family", loc="center left", fontsize=9)
+l2 = leg.legend(handles=park_h, title="parking family", loc="upper left", bbox_to_anchor=(0.5, 1.0), fontsize=8)
 leg.add_artist(l2)
 leg.legend(handles=[x_h], loc="lower left", fontsize=8)
 
