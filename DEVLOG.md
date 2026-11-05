@@ -267,3 +267,13 @@
 - Mass check confirmed numerically: the smallest singular value is 4e-11 of the largest with mass as a parameter.
 - Best case only: same model class and known noise. An optimiser overflow warning from a trial with negative parameters (first
   version without bounds) was fixed with bounds.
+
+## Task 23: identification quality
+
+- `identifiability.py`: the covariance at the true parameters for any experiment, plus fits with a wrong mass, steering noise and large
+  amplitudes. 5 tests (324 total). The study script takes about 4 minutes (about 300 fits).
+- Findings: scaling laws hold (amplitude law fails once the rate limit is active, 0.1 rad); cr is poorly identified at low speed (7 times
+  cf's std at 5 m/s); wrong mass shifts all estimates exactly 1:1 with unchanged chi-squared; steering noise gives a downward bias that
+  reaches the reported std from 0.5 mrad (4 to 7 times it at 1 mrad); bias from the model difference crosses the std near 0.05 rad.
+- Not explained: the covariance overestimates the sweep Iz spread by 13 to 21 percent; the size of the steering-noise bias was not derived.
+- The Task 21 note said Task 23 could relax exact steering measurement; this is where it was relaxed, and it matters.

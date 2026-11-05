@@ -247,3 +247,17 @@ deviations of 0.11 to 0.21 percent, and over 100 noise seeds the predicted stand
 **Limit:** the fitted model is almost the model that generated the data and the noise levels are known, so this is a best
 case; it says nothing about a real vehicle. See [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md),
 "Least-squares identification".
+
+## Identification quality (Task 23)
+
+`scripts/study_identifiability.py` varies the experiment and the assumptions behind the least-squares estimate (simulated data
+only). Results: the standard deviation scales as noise / (amplitude x sqrt(length)); the rear stiffness is the poorly
+identified parameter and needs speed (cr std 1.9 percent at 5 m/s, 0.2 percent at 15 m/s); a sweep that stops below the lateral
+pole frequency or a random signal that switches slowly roughly doubles the intervals. The errors that matter are not the noise:
+a wrong assumed mass moves all three estimates by exactly the same factor and the fit cannot tell (chi-squared unchanged), and
+1 mrad of noise on the measured steering angle biases them down by 0.8 to 0.9 percent, several times the reported standard
+deviation.
+
+![Identifiability](docs/figures/identifiability.png)
+
+See [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), "Identification quality".

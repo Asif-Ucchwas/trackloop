@@ -1,0 +1,95 @@
+study,setting,metric,parameter,value
+assumed mass,x0.9,estimate_over_true,cf,0.8997
+assumed mass,x0.9,estimate_over_true,cr,0.8991
+assumed mass,x0.9,estimate_over_true,Iz,0.8999
+assumed mass,x0.9,chi2_dof,all,1.0138
+assumed mass,x0.95,estimate_over_true,cf,0.9497
+assumed mass,x0.95,estimate_over_true,cr,0.9491
+assumed mass,x0.95,estimate_over_true,Iz,0.9499
+assumed mass,x0.95,chi2_dof,all,1.0138
+assumed mass,x0.98,estimate_over_true,cf,0.9797
+assumed mass,x0.98,estimate_over_true,cr,0.979
+assumed mass,x0.98,estimate_over_true,Iz,0.9799
+assumed mass,x0.98,chi2_dof,all,1.0138
+assumed mass,x1.02,estimate_over_true,cf,1.0197
+assumed mass,x1.02,estimate_over_true,cr,1.019
+assumed mass,x1.02,estimate_over_true,Iz,1.0199
+assumed mass,x1.02,chi2_dof,all,1.0138
+assumed mass,x1.05,estimate_over_true,cf,1.0497
+assumed mass,x1.05,estimate_over_true,cr,1.049
+assumed mass,x1.05,estimate_over_true,Iz,1.0499
+assumed mass,x1.05,chi2_dof,all,1.0138
+assumed mass,x1.1,estimate_over_true,cf,1.0997
+assumed mass,x1.1,estimate_over_true,cr,1.0989
+assumed mass,x1.1,estimate_over_true,Iz,1.0999
+assumed mass,x1.1,chi2_dof,all,1.0138
+amplitude,0.01 rad,noise_free_bias_pct,cf,-0.0032
+amplitude,0.01 rad,noise_free_bias_pct,cr,0.0002
+amplitude,0.01 rad,noise_free_bias_pct,Iz,0.0006
+amplitude,0.01 rad,std_pct,cf,0.3932
+amplitude,0.01 rad,std_pct,cr,0.6418
+amplitude,0.01 rad,std_pct,Iz,0.5398
+amplitude,0.03 rad,noise_free_bias_pct,cf,-0.0295
+amplitude,0.03 rad,noise_free_bias_pct,cr,0.0011
+amplitude,0.03 rad,noise_free_bias_pct,Iz,0.0063
+amplitude,0.03 rad,std_pct,cf,0.1311
+amplitude,0.03 rad,std_pct,cr,0.2139
+amplitude,0.03 rad,std_pct,Iz,0.1799
+amplitude,0.05 rad,noise_free_bias_pct,cf,-0.0822
+amplitude,0.05 rad,noise_free_bias_pct,cr,0.0027
+amplitude,0.05 rad,noise_free_bias_pct,Iz,0.0173
+amplitude,0.05 rad,std_pct,cf,0.0788
+amplitude,0.05 rad,std_pct,cr,0.1285
+amplitude,0.05 rad,std_pct,Iz,0.1082
+amplitude,0.1 rad,noise_free_bias_pct,cf,-0.2656
+amplitude,0.1 rad,noise_free_bias_pct,cr,0.0704
+amplitude,0.1 rad,noise_free_bias_pct,Iz,0.1518
+amplitude,0.1 rad,std_pct,cf,0.048
+amplitude,0.1 rad,std_pct,cr,0.0715
+amplitude,0.1 rad,std_pct,Iz,0.066
+amplitude,0.2 rad,noise_free_bias_pct,cf,-0.8517
+amplitude,0.2 rad,noise_free_bias_pct,cr,0.5682
+amplitude,0.2 rad,noise_free_bias_pct,Iz,0.7947
+amplitude,0.2 rad,std_pct,cf,0.0351
+amplitude,0.2 rad,std_pct,cr,0.0497
+amplitude,0.2 rad,std_pct,Iz,0.0511
+steering noise,0 rad,bias_pct,cf,-0.0444
+steering noise,0 rad,bias_pct,cr,-0.0257
+steering noise,0 rad,bias_pct,Iz,0.0015
+steering noise,0 rad,spread_pct,cf,0.129
+steering noise,0 rad,spread_pct,cr,0.2136
+steering noise,0 rad,spread_pct,Iz,0.1422
+steering noise,0 rad,predicted_std_pct,cf,0.1311
+steering noise,0 rad,predicted_std_pct,cr,0.2139
+steering noise,0 rad,predicted_std_pct,Iz,0.18
+steering noise,0 rad,chi2_dof,all,0.9983
+steering noise,0.0005 rad,bias_pct,cf,-0.2588
+steering noise,0.0005 rad,bias_pct,cr,-0.2422
+steering noise,0.0005 rad,bias_pct,Iz,-0.2004
+steering noise,0.0005 rad,spread_pct,cf,0.1346
+steering noise,0.0005 rad,spread_pct,cr,0.2447
+steering noise,0.0005 rad,spread_pct,Iz,0.1396
+steering noise,0.0005 rad,predicted_std_pct,cf,0.1307
+steering noise,0.0005 rad,predicted_std_pct,cr,0.2132
+steering noise,0.0005 rad,predicted_std_pct,Iz,0.1795
+steering noise,0.0005 rad,chi2_dof,all,1.1559
+steering noise,0.001 rad,bias_pct,cf,-0.8608
+steering noise,0.001 rad,bias_pct,cr,-0.8716
+steering noise,0.001 rad,bias_pct,Iz,-0.8033
+steering noise,0.001 rad,spread_pct,cf,0.1582
+steering noise,0.001 rad,spread_pct,cr,0.3022
+steering noise,0.001 rad,spread_pct,Iz,0.1381
+steering noise,0.001 rad,predicted_std_pct,cf,0.1297
+steering noise,0.001 rad,predicted_std_pct,cr,0.2111
+steering noise,0.001 rad,predicted_std_pct,Iz,0.1782
+steering noise,0.001 rad,chi2_dof,all,1.6216
+steering noise,0.002 rad,bias_pct,cf,-3.0986
+steering noise,0.002 rad,bias_pct,cr,-3.2151
+steering noise,0.002 rad,bias_pct,Iz,-3.0688
+steering noise,0.002 rad,spread_pct,cf,0.23
+steering noise,0.002 rad,spread_pct,cr,0.4411
+steering noise,0.002 rad,spread_pct,Iz,0.1503
+steering noise,0.002 rad,predicted_std_pct,cf,0.1262
+steering noise,0.002 rad,predicted_std_pct,cr,0.2033
+steering noise,0.002 rad,predicted_std_pct,Iz,0.1735
+steering noise,0.002 rad,chi2_dof,all,3.4308

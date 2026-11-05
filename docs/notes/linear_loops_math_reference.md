@@ -425,3 +425,94 @@ noise levels were exactly right.
 - One speed (15 m/s) and one steering amplitude (0.03 rad), well inside the linear tire range.
 - The nominal parameters are the true parameters in the fit (the starting point is 30 to 50 percent away from them, so it
   does not begin at the answer, but the bounds are centred on it).
+
+## Identification quality: excitation, noise and assumptions (Task 23)
+
+Code: `src/trackloop/identifiability.py`. Script: `scripts/study_identifiability.py`. Data:
+`data/results/identifiability_conditions.csv` and `identifiability_other.csv`. Figure: `docs/figures/identifiability.png`.
+**Simulated data throughout.** The estimator is the Task 22 one (cf, cr, Iz; mass fixed), the base experiment is the Task 21
+sweep (15 m/s, 40 s, amplitude 0.03 rad, noise 0.003 rad/s and 0.05 m/s^2). "std" below is the relative standard deviation the
+estimator's covariance gives at the true parameters, in percent; it does not depend on the noise realisation, so no fitting is
+needed to get it. Where I did fit, it is over 50 noise seeds.
+
+### Scaling laws
+
+**Formula.** std is proportional to (noise level) / (steering amplitude x sqrt(record length)).
+
+**Derivation.** The covariance is (J^T J)^-1 with J the Jacobian of the residuals divided by the noise level. In the linear
+model the outputs, and so each column of J before weighting, are proportional to the steering amplitude a, and J^T J sums
+over N = T/dt samples: J^T J is proportional to a^2 T / sigma^2, so the covariance is proportional to sigma^2 / (a^2 T).
+
+**Worked example (cf, base 0.131 percent).** Noise times 4 gives 0.524 (4.00 times, to 1e-4); amplitude 0.01 instead of 0.03 gives
+0.393 (3.00 times); a 10 s record gives 0.264 (2.01 times, a 4 times shorter record) and 80 s gives 0.093 (0.71 times). The
+amplitude law fails at 0.1 rad (cf 0.048, where the law gives 0.039) because 47 percent of the steps are then limited by the
+steering rate limit, which changes the input. The 50-seed fits agree with the predictions at noise x8 and amplitude 0.01
+(spread within 2 percent of predicted for cf and cr).
+
+### Which parameters are poorly identified
+
+| experiment | std cf | std cr | std Iz | eigenvalue ratio of J^T J |
+|---|---|---|---|---|
+| sweep 0.1 to 3 Hz, 15 m/s (base) | 0.131 | 0.214 | 0.180 | 16 |
+| random, hold 0.25 s, 15 m/s | 0.106 | 0.158 | 0.151 | 20 |
+| sweep to 0.5 Hz | 0.275 | 0.411 | 0.488 | 158 |
+| sweep to 5 Hz | 0.103 | 0.234 | 0.162 | 14 |
+| random, hold 0.1 s | 0.088 | 0.180 | 0.136 | 14 |
+| random, hold 2 s | 0.212 | 0.326 | 0.357 | 183 |
+| sweep, 5 m/s | 0.271 | 1.945 | 0.537 | 110 |
+| sweep, 10 m/s | 0.159 | 0.412 | 0.243 | 21 |
+| sweep, 25 m/s | 0.096 | 0.127 | 0.132 | 33 |
+| sweep, 30 m/s | 0.083 | 0.108 | 0.118 | 50 |
+
+- **Rear against front stiffness.** At 15 m/s cr has a 1.6 times larger std than cf (0.214 against 0.131). At 5 m/s it is 7.2 times
+  larger (1.95 against 0.27 percent), and the weakest direction of the data is purely cr (component 1.0 in the figure's last panel).
+  So the rear stiffness is the poorly identified parameter, and it needs speed. At 5 m/s the signals are also smaller for the
+  same steering amplitude; I did not separate that from the change in the dynamics.
+- **Weakest direction.** At 15 m/s it is (cf, cr, Iz) = (0.39, 0.71, 0.58), about 13 degrees from "all three scaled together".
+  That is the near-image of Task 21's invisible direction (all four of m, cf, cr, Iz scaled together): with the mass fixed, the
+  data say least about moving the three together. The best-determined direction is about 4 times (square root of 16.4)
+  better determined.
+- **Bandwidth.** Stopping the sweep at 0.5 Hz (below the 1.5 Hz lateral pole frequency) doubles to nearly triples every std, Iz
+  suffering most (0.49 percent); raising the top to 5 Hz keeps improving cf (0.103) but not cr (0.234, no better than
+  2 Hz). For the random signal, holding each level 2 s about doubles the std against 0.25 s, because it moves power to low
+  frequency; holding 0.1 s helps cf and Iz but not cr.
+- **Check against fits.** Over 50 noise seeds at six experiments the spread was 0.90 to 1.12 times the predicted std for cf and
+  cr, and 0.79 to 0.99 for Iz, with the 95 percent interval containing the true value 92 to 98 percent of the time. The three
+  runs at base, noise x8 and amplitude 0.01 use the same noise realisations scaled, so they are one check, not three.
+  The covariance overestimates the spread of Iz in the sweep runs by about 13 to 21 percent (0.87 in the 100 seeds of Task 22);
+  I have not looked for the reason.
+
+### What moves the estimates away from the truth
+
+| source | effect on (cf, cr, Iz) | against the statistical std (base) |
+|---|---|---|
+| assumed mass wrong by a factor k | all three scaled by exactly k (0.9997 k, 0.999 k, 0.9999 k) | 5 percent mass error is 23 to 38 times the std |
+| noise on the measured steering angle, 0.5 mrad | -0.26, -0.24, -0.20 percent | about 1 to 2 times |
+| same, 1 mrad (0.057 degrees) | -0.86, -0.87, -0.80 percent | 4 to 7 times |
+| same, 2 mrad | -3.1, -3.2, -3.1 percent | 16 to 25 times |
+| steering amplitude 0.1 rad (model difference) | -0.27, +0.07, +0.15 percent | std is 0.048 for cf: bias larger |
+| steering amplitude 0.05 rad | -0.08, 0.00, +0.02 percent | bias about equal to std for cf |
+
+- **A wrong mass cannot be seen in the data.** The fit's chi-squared per degree of freedom is 1.014 for every assumed mass from 0.9 to
+  1.1 times the true value; the estimates simply move with it. This is the Task 21 scale invariance: the estimator returns
+  the parameters of the model that behaves like the vehicle, and with a wrong mass those are k times too large. It is the
+  largest error source here, and the only one that statistics do not shrink. For controller design the identified model still has
+  the same dynamics (only the ratios cf/m, cr/m, Iz/m enter), so Task 24 should show no loss from it; I will check that
+  instead of assuming it.
+- **Noise on the steering input biases the estimates low.** The sign is the one expected when the input is measured with noise, which
+  makes the apparent gain smaller; I did not derive the size. The predicted std stays at about 0.13 percent, so
+  the bias is already about 2 standard deviations for cf at 0.5 mrad (1 for cr and Iz) and 4 to 7 at 1 mrad, while the chi-squared per degree of freedom rises (1.16, 1.62, 3.43),
+  which is a warning sign the user can see. cr's spread also grows (0.245, 0.302, 0.441 percent). The base data assume an exact
+  steering measurement, which is the optimistic case.
+- **A large amplitude buys a smaller std and costs a bias.** The std falls as 1/amplitude, the bias from the model difference
+  (linear model against nonlinear simulation) grows roughly as its square (cf: -0.029 percent at 0.03 rad,
+  -0.27 at 0.1 rad, -0.85 at 0.2 rad); they cross near 0.05 rad for cf. That amplitude is also where real tires would saturate,
+  which this simulation cannot show.
+
+### Summary and limits
+
+At the base settings the estimates are within 0.1 to 0.2 percent of the true values and the covariance describes their spread.
+That precision is a statement about noise only. In error size, the order is: a wrong assumed mass (the error carries over one to one), noise on the steering
+angle (0.2 to 3 percent), a large amplitude (above about 0.05 rad), and last the measurement noise. Not studied: model error from a
+wrong tire model, sensor bias or offset, unknown noise levels, speed changes within a record, and the sample rate.
+The speed and bandwidth results are for this one vehicle model and one noise level.
