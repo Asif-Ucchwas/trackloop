@@ -288,3 +288,53 @@
 - Lag is not identified: lag cases unchanged, the same 5 MPC runs diverge at 0.2 s.
 - Unexplained: at 5 m/s the nominal design beats the oracle on RMS error in softer-plant cases (0.91 to 0.95) with the same effort.
 - Stage 6 done. Next: Stage 7, packaging (Task 25).
+
+## Task 25: README overview
+
+- Added an overview, an architecture diagram (`docs/figures/architecture.png`, drawn with mermaid), a main-results table and one
+  reproduce command per stage at the top of the README, and replaced the old "benchmarks are still to come" intro, which had been
+  out of date since Task 14. `tests/test_readme.py` fails if the README names a file that does not exist. 332 tests.
+- I have not run every reproduce command in the table end to end; the test only checks that each named script exists.
+
+## Task 26: tests and CI
+
+- `tests/test_analytic_models.py`: closed-form checks of both models (circle radius, constant-acceleration line, the understeer
+  formula at three speeds, neutral steer, oversteer). `tests/test_regression_controllers.py`: 16 frozen runs, four controllers on
+  two road and two parking paths, and the same runs against the committed benchmark CSVs. 360 tests.
+- `.github/workflows/ci.yml` runs pytest on Python 3.12 for every push to `main` and pull request. Not yet seen to pass on GitHub.
+
+## Task 27: traceability
+
+- `docs/TRACEABILITY.md` maps each README section to the CSV, note and script behind its numbers, and
+  `tests/test_traceability.py` recomputes the CSV-backed ones.
+- Found one error this way: the README gave the MPC phase margin as 61 degrees at 10 m/s with 0.1 s lag; the CSV has 60.49 (the
+  note rounds to 60.5, and I rounded that again). Now 60.
+- Every other number I checked agrees with its CSV: the road and parking means, the 36 of 36 interval target, the Task 17 gap
+  percentages, the stability limits, the 0.4 to 2.6 percent gap, the identification ranges and the identified-design ratios.
+
+## Failures, wrong hypotheses and open items (index of this log)
+
+Mistakes of mine that were caught, with the task that fixed them:
+- Task 2 (environment): the shell's ROS `PYTHONPATH` leaked into the venv; fixed with `unset PYTHONPATH` and a test.
+- Task 11: I said the dynamic LQR and MPC would need only small changes for reverse driving. Wrong: they divide by speed, so
+  kinematic versions in distance driven were written. I also reported every cusp stop within 0.55 m; the worst case is 1.1 m.
+- Task 12 to 14: I missed that the 5, 10 and 20 m/s benchmark speeds need far more lateral acceleration than the frozen paths allow
+  at those speeds, which led to the parking and road families.
+- Task 16: a bug in my BENCHMARKS.md generator (wrong scope in the parking relative column), fixed with a test. The first Monte Carlo
+  run missed the 5 percent target in four road cells, so the road family was rerun with 150 seeds.
+- Task 16, wrong hypothesis: I expected softer tires to push more runs past the friction limit; the data say fewer.
+- Task 18: the LQR model used the exact gain above 30 m/s where the controller holds a constant one (limit 54 m/s, correct 92.1).
+- Task 19: an envelope-slope growth estimate disagreed with the simulation for Stanley; the estimator was at fault.
+- Task 22: the first fit had no bounds and tried negative parameters; fixed with bounds.
+- Task 27: the MPC phase margin was quoted as 61 degrees, the table says 60.49.
+
+Open and not explained:
+- Why Pure Pursuit beats the kinematic LQR and MPC in parking at 1.5 and 3 m/s; whether Pure Pursuit and Stanley are tuned fairly at 20 m/s.
+- Why a steering lag helps Pure Pursuit and Stanley; why the dynamic LQR's mean exceeds its median at 20 m/s.
+- Why Stanley is weakest on forward arcs and chatters at 3.6 reversals per second in the cusp runs (the 5 m/s road chatter is a path-spacing effect).
+- Why feedforward made the rate-limited parking cases worse; why the discrete gains at 0.05 s are lower than the continuous ones (not derived).
+- Why the LQR and MPC leave the linear model near 1e-2 m past the stability limit; the sampling-delay explanation of the LQR's small gain margin was not tested.
+- Why the covariance overestimates the sweep Iz spread by 13 to 21 percent; the size of the steering-noise bias was not derived.
+- Why at 5 m/s the nominal design beats the true-parameter design on RMS error in softer plants.
+- Tire saturation cannot be tested: the simulated tires are linear.
+- Everything here is simulation with placeholder vehicle parameters; nothing was tested on a real vehicle.

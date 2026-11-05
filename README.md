@@ -12,7 +12,7 @@ TrackLoop compares four path-tracking controllers (Pure Pursuit, Stanley, schedu
 
 ![Architecture](docs/figures/architecture.png)
 
-Code is in `src/trackloop/` (models, controllers, runners, metrics, analysis), one script per result in `scripts/`, tests in `tests/`, results in `data/results/`, figures in `docs/figures/`, and derivations in `docs/notes/`.
+Code is in `src/trackloop/` (models, controllers, runners, metrics, analysis), one script per result in `scripts/`, tests in `tests/`, results in `data/results/`, figures in `docs/figures/`, and derivations in `docs/notes/`. Where each number comes from: [docs/TRACEABILITY.md](docs/TRACEABILITY.md). Failures, wrong hypotheses and open questions: [DEVLOG.md](DEVLOG.md).
 
 ## Main results
 
@@ -20,7 +20,7 @@ Code is in `src/trackloop/` (models, controllers, runners, metrics, analysis), o
 | --- | --- | --- |
 | Road family, 20 m/s, mean RMS lateral error | LQR 0.045 m, MPC 0.054 m, Stanley 0.198 m, Pure Pursuit 0.257 m; LQR and MPC are partly outside the linear tire range | Monte Carlo benchmark (Task 16), `BENCHMARKS.md` |
 | Parking family, 1.5 and 3 m/s | Pure Pursuit 0.084 and 0.109 m against 0.132 and 0.286 m for the kinematic LQR; cause not investigated | Monte Carlo benchmark (Task 16) |
-| Phase margin at 10 m/s, 0.1 s steering lag | Pure Pursuit 33, Stanley 37, LQR 54, MPC 61 degrees | Gain and phase margins (Task 18) |
+| Phase margin at 10 m/s, 0.1 s steering lag | Pure Pursuit 33, Stanley 37, LQR 54, MPC 60 degrees | Gain and phase margins (Task 18) |
 | Linear model against the simulation | within a few percent up to about a 0.25 m offset; the 0.8 rad/s steering rate limit explains the gap | Linearisation (Task 20) |
 | Identification from simulated noisy data | cf, cr, Iz within 0.2 percent; mass is not identifiable | Tasks 21 to 23 |
 | Wrong-model penalty, combined case, 20 m/s | LQR 2.6 times the nominal error, 1.4 with the identified model; MPC 2.8 and 1.6 | Controllers on the identified model (Task 24) |
@@ -221,7 +221,7 @@ The Task 17 loops, broken at the steering command and sampled at 0.05 s, give a 
 controller (`src/trackloop/margins.py`). Gain margins come from scaling the loop gain and checking the poles;
 phase margins from the frequency response at the unity-gain crossing. Phase margin falls with speed for all four
 controllers and all three steering lags (0, 0.1, 0.2 s). At 10 m/s with a 0.1 s lag it is 33 degrees for Pure
-Pursuit, 37 for Stanley, 54 for LQR and 61 for MPC.
+Pursuit, 37 for Stanley, 54 for LQR and 60 for MPC.
 
 ![Bode plot at 10 m/s](docs/figures/bode_10ms.png)
 
