@@ -257,3 +257,13 @@
   signals. The syllabus's four parameters become three (cf, cr, Iz with mass fixed) in Task 22.
 - The random signal is rate limited on 14.8 percent of steps; the file holds the applied steering angle, not the command.
 - Steering is treated as measured exactly (an easier problem than a real one); noise levels are my choice.
+
+## Task 22: least-squares identification
+
+- `identification.py`: sampled linear model, weighted least squares on yaw rate and lateral acceleration, covariance from
+  (J^T J)^-1, a Monte Carlo over noise seeds, a mass-direction check. 5 tests (319 total).
+- Estimates within 0.2 percent; predicted standard deviations match the spread over 100 seeds (13 percent smaller to 1 percent larger
+  than predicted) and 95 percent coverage is 93 to 97 percent. cf shows a small bias of -0.04 percent from the model difference.
+- Mass check confirmed numerically: the smallest singular value is 4e-11 of the largest with mass as a parameter.
+- Best case only: same model class and known noise. An optimiser overflow warning from a trial with negative parameters (first
+  version without bounds) was fixed with bounds.

@@ -232,3 +232,18 @@ One result before any estimation: scaling mass, yaw inertia and both cornering s
 every measured signal unchanged (shown by derivation and by a test), so only cf/m, cr/m and Iz/m can be identified.
 Task 22 therefore fixes the mass and estimates cf, cr and Iz. See
 [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md), "System identification data".
+
+## Least-squares identification (Task 22)
+
+`scripts/run_identification.py` estimates the front and rear cornering stiffnesses and the yaw inertia (cf, cr, Iz; the
+mass is fixed because it is not identifiable) from the simulated noisy data by least squares on the prediction error, with
+the parameter covariance from the Jacobian. Both estimates land within 0.2 percent of the true values, with standard
+deviations of 0.11 to 0.21 percent, and over 100 noise seeds the predicted standard deviations match the real spread and the
+95 percent intervals contain the true value in 93 to 97 percent of runs. The three estimates are strongly correlated (0.68 to
+0.82).
+
+![Identification](docs/figures/identification.png)
+
+**Limit:** the fitted model is almost the model that generated the data and the noise levels are known, so this is a best
+case; it says nothing about a real vehicle. See [docs/notes/linear_loops_math_reference.md](docs/notes/linear_loops_math_reference.md),
+"Least-squares identification".

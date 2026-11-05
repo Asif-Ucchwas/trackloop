@@ -352,3 +352,76 @@ above shows only that three is the most that can be determined.
 `python scripts/make_sysid_data.py` regenerates all four data files and the figure from the seed (21). The files are
 rounded to six decimals, so a last digit could differ between machines: I check the line counts (4001 for each CSV)
 rather than checksums.
+
+## Least-squares identification (Task 22)
+
+Code: `src/trackloop/identification.py`. Script: `scripts/run_identification.py`. Data: `data/results/identification.csv`.
+Figure: `docs/figures/identification.png`. Input: the two simulated datasets of Task 21 (sweep and random steering, 15 m/s,
+40 s, 100 Hz). **Simulated data throughout; nothing here is a claim about a real vehicle.**
+
+### Method
+
+**Model.** The estimator's model is the sampled linear lateral model (state: lateral velocity and yaw rate) with the steering
+angle held over each step, the lateral part of the error model of Task 20 (Part 1) with the same exact discretisation
+(Part 2):
+x+ = Ad x + Bd delta, r = x2, ay = a1 x1 + a2 x2 + (cf/m) delta, with a1 = -(cf+cr)/(m v) and
+a2 = (-lf cf + lr cr)/(m v). The data come from the nonlinear simulation, whose differences from this model (the atan in
+the slip angles, cos(delta) in the front force) are 0.03 percent of the signal peak at these amplitudes
+(`tests/test_identification.py`). So the model is almost exactly the model that made the data: this is the best case for the
+estimator, not a test of how it copes with a model that is wrong.
+
+**Estimate.** theta_hat minimises the sum over both outputs and all 4000 samples of the squared prediction error divided by
+the noise standard deviation (0.003 rad/s for yaw rate, 0.05 m/s^2 for lateral acceleration). The parameters are
+theta = (cf, cr, Iz); the mass is fixed at its true value because it cannot be identified (Task 21). The optimiser is
+`scipy.optimize.least_squares` (trust region, bounds 0.1 to 10 times the true values to keep every trial model stable),
+started from 0.6 cf, 1.5 cr and 0.7 Iz.
+
+**Covariance.** With whitened residuals e(theta) and Jacobian J = de/dtheta at theta_hat, the covariance of the estimate is
+(J^T J)^-1. This is the standard linearised result for Gaussian noise of known standard deviation; it is also the
+Cramer-Rao bound for this model, so no unbiased estimator could do better. It is a local linear approximation, and I check it
+against the real spread of the estimates over 100 noise seeds below instead of assuming it.
+
+**Worked example (sweep dataset).** estimate cf = 79977.4 against a true value of 80000 (error -0.03 percent); the covariance
+gives a standard deviation of 104.8 N/rad (0.13 percent), so the error is -0.22 standard deviations. The sum of the whitened
+squared residuals per degree of freedom (chi-squared per degree of freedom) is 1.014; it would be 1 if the model and the
+noise levels were exactly right.
+
+### Results
+
+| dataset | parameter | true | estimate | std (covariance) | error | spread over 100 seeds | mean predicted std | inside 95% interval |
+|---|---|---|---|---|---|---|---|---|
+| sweep | cf | 80000 | 79977 | 105 (0.13%) | -0.03% | 0.132% | 0.131% | 94% |
+| sweep | cr | 100000 | 99901 | 214 (0.21%) | -0.10% | 0.199% | 0.214% | 95% |
+| sweep | Iz | 2500 | 2499.7 | 4.5 (0.18%) | -0.01% | 0.157% | 0.180% | 97% |
+| prbs | cf | 80000 | 79928 | 84 (0.11%) | -0.09% | 0.102% | 0.107% | 93% |
+| prbs | cr | 100000 | 99912 | 158 (0.16%) | -0.09% | 0.147% | 0.160% | 95% |
+| prbs | Iz | 2500 | 2495.9 | 3.8 (0.15%) | -0.16% | 0.152% | 0.155% | 94% |
+
+- **The covariance is right.** Over 100 noise seeds, the real standard deviation of each estimate is within 13 percent of
+  the predicted one (one is 1 percent larger, the other five 2 to 13 percent smaller), and the 95 percent interval from the covariance
+  contains the true value in 93 to 97 percent of the runs. With 100 seeds the 95 percent coverage itself is uncertain by
+  about plus or minus 2 percentage points.
+- **A small bias exists.** The mean error over the seeds is -0.04 percent for cf (the other four are within 0.01 percent). The
+  fit to noise-free data is off by -0.03 to -0.04 percent for cf, which is the model difference above: it is a third of the standard
+  deviation and does not matter here, but it is not zero and would grow with a larger steering amplitude.
+- **The estimates are strongly correlated.** The correlation coefficients are 0.68 (cf, cr), 0.78 (cf, Iz) and 0.75 (cr, Iz)
+  for the sweep, and 0.79, 0.82 and 0.80 for the random signal (the figure's ellipses). A change in one stiffness is
+  mostly compensated by changes in the others, so the three parameters are less separately identifiable than their individual
+  standard deviations suggest. Task 23 studies what excitation and noise do to this.
+- **The random signal gives smaller intervals** (0.11, 0.16, 0.15 percent against 0.13, 0.21, 0.18 percent) because it puts more
+  power into the steering (RMS yaw rate 0.102 against 0.070 rad/s), and it is also the one with the strongest correlations.
+  The data are different records of the same length, so this says what these two records gave, not that one signal type is
+  always better.
+- **Mass check.** With the mass added as a fourth parameter, the smallest singular value of the weighted Jacobian at the true
+  parameters is 4e-11 (sweep) and 4e-11 (random) of the largest, a numerical zero; with three parameters it is 0.25 and
+  0.23 of the largest. This confirms the Task 21 argument numerically.
+
+### What this does not show
+
+- The model that makes the data and the model that is fitted are almost the same, and the noise levels are known to the
+  estimator (chi-squared per degree of freedom of 1.01 is a check on the code and the noise assumption, not a test of model
+  error). A real vehicle has a model error, unknown noise, sensor bias and steering measured with error, and the intervals here would
+  then be too small. The Stage 4 model-error cases and Task 23's noise study are where that starts to be tested.
+- One speed (15 m/s) and one steering amplitude (0.03 rad), well inside the linear tire range.
+- The nominal parameters are the true parameters in the fit (the starting point is 30 to 50 percent away from them, so it
+  does not begin at the answer, but the bounds are centred on it).
